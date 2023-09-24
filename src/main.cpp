@@ -9,10 +9,24 @@ const char* password = WIFI_PASSWORD;
 
 WiFiServer server(80);
 
+void initWiFi();
+
+void initWiFi() {
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  Serial.print("Connecting to WiFi ..");
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print('.');
+    delay(1000);
+  }
+  Serial.println(WiFi.localIP());
+}
+
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(921600);
   Serial.println("Setup");
+  initWiFi();
 }
 
 void loop() {
