@@ -26,10 +26,11 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(921600);
   Serial.println("Setup");
-  initWiFi();
+  // initWiFi();
 }
 
 void loop() {
   delay(1000);
   Serial.println("Loop");
+  Serial.println(analogRead(34));
 }
