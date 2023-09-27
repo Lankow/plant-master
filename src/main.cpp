@@ -2,18 +2,21 @@
 
 #include "constants.h"
 #include "HumidityHandler.h"
-#include "WiFiHandler.h"
+#include "NetworkHandler.h"
+#include "TimeHandler.h"
 
 HumidityHandler humidityHandler(PIN_34, 2000);
-WiFiHandler wifiHandler;
+NetworkHandler networkHandler;
+TimeHandler timeHandler;
 
 void setup() {
   Serial.begin(921600);
   Serial.println("Plant-Master Setup");
-  wifiHandler.initWiFi();
+  networkHandler.initWiFi();
 }
 
 void loop() {
   delay(1000);
   humidityHandler.readHumidity();
+  timeHandler.getTimeStamp();
 }
