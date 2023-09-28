@@ -8,7 +8,9 @@
 #include "config.h"
 #include "constants.h"
 
-NetworkHandler::NetworkHandler(){};
+NetworkHandler::NetworkHandler(){
+  m_server = WiFiServer(80);
+};
 
 void NetworkHandler::initWiFi() {
   uint8_t connectionCounter = 0;
@@ -32,6 +34,7 @@ void NetworkHandler::initWiFi() {
 
   Serial.printf("WiFi Connected - IP Address: %u.%u.%u.%u \n", ip[0], ip[1], ip[2], ip[3]);
   updateTimeViaNTP();
+  startServer();
 };
 
 void NetworkHandler::updateTimeViaNTP(){
@@ -43,4 +46,40 @@ void NetworkHandler::updateTimeViaNTP(){
   }
 };
 
+void NetworkHandler::startServer(){
+  
+  if(NULL != &m_server){
+    m_server.begin();
+    Serial.print("Connect to IP Address: ");
+    Serial.print("http://");
+    Serial.println(WiFi.localIP());
+  }
+};
 
+void NetworkHandler::handleClient(){
+  m_client = m_server.available();
+  
+  if(!m_client) return;
+
+  if(m_client.connected()){
+    html();
+  }
+};
+
+void NetworkHandler::html(){
+  m_client.println("HTTP/1.1 200 OK");
+  m_client.println("Content-Type: text/html");
+  m_client.println("Connection: close");
+  m_client.println();
+
+  m_client.println("<!DOCTYPE HTML>");
+  m_client.println("<html>");
+
+  m_client.println("<head></head>");
+  m_client.println("<body>");
+  m_client.println("<h2>PLANT-MASTER</h2>");
+  m_client.println("<p>To be reworked...</p>");
+ 
+  m_client.println("</body>");
+  m_client.println("</html>");    
+}

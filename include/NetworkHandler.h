@@ -8,11 +8,19 @@
 
 class NetworkHandler
 {   
+    private:
+    WiFiServer m_server;
+    WiFiClient m_client;
+
+    void updateTimeViaNTP();
+    void startServer();
+
     public:
     NetworkHandler();
 
     void initWiFi();
-    void updateTimeViaNTP();
+    void handleClient();
+    void html();
 };
 
 

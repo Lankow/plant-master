@@ -19,4 +19,5 @@ void loop() {
   delay(1000);
   humidityHandler.readHumidity();
   timeHandler.getTimeStamp();
+  networkHandler.handleClient();
 }
