@@ -1,10 +1,15 @@
 /*
-*   HumidityHandler.cpp
+*   HumidityHandler.h
 *   ----------------------
 *   Created on: 2023/09/26
 *   Author: Lankow
 */
-class HumidityHandler
+#ifndef HUMIDITY_HANDLER_H
+#define HUMIDITY_HANDLER_H
+
+#include "Handler.h"
+
+class HumidityHandler : public Handler
 {
     private:
     int m_operatedPin;
@@ -22,4 +27,7 @@ class HumidityHandler
     void setOperatedPin(int pin);
 
     bool getNeedsWatering();
+    int getCurrentHumidity();
 };
+
+#endif // HUMIDITY_HANDLER_H

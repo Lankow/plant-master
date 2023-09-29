@@ -5,6 +5,7 @@
 *   Author: Lankow
 */
 #define ANALOG_PIN_MAX 4095
+#define ANALOG_PIN_MIN 0
 
 #define LED_BUILTIN 2
 #define PIN_34 34

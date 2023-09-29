@@ -37,8 +37,12 @@
 
     void HumidityHandler::setHumidityThreshold(int threshold){
       if(NULL != &threshold){
-        m_humidityThreshold = threshold;
+        if (threshold >= ANALOG_PIN_MIN && threshold <= ANALOG_PIN_MAX){
+          m_humidityThreshold = threshold;
+          return;
+        }
       }
+      Serial.println("Threshold update error...");
     };
 
     void HumidityHandler::setOperatedPin(int pin){
@@ -49,4 +53,8 @@
 
     bool HumidityHandler::getNeedsWatering(){
       return m_needsWatering;
+    };
+
+    int HumidityHandler::getCurrentHumidity(){
+      return m_currentHumidityLvl;
     };

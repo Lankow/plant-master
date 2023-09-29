@@ -4,10 +4,14 @@
 *   Created on: 2023/09/27
 *   Author: Lankow
 */
-#include <Arduino.h>
+#ifndef TIME_HANDLER_H
+#define TIME_HANDLER_H
 
-class TimeHandler
+#include "Handler.h"
+
+class TimeHandler : public Handler
 {   
     public:
     void getTimeStamp();
 };
+#endif // TIME_HANDLER_H

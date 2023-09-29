@@ -4,13 +4,17 @@
 *   Created on: 2023/09/26
 *   Author: Lankow
 */
-#include <WiFi.h>
+#ifndef NETWORK_HANDLER_H
+#define NETWORK_HANDLER_H
 
-class NetworkHandler
+#include <WiFi.h>
+#include <AsyncTCP.h>
+#include <ESPAsyncWebServer.h>
+#include "Handler.h"
+
+class NetworkHandler : public Handler 
 {   
     private:
-    WiFiServer m_server;
-    WiFiClient m_client;
 
     void updateTimeViaNTP();
     void startServer();
@@ -19,11 +23,5 @@ class NetworkHandler
     NetworkHandler();
 
     void initWiFi();
-    void handleClient();
-    void html();
 };
-
-
-
-
-
+#endif // NETWORK_HANDLER_H

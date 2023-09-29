@@ -7,10 +7,11 @@
 #include "NetworkHandler.h"
 #include "config.h"
 #include "constants.h"
+#include "DataProvider.h"
 
-NetworkHandler::NetworkHandler(){
-  m_server = WiFiServer(80);
-};
+AsyncWebServer m_server(80);
+
+NetworkHandler::NetworkHandler(){};
 
 void NetworkHandler::initWiFi() {
   uint8_t connectionCounter = 0;
@@ -47,39 +48,25 @@ void NetworkHandler::updateTimeViaNTP(){
 };
 
 void NetworkHandler::startServer(){
-  
   if(NULL != &m_server){
-    m_server.begin();
-    Serial.print("Connect to IP Address: ");
-    Serial.print("http://");
-    Serial.println(WiFi.localIP());
+    m_server.on("/humidity", HTTP_GET, [this](AsyncWebServerRequest *request){
+      int humidityData = getDataProvider()->getHumidity();
+      String response = String(humidityData);
+      request->send(200, "text/html", response);
+    });
+
+    m_server.on("/threshold", HTTP_POST, [this](AsyncWebServerRequest * request) 
+    {
+      int paramsNr = request->params();
+      AsyncWebParameter * param = request->getParam(0);
+      int threshold = param->value().toInt();
+
+      Serial.printf("Threshold to set: %d \n", threshold);
+      getDataProvider()->setThreshold(param->value().toInt());
+
+      request->send(200);
+  });
+
+  m_server.begin();
   }
 };
-
-void NetworkHandler::handleClient(){
-  m_client = m_server.available();
-  
-  if(!m_client) return;
-
-  if(m_client.connected()){
-    html();
-  }
-};
-
-void NetworkHandler::html(){
-  m_client.println("HTTP/1.1 200 OK");
-  m_client.println("Content-Type: text/html");
-  m_client.println("Connection: close");
-  m_client.println();
-
-  m_client.println("<!DOCTYPE HTML>");
-  m_client.println("<html>");
-
-  m_client.println("<head></head>");
-  m_client.println("<body>");
-  m_client.println("<h2>PLANT-MASTER</h2>");
-  m_client.println("<p>To be reworked...</p>");
- 
-  m_client.println("</body>");
-  m_client.println("</html>");    
-}
