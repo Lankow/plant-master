@@ -1,11 +1,11 @@
 #include <Arduino.h>
 
-#include "constants.h"
-#include "HumidityHandler.h"
-#include "NetworkHandler.h"
-#include "TimeHandler.h"
+#include "constants.hpp"
+#include "handler/HumidityHandler.hpp"
+#include "handler/NetworkHandler.hpp"
+#include "handler/TimeHandler.hpp"
 
-#include"DataProvider.h"
+#include"DataProvider.hpp"
 
 HumidityHandler humidityHandler(PIN_34, 2000);
 NetworkHandler networkHandler;

@@ -4,10 +4,10 @@
 *   Created on: 2023/09/26
 *   Author: Lankow
 */
-#include "NetworkHandler.h"
+#include "handler/NetworkHandler.hpp"
 #include "config.h"
-#include "constants.h"
-#include "DataProvider.h"
+#include "constants.hpp"
+#include "DataProvider.hpp"
 
 AsyncWebServer m_server(80);
 

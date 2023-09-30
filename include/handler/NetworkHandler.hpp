@@ -1,5 +1,5 @@
 /*
-*   NetworkHandler.h
+*   NetworkHandler.hpp
 *   ----------------------
 *   Created on: 2023/09/26
 *   Author: Lankow
@@ -10,7 +10,7 @@
 #include <WiFi.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
-#include "Handler.h"
+#include "Handler.hpp"
 
 class NetworkHandler : public Handler 
 {   

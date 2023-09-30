@@ -6,8 +6,8 @@
 */
 #include <Arduino.h>
 
-#include "TimeHandler.h"
-#include "constants.h"
+#include "handler/TimeHandler.hpp"
+#include "constants.hpp"
     
 void TimeHandler::getTimeStamp(){
   struct tm timeinfo;

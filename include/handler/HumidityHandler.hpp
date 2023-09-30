@@ -1,5 +1,5 @@
 /*
-*   HumidityHandler.h
+*   HumidityHandler.hpp
 *   ----------------------
 *   Created on: 2023/09/26
 *   Author: Lankow
@@ -7,7 +7,7 @@
 #ifndef HUMIDITY_HANDLER_H
 #define HUMIDITY_HANDLER_H
 
-#include "Handler.h"
+#include "Handler.hpp"
 
 class HumidityHandler : public Handler
 {

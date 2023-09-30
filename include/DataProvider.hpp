@@ -1,5 +1,5 @@
 /*
-*   DataProvider.h
+*   DataProvider.hpp
 *   ----------------------
 *   Created on: 2023/09/29
 *   Author: Lankow
@@ -7,8 +7,8 @@
 #ifndef DATA_PROVIDER_H
 #define DATA_PROVIDER_H
 
-#include "HumidityHandler.h"
-#include "NetworkHandler.h"
+#include "handler/HumidityHandler.hpp"
+#include "handler/NetworkHandler.hpp"
 
 class DataProvider
 {

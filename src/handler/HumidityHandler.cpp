@@ -6,8 +6,8 @@
 */
 #include <Arduino.h>
 
-#include "HumidityHandler.h"
-#include "constants.h"
+#include "handler/HumidityHandler.hpp"
+#include "constants.hpp"
 
     HumidityHandler::HumidityHandler(int pin, int threshold):
                                      m_operatedPin(pin),
