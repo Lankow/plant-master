@@ -4,8 +4,8 @@
 *   Created on: 2023/09/26
 *   Author: Lankow
 */
-#ifndef NETWORK_HANDLER_H
-#define NETWORK_HANDLER_H
+#ifndef NETWORK_HANDLER_HPP
+#define NETWORK_HANDLER_HPP
 
 #include <WiFi.h>
 #include <AsyncTCP.h>
@@ -24,4 +24,4 @@ class NetworkHandler : public Handler
 
     void initWiFi();
 };
-#endif // NETWORK_HANDLER_H
+#endif // NETWORK_HANDLER_HPP

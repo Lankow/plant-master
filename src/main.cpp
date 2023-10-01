@@ -11,7 +11,7 @@ HumidityHandler humidityHandler(PIN_34, 2000);
 NetworkHandler networkHandler;
 TimeHandler timeHandler;
 
-DataProvider dataProvider(&humidityHandler, &networkHandler);
+DataProvider dataProvider(&humidityHandler, &networkHandler, &timeHandler);
 
 void setup() {
   Serial.begin(921600);
@@ -23,5 +23,4 @@ void setup() {
 void loop() {
   delay(1000);
   humidityHandler.readHumidity();
-  timeHandler.getTimeStamp();
 }

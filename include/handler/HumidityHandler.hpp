@@ -4,8 +4,8 @@
 *   Created on: 2023/09/26
 *   Author: Lankow
 */
-#ifndef HUMIDITY_HANDLER_H
-#define HUMIDITY_HANDLER_H
+#ifndef HUMIDITY_HANDLER_HPP
+#define HUMIDITY_HANDLER_HPP
 
 #include "Handler.hpp"
 
@@ -30,4 +30,4 @@ class HumidityHandler : public Handler
     int getCurrentHumidity();
 };
 
-#endif // HUMIDITY_HANDLER_H
+#endif // HUMIDITY_HANDLER_HPP

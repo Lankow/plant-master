@@ -5,7 +5,7 @@
 *   Author: Lankow
 */
 #include "handler/NetworkHandler.hpp"
-#include "config.h"
+#include "config.hpp"
 #include "constants.hpp"
 #include "DataProvider.hpp"
 
@@ -52,6 +52,12 @@ void NetworkHandler::startServer(){
     m_server.on("/humidity", HTTP_GET, [this](AsyncWebServerRequest *request){
       int humidityData = getDataProvider()->getHumidity();
       String response = String(humidityData);
+      request->send(200, "text/html", response);
+    });
+
+    m_server.on("/time", HTTP_GET, [this](AsyncWebServerRequest *request){
+      String timeData = getDataProvider()->getTime();
+      String response = String(timeData);
       request->send(200, "text/html", response);
     });
 

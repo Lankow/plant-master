@@ -4,8 +4,8 @@
 *   Created on: 2023/09/29
 *   Author: Lankow
 */
-#ifndef HANDLER_H
-#define HANDLER_H
+#ifndef HANDLER_HPP
+#define HANDLER_HPP
 
 #include <Arduino.h>
 
@@ -23,4 +23,4 @@ class Handler
     void initDataProvider(DataProvider *p_dataProvider);
 };
 
-#endif // HUMIDITY_HANDLER_H
+#endif // HANDLER_HPP

@@ -4,14 +4,14 @@
 *   Created on: 2023/09/27
 *   Author: Lankow
 */
-#ifndef TIME_HANDLER_H
-#define TIME_HANDLER_H
+#ifndef TIME_HANDLER_HPP
+#define TIME_HANDLER_HPP
 
 #include "Handler.hpp"
 
 class TimeHandler : public Handler
 {   
     public:
-    void getTimeStamp();
+    void getTimeStamp(char time_buffer[]);
 };
-#endif // TIME_HANDLER_H
+#endif // TIME_HANDLER_HPP
