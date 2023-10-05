@@ -8,6 +8,17 @@
 #define TEMPERATURE_HANDLER_HPP
 
 #include "Handler.hpp"
+#include <DHT.h>
 
-class TemperatureHandler : public Handler{};
+class TemperatureHandler : public Handler{
+  private:
+  DHT m_dht;
+
+  public:
+  TemperatureHandler(int pin);
+
+  void readTemperature();
+  void readRoomHumidity();
+
+};
 #endif // TEMPERATURE_HANDLER_HPP

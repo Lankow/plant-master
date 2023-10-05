@@ -8,7 +8,10 @@
 #define ANALOG_PIN_MIN 0
 
 #define LED_BUILTIN 2
+#define PIN_18 18
+
 #define PIN_34 34
+#define PIN_35 35
 
 #define MAX_CONNECTION_TRIES 6
 
@@ -18,3 +21,5 @@
 
 #define GMT_OFFSET 0
 #define DAY_OFFSET 7200
+
+#define DHT_TYPE DHT11

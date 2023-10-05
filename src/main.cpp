@@ -4,10 +4,12 @@
 #include "handler/HumidityHandler.hpp"
 #include "handler/NetworkHandler.hpp"
 #include "handler/TimeHandler.hpp"
+#include "handler/TemperatureHandler.hpp"
 
 #include"DataProvider.hpp"
 
 HumidityHandler humidityHandler(PIN_34, 2000);
+TemperatureHandler temperatureHandler(PIN_18);
 NetworkHandler networkHandler;
 TimeHandler timeHandler;
 
@@ -23,4 +25,6 @@ void setup() {
 void loop() {
   delay(1000);
   humidityHandler.readHumidity();
+  temperatureHandler.readTemperature();
+  temperatureHandler.readRoomHumidity();
 }

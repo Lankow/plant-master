@@ -35,7 +35,15 @@
         }
     }
 
-    void HumidityHandler::setHumidityThreshold(int threshold){
+    bool HumidityHandler::getNeedsWatering(){
+      return m_needsWatering;
+    };
+
+    int HumidityHandler::getCurrentHumidity(){
+      return m_currentHumidityLvl;
+    };
+
+        void HumidityHandler::setHumidityThreshold(int threshold){
       if(NULL != &threshold){
         if (threshold >= ANALOG_PIN_MIN && threshold <= ANALOG_PIN_MAX){
           m_humidityThreshold = threshold;
@@ -49,12 +57,4 @@
       if(NULL != &pin){
         m_operatedPin = pin;
       }
-    };
-
-    bool HumidityHandler::getNeedsWatering(){
-      return m_needsWatering;
-    };
-
-    int HumidityHandler::getCurrentHumidity(){
-      return m_currentHumidityLvl;
     };
