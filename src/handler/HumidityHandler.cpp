@@ -24,14 +24,14 @@
     };
 
     void HumidityHandler::compareHumidity(){
-      pinMode(LED_BUILTIN, OUTPUT);
+      pinMode(PIN_LED_BUILTIN, OUTPUT);
       if(m_currentHumidityLvl <= m_humidityThreshold){
         m_needsWatering = true;
-        digitalWrite(LED_BUILTIN, HIGH);
+        digitalWrite(PIN_LED_BUILTIN, HIGH);
         }
       else{
         m_needsWatering = false;
-        digitalWrite(LED_BUILTIN, LOW);
+        digitalWrite(PIN_LED_BUILTIN, LOW);
         }
     }
 

@@ -7,8 +7,16 @@
 #define ANALOG_PIN_MAX 4095
 #define ANALOG_PIN_MIN 0
 
-#define LED_BUILTIN 2
+/* ESP PINS */
+#define PIN_LED_BUILTIN 2
+
+#define PIN_5  5
+
+#define PIN_17 17
 #define PIN_18 18
+#define PIN_19 19
+
+#define PIN_23 23
 
 #define PIN_34 34
 #define PIN_35 35
