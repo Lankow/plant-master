@@ -11,6 +11,10 @@
 #include "handler/NetworkHandler.hpp"
 #include "handler/TimeHandler.hpp"
 
+// DataProvider to store all the information that could be forwarded
+// Handlers have a handle on a dataProvider and on cyclics fill data
+// DataManager on cyclic checks and manages the data e.g. humidity thresholds
+
 class DataProvider
 {
     private:

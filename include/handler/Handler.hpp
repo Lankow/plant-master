@@ -21,6 +21,9 @@ class Handler
 
   public:
     void initDataProvider(DataProvider *p_dataProvider);
+    
+    void init();
+    void cyclic();
 };
 
 #endif // HANDLER_HPP

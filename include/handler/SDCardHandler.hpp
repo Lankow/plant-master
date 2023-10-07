@@ -15,8 +15,13 @@ class SDCardHandler
 {
   private: 
   SPIClass m_spi;
-  
+
   public:
+    SDCardHandler(uint8_t pinSck, uint8_t pinMiso, uint8_t pinMosi, uint8_t pinCs);
+
+    void initSDCard();
+
+    void listDir(fs::FS &fs, const char * dirname, uint8_t levels);
     void createDir(fs::FS &fs, const char * path);
     void removeDir(fs::FS &fs, const char * path);
     void readFile(fs::FS &fs, const char * path);
