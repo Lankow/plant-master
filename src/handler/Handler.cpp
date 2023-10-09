@@ -16,10 +16,6 @@ DataProvider* Handler::getDataProvider() const{
         return m_dataProvider;
 }
 
-void Handler::init(){
-  Serial.println("Handler - Initialization");
-};
+void Handler::init(){};
 
-void Handler::cyclic(){
-  Serial.println("Handler - Cyclic Task");
-};
+void Handler::cyclic(){};

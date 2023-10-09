@@ -14,11 +14,12 @@ class TemperatureHandler : public Handler{
   private:
   DHT m_dht;
 
+  void readTemperature();
+  void readRoomHumidity();
+
   public:
   TemperatureHandler(int pin);
 
-  void readTemperature();
-  void readRoomHumidity();
   void cyclic();
 
 };

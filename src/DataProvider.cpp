@@ -6,24 +6,13 @@
 */
 #include "DataProvider.hpp"
 
-DataProvider::DataProvider(): m_currentHumidityLvl(0),
-                              m_humidityThreshold(0),
-                              m_needsWatering(false),
-                              m_currentTime(""),
+DataProvider::DataProvider(): m_currentTime(""),
                               m_temperature(0),
                               m_roomHumidity(0)
-                              {}
-
-int& DataProvider::getCurrentHumidityLvl(){
-    return m_currentHumidityLvl;
-};
-
-int& DataProvider::getHumidityThreshold(){
-    return m_humidityThreshold;
-};
-
-bool& DataProvider::getNeedsWatering(){
-    return m_needsWatering;
+                              {
+    for (int i = 0; i < 10; i++) {
+    m_humidityData[i] = HumidityData();
+    }
 };
 
 char* DataProvider::getCurrentTime(){
@@ -36,24 +25,6 @@ float& DataProvider::getTemperature(){
 
 float& DataProvider::getRoomHumidity(){
     return m_roomHumidity;
-};
-
-void DataProvider::setCurrentHumidityLvl(int p_currentHumidityLvl){
-    if(nullptr != &p_currentHumidityLvl){
-        m_currentHumidityLvl = p_currentHumidityLvl;
-    }
-};
-
-void DataProvider::setHumidityThreshold(int p_humidityThreshold){
-    if(nullptr != &p_humidityThreshold){
-        m_humidityThreshold = p_humidityThreshold;
-    }
-};
-
-void DataProvider::setNeedsWatering(bool p_needsWatering){
-    if(nullptr != &p_needsWatering){
-        m_needsWatering = p_needsWatering;
-    }
 };
 
 void DataProvider::setCurrentTime(char p_currentTime[]){
@@ -72,4 +43,23 @@ void DataProvider::setRoomHumidity(float p_roomHumidity){
     if(nullptr != &p_roomHumidity){
         m_roomHumidity = p_roomHumidity;
     }
+};
+
+void DataProvider::setCurrentHumidityLvl(uint8_t p_handlerId, uint16_t p_readHumidity){
+    if(nullptr != &p_readHumidity){
+        m_humidityData[p_handlerId].setCurrentHumidityLvl(p_readHumidity);
+        Serial.println(m_humidityData[p_handlerId].getCurrentHumidityLvl());
+    }
+};
+
+void DataProvider::setHumidityThreshold(uint8_t p_handlerId, uint16_t p_newThreshold){
+    if(nullptr != &p_newThreshold){
+        m_humidityData[p_handlerId].setHumidityThreshold(p_newThreshold);
+    } 
+};
+
+void DataProvider::setNeedsWatering(uint8_t p_handlerId, bool p_needsWatering){
+    if(nullptr != &p_needsWatering){
+        m_humidityData[p_handlerId].setNeedsWatering(p_needsWatering);
+    } 
 };

@@ -1,18 +1,18 @@
 /*
-*   NetworkHandler.cpp
+*   NetworkManager.cpp
 *   ----------------------
 *   Created on: 2023/09/26
 *   Author: Lankow
 */
-#include "handler/NetworkHandler.hpp"
+#include "manager/NetworkManager.hpp"
 #include "config.hpp"
 #include "constants.hpp"
 
 AsyncWebServer m_server(80);
 
-NetworkHandler::NetworkHandler(){};
+NetworkManager::NetworkManager(DataProvider* p_dataProvider) : m_dataProvider (p_dataProvider){};
 
-void NetworkHandler::init() {
+void NetworkManager::init() {
   uint8_t connectionCounter = 0;
 
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -37,7 +37,7 @@ void NetworkHandler::init() {
   startServer();
 };
 
-void NetworkHandler::updateTimeViaNTP(){
+void NetworkManager::updateTimeViaNTP(){
   if(WiFi.status() == WL_CONNECTED){
     configTime(GMT_OFFSET, DAY_OFFSET, NTP_SERVER_PL_0, NTP_SERVER_PL_1, NTP_SERVER_PL_2);
   }
@@ -46,16 +46,16 @@ void NetworkHandler::updateTimeViaNTP(){
   }
 };
 
-void NetworkHandler::startServer(){
+void NetworkManager::startServer(){
   if(NULL != &m_server){
     m_server.on("/humidity", HTTP_GET, [this](AsyncWebServerRequest *request){
-      int humidityData = getDataProvider()->getCurrentHumidityLvl();
-      String response = String(humidityData);
-      request->send(200, "text/html", response);
+      // HumidityData humidityData = getDataProvider()->getHumidityDataById(0);
+      // String response = String(humidityData);
+      // request->send(200, "text/html", response);
     });
 
     m_server.on("/time", HTTP_GET, [this](AsyncWebServerRequest *request){
-      String timeData = getDataProvider()->getCurrentTime();
+      String timeData = m_dataProvider->getCurrentTime();
       String response = String(timeData);
       request->send(200, "text/html", response);
     });
@@ -67,7 +67,7 @@ void NetworkHandler::startServer(){
       int threshold = param->value().toInt();
 
       Serial.printf("Threshold to set: %d \n", threshold);
-      getDataProvider()->setHumidityThreshold(param->value().toInt());
+      // getDataProvider()->setHumidityThreshold(param->value().toInt());
 
       request->send(200);
   });

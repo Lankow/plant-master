@@ -1,26 +1,27 @@
 /*
-*   NetworkHandler.hpp
+*   NetworkManager.hpp
 *   ----------------------
 *   Created on: 2023/09/26
 *   Author: Lankow
 */
-#ifndef NETWORK_HANDLER_HPP
-#define NETWORK_HANDLER_HPP
+#ifndef NETWORK_MANAGER_HPP
+#define NETWORK_MANAGER_HPP
 
 #include <WiFi.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
-#include "Handler.hpp"
+#include "DataProvider.hpp"
 
-class NetworkHandler : public Handler 
+class NetworkManager 
 {   
     private:
+    DataProvider* m_dataProvider;
 
     void updateTimeViaNTP();
     void startServer();
 
     public:
-    NetworkHandler();
+    NetworkManager(DataProvider* p_dataProvider);
 
     void init();
 };

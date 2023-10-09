@@ -12,7 +12,8 @@
 class HumidityHandler : public Handler
 {
     private:
-    int m_operatedPin;
+    uint8_t m_operatedPin;
+    uint8_t m_handlerId;
 
     public:
     HumidityHandler(uint8_t pin);

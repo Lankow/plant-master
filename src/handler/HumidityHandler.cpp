@@ -7,12 +7,17 @@
 #include "handler/HumidityHandler.hpp"
 #include "constants.hpp"
 
+static uint8_t m_idCounter;
+
 HumidityHandler::HumidityHandler(uint8_t p_operatedPin):
-                                 m_operatedPin(p_operatedPin){};
+                                 m_operatedPin(p_operatedPin){
+                                  m_handlerId = m_idCounter;
+                                  m_idCounter++;
+                                 };
 
 void HumidityHandler::readHumidity(){
   if(nullptr != getDataProvider() ){
-    getDataProvider()->setCurrentHumidityLvl(analogRead(m_operatedPin));
+    getDataProvider()->setCurrentHumidityLvl(m_handlerId, analogRead(m_operatedPin));
   }
 };
 
