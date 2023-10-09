@@ -6,22 +6,70 @@
 */
 #include "DataProvider.hpp"
 
-DataProvider::DataProvider(HumidityHandler *p_humidityHandler, NetworkHandler *p_networkHandler, TimeHandler *p_timeHandler) {
-    m_humidityHandler = p_humidityHandler;
-    m_networkHandler = p_networkHandler;
-    m_timeHandler = p_timeHandler;
-}
+DataProvider::DataProvider(): m_currentHumidityLvl(0),
+                              m_humidityThreshold(0),
+                              m_needsWatering(false),
+                              m_currentTime(""),
+                              m_temperature(0),
+                              m_roomHumidity(0)
+                              {}
 
-int DataProvider::getHumidity() {
-    return m_humidityHandler->getCurrentHumidity();
-}
+int& DataProvider::getCurrentHumidityLvl(){
+    return m_currentHumidityLvl;
+};
 
-String DataProvider::getTime() {
-    char time_temp[20];
-    m_timeHandler->getTimeStamp(time_temp);
-    return time_temp;
-}
+int& DataProvider::getHumidityThreshold(){
+    return m_humidityThreshold;
+};
 
-void DataProvider::setThreshold(int threshold) {
-    return m_humidityHandler->setHumidityThreshold(threshold);
-}
+bool& DataProvider::getNeedsWatering(){
+    return m_needsWatering;
+};
+
+char* DataProvider::getCurrentTime(){
+    return m_currentTime;
+};
+
+float& DataProvider::getTemperature(){
+    return m_temperature;
+};
+
+float& DataProvider::getRoomHumidity(){
+    return m_roomHumidity;
+};
+
+void DataProvider::setCurrentHumidityLvl(int p_currentHumidityLvl){
+    if(nullptr != &p_currentHumidityLvl){
+        m_currentHumidityLvl = p_currentHumidityLvl;
+    }
+};
+
+void DataProvider::setHumidityThreshold(int p_humidityThreshold){
+    if(nullptr != &p_humidityThreshold){
+        m_humidityThreshold = p_humidityThreshold;
+    }
+};
+
+void DataProvider::setNeedsWatering(bool p_needsWatering){
+    if(nullptr != &p_needsWatering){
+        m_needsWatering = p_needsWatering;
+    }
+};
+
+void DataProvider::setCurrentTime(char p_currentTime[]){
+    if(nullptr != &p_currentTime){
+        // m_currentTime = p_currentTime;
+    }
+};
+
+void DataProvider::setTemperature(float p_temperature){
+    if(nullptr != &p_temperature){
+        m_temperature = p_temperature;
+    }
+};
+
+void DataProvider::setRoomHumidity(float p_roomHumidity){
+    if(nullptr != &p_roomHumidity){
+        m_roomHumidity = p_roomHumidity;
+    }
+};

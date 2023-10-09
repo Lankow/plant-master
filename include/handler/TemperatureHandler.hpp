@@ -7,8 +7,8 @@
 #ifndef TEMPERATURE_HANDLER_HPP
 #define TEMPERATURE_HANDLER_HPP
 
-#include "Handler.hpp"
 #include <DHT.h>
+#include "Handler.hpp"
 
 class TemperatureHandler : public Handler{
   private:
@@ -19,6 +19,7 @@ class TemperatureHandler : public Handler{
 
   void readTemperature();
   void readRoomHumidity();
+  void cyclic();
 
 };
 #endif // TEMPERATURE_HANDLER_HPP

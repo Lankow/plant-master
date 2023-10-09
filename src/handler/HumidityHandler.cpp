@@ -4,57 +4,19 @@
 *   Created on: 2023/09/26
 *   Author: Lankow
 */
-#include <Arduino.h>
-
 #include "handler/HumidityHandler.hpp"
 #include "constants.hpp"
 
-    HumidityHandler::HumidityHandler(int pin, int threshold):
-                                     m_operatedPin(pin),
-                                     m_humidityThreshold(threshold),
-                                     m_currentHumidityLvl(ANALOG_PIN_MAX),
-                                     m_needsWatering(false)
-    {};
-    
-    void HumidityHandler::readHumidity(){
-      if(NULL != &m_operatedPin ){
-        m_currentHumidityLvl = analogRead(m_operatedPin);
-        compareHumidity();
-      }
-    };
+HumidityHandler::HumidityHandler(uint8_t p_operatedPin):
+                                 m_operatedPin(p_operatedPin){};
 
-    void HumidityHandler::compareHumidity(){
-      pinMode(PIN_LED_BUILTIN, OUTPUT);
-      if(m_currentHumidityLvl <= m_humidityThreshold){
-        m_needsWatering = true;
-        digitalWrite(PIN_LED_BUILTIN, HIGH);
-        }
-      else{
-        m_needsWatering = false;
-        digitalWrite(PIN_LED_BUILTIN, LOW);
-        }
-    }
+void HumidityHandler::readHumidity(){
+  if(nullptr != getDataProvider() ){
+    getDataProvider()->setCurrentHumidityLvl(analogRead(m_operatedPin));
+  }
+};
 
-    bool HumidityHandler::getNeedsWatering(){
-      return m_needsWatering;
-    };
-
-    int HumidityHandler::getCurrentHumidity(){
-      return m_currentHumidityLvl;
-    };
-
-        void HumidityHandler::setHumidityThreshold(int threshold){
-      if(NULL != &threshold){
-        if (threshold >= ANALOG_PIN_MIN && threshold <= ANALOG_PIN_MAX){
-          m_humidityThreshold = threshold;
-          return;
-        }
-      }
-      Serial.println("Threshold update error...");
-    };
-
-    void HumidityHandler::setOperatedPin(int pin){
-      if(NULL != &pin){
-        m_operatedPin = pin;
-      }
-    };
+ void HumidityHandler::cyclic() {
+  Serial.println("HumidityHandler - Cyclic Task");
+  readHumidity();
+};

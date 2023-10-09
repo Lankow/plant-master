@@ -22,6 +22,6 @@ class NetworkHandler : public Handler
     public:
     NetworkHandler();
 
-    void initWiFi();
+    void init();
 };
 #endif // NETWORK_HANDLER_HPP

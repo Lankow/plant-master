@@ -7,11 +7,12 @@
 #include "FS.h"
 #include "SD.h"
 #include "SPI.h"
+#include "Handler.hpp"
 
 #ifndef SD_CARD_HANDLER_HPP
 #define SD_CARD_HANDLER_HPP
 
-class SDCardHandler
+class SDCardHandler : public Handler
 {
   private: 
   SPIClass m_spi;

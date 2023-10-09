@@ -5,10 +5,9 @@
 *   Author: Lankow
 */
 #include "handler/TemperatureHandler.hpp"
-#include "constants.hpp"
 
 TemperatureHandler::TemperatureHandler(int pin) : m_dht(pin, DHT11) {
-    // Constructor initialization list
+  m_dht.begin();
 };
 
 void TemperatureHandler::readTemperature() {
@@ -17,7 +16,7 @@ void TemperatureHandler::readTemperature() {
     Serial.println("Temperature read error.");
   }
   else {
-    Serial.println(t);
+    getDataProvider()->setTemperature(t);
   }
 }
 
@@ -27,6 +26,12 @@ void TemperatureHandler::readRoomHumidity() {
     Serial.println("Room Humidity read error.");
   }
   else {
-    Serial.println(t);
+    getDataProvider()->setRoomHumidity(t);
   }
+}
+
+void TemperatureHandler::cyclic(){
+  Serial.println("TemperatureHandler - Cyclic Task");
+  readTemperature();
+  readRoomHumidity();
 }

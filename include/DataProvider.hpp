@@ -7,10 +7,6 @@
 #ifndef DATA_PROVIDER_HPP
 #define DATA_PROVIDER_HPP
 
-#include "handler/HumidityHandler.hpp"
-#include "handler/NetworkHandler.hpp"
-#include "handler/TimeHandler.hpp"
-
 // DataProvider to store all the information that could be forwarded
 // Handlers have a handle on a dataProvider and on cyclics fill data
 // DataManager on cyclic checks and manages the data e.g. humidity thresholds
@@ -18,16 +14,28 @@
 class DataProvider
 {
     private:
-    HumidityHandler *m_humidityHandler;
-    NetworkHandler *m_networkHandler;
-    TimeHandler *m_timeHandler;
+    int m_currentHumidityLvl;
+    int m_humidityThreshold;
+    bool m_needsWatering;
+    char m_currentTime[20];
+    float m_temperature;
+    float m_roomHumidity;
 
     public:
-    DataProvider(HumidityHandler *p_humidityHandler, NetworkHandler *p_networkHandler, TimeHandler *p_timeHandler);
-    
-    int getHumidity();
-    String getTime();
-    void setThreshold(int threshold);
+    DataProvider();
 
+    int& getCurrentHumidityLvl();
+    int& getHumidityThreshold();
+    bool& getNeedsWatering();
+    float& getTemperature();
+    float& getRoomHumidity();
+    char* getCurrentTime();
+    
+    void setCurrentHumidityLvl(int p_currentHumidityLvl);
+    void setHumidityThreshold(int p_humidityThreshold);
+    void setNeedsWatering(bool p_needsWatering);
+    void setCurrentTime(char p_currentTime[]);
+    void setTemperature(float p_temperature);
+    void setRoomHumidity(float p_roomHumidity);
 };
 #endif // DATA_PROVIDER_HPP

@@ -7,13 +7,12 @@
 #include "handler/NetworkHandler.hpp"
 #include "config.hpp"
 #include "constants.hpp"
-#include "DataProvider.hpp"
 
 AsyncWebServer m_server(80);
 
 NetworkHandler::NetworkHandler(){};
 
-void NetworkHandler::initWiFi() {
+void NetworkHandler::init() {
   uint8_t connectionCounter = 0;
 
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -50,13 +49,13 @@ void NetworkHandler::updateTimeViaNTP(){
 void NetworkHandler::startServer(){
   if(NULL != &m_server){
     m_server.on("/humidity", HTTP_GET, [this](AsyncWebServerRequest *request){
-      int humidityData = getDataProvider()->getHumidity();
+      int humidityData = getDataProvider()->getCurrentHumidityLvl();
       String response = String(humidityData);
       request->send(200, "text/html", response);
     });
 
     m_server.on("/time", HTTP_GET, [this](AsyncWebServerRequest *request){
-      String timeData = getDataProvider()->getTime();
+      String timeData = getDataProvider()->getCurrentTime();
       String response = String(timeData);
       request->send(200, "text/html", response);
     });
@@ -68,7 +67,7 @@ void NetworkHandler::startServer(){
       int threshold = param->value().toInt();
 
       Serial.printf("Threshold to set: %d \n", threshold);
-      getDataProvider()->setThreshold(param->value().toInt());
+      getDataProvider()->setHumidityThreshold(param->value().toInt());
 
       request->send(200);
   });

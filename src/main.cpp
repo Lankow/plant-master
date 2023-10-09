@@ -1,33 +1,44 @@
 #include <Arduino.h>
 
 #include "constants.hpp"
+#include "DataProvider.hpp"
+
 #include "handler/HumidityHandler.hpp"
 #include "handler/NetworkHandler.hpp"
 #include "handler/TimeHandler.hpp"
 #include "handler/TemperatureHandler.hpp"
 #include "handler/SDCardHandler.hpp"
 
-#include"DataProvider.hpp"
+Handler* handlers[] = {
+  new HumidityHandler(PIN_34),
+  new NetworkHandler,
+  new TimeHandler,
+  new SDCardHandler(PIN_17, PIN_19, PIN_23, PIN_5),
+  new TemperatureHandler(PIN_18)
+};
 
-HumidityHandler humidityHandler(PIN_34, 2000);
-TemperatureHandler temperatureHandler(PIN_18);
-NetworkHandler networkHandler;
-TimeHandler timeHandler;
-SDCardHandler sdCardHandler(PIN_17, PIN_19, PIN_23, PIN_5);
-
-DataProvider dataProvider(&humidityHandler, &networkHandler, &timeHandler);
+DataProvider dataProvider;
 
 void setup() {
   Serial.begin(921600);
   Serial.println("Plant-Master Setup");
-  networkHandler.initWiFi();
-  networkHandler.initDataProvider(&dataProvider);
-  sdCardHandler.initSDCard();
+
+  // Handlers Initialization
+  for (int i = 0; i < sizeof(handlers) / sizeof(handlers[0]); i++) {
+    handlers[i]->init();
+  }
+
+  // Handlers subscription to DataProvider
+  for (int i = 0; i < sizeof(handlers) / sizeof(handlers[0]); i++) {
+    handlers[i]->subscribeDataProvider(&dataProvider);
+  }
 }
 
 void loop() {
   delay(1000);
-  humidityHandler.readHumidity();
-  temperatureHandler.readTemperature();
-  temperatureHandler.readRoomHumidity();
+
+  // Triggering Cyclic Tasks for Handlers
+  for (int i = 0; i < sizeof(handlers) / sizeof(handlers[0]); i++) {
+    handlers[i]->cyclic();
+  }
 }

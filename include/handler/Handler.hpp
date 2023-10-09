@@ -8,9 +8,7 @@
 #define HANDLER_HPP
 
 #include <Arduino.h>
-
-class DataProvider;
-
+#include "DataProvider.hpp"
 class Handler
 {
   private:
@@ -20,10 +18,10 @@ class Handler
     DataProvider* getDataProvider() const;
 
   public:
-    void initDataProvider(DataProvider *p_dataProvider);
+    void subscribeDataProvider(DataProvider *p_dataProvider);
     
-    void init();
-    void cyclic();
+    virtual void init();
+    virtual void cyclic();
 };
 
 #endif // HANDLER_HPP

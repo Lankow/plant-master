@@ -13,21 +13,12 @@ class HumidityHandler : public Handler
 {
     private:
     int m_operatedPin;
-    int m_currentHumidityLvl;
-    int m_humidityThreshold;
-    bool m_needsWatering;
-
-    void compareHumidity();
 
     public:
-    HumidityHandler(int pin, int threshold);
+    HumidityHandler(uint8_t pin);
     
     void readHumidity();
-    void setHumidityThreshold(int value);
-    void setOperatedPin(int pin);
-
-    bool getNeedsWatering();
-    int getCurrentHumidity();
+    void cyclic();
 };
 
 #endif // HUMIDITY_HANDLER_HPP
