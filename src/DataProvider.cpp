@@ -15,6 +15,8 @@ DataProvider::DataProvider(): m_currentTime(""),
     }
 };
 
+/* GETTERS */
+
 char* DataProvider::getCurrentTime(){
     return m_currentTime;
 };
@@ -26,6 +28,12 @@ float& DataProvider::getTemperature(){
 float& DataProvider::getRoomHumidity(){
     return m_roomHumidity;
 };
+
+HumidityData* DataProvider::getHumidityData(){
+    return m_humidityData;
+};
+
+/* SETTERS */
 
 void DataProvider::setCurrentTime(char p_currentTime[]){
     if(nullptr != &p_currentTime){

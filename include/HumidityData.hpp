@@ -12,6 +12,7 @@ class HumidityData
     int m_currentHumidityLvl;
     int m_humidityThreshold;
     bool m_needsWatering;
+    bool m_isActive;
 
     public:
     HumidityData();
@@ -19,9 +20,11 @@ class HumidityData
     int& getCurrentHumidityLvl();
     int& getHumidityThreshold();
     bool& getNeedsWatering();
+    bool& getIsActive();
 
     void setCurrentHumidityLvl(int p_currentHumidityLvl);
     void setHumidityThreshold(int p_humidityThreshold);
     void setNeedsWatering(bool p_needsWatering);
+    void setIsActive(bool p_isActive);
 };
 #endif // HUMIDITY_DATA_HPP

@@ -29,6 +29,7 @@ class DataProvider
     float& getTemperature();
     float& getRoomHumidity();
     char* getCurrentTime();
+    HumidityData* getHumidityData();
 
     void setCurrentTime(char p_currentTime[]);
     void setTemperature(float p_temperature);
