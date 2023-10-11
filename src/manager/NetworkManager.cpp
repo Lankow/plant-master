@@ -10,8 +10,6 @@
 
 AsyncWebServer m_server(80);
 
-NetworkManager::NetworkManager(DataProvider* p_dataProvider) : m_dataProvider (p_dataProvider){};
-
 void NetworkManager::init() {
   uint8_t connectionCounter = 0;
 
@@ -55,7 +53,7 @@ void NetworkManager::startServer(){
     });
 
     m_server.on("/time", HTTP_GET, [this](AsyncWebServerRequest *request){
-      String timeData = m_dataProvider->getCurrentTime();
+      String timeData = getDataProvider()->getCurrentTime();
       String response = String(timeData);
       request->send(200, "text/html", response);
     });

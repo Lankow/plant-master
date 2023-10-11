@@ -7,7 +7,7 @@
 #ifndef VALVE_HANDLER_HPP
 #define VALVE_HANDLER_HPP
 
-#include "Handler.hpp"
+#include "Component.hpp"
 
-class ValvesHandler : public Handler{};
+class ValvesHandler : public Component{};
 #endif // VALVES_HANDLER_HPP

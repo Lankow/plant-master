@@ -8,15 +8,13 @@
 #define DATA_MANAGER_HPP
 
 #include "DataProvider.hpp"
+#include "Component.hpp"
 
-class DataManager {
+class DataManager : public Component{
     private:
-    DataProvider* m_dataProvider;
-
+        void checkHumidity();
     public:
-    DataManager(DataProvider* p_dataProvider);
-
-    void checkData();
+        void cyclic();
 };
 
 #endif // DATA_MANAGER_HPP

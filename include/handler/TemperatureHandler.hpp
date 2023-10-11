@@ -8,9 +8,9 @@
 #define TEMPERATURE_HANDLER_HPP
 
 #include <DHT.h>
-#include "Handler.hpp"
+#include "Component.hpp"
 
-class TemperatureHandler : public Handler{
+class TemperatureHandler : public Component{
   private:
   DHT m_dht;
 

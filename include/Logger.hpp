@@ -8,7 +8,8 @@
 #define LOGGER_HPP
 
 class Logger{
-
+  public:
+    void log(const char* message);
 };
 
 #endif // LOGGER_HPP

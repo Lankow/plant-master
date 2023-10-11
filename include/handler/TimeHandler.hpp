@@ -7,9 +7,9 @@
 #ifndef TIME_HANDLER_HPP
 #define TIME_HANDLER_HPP
 
-#include "Handler.hpp"
+#include "Component.hpp"
 
-class TimeHandler : public Handler
+class TimeHandler : public Component
 {   
     public:
     void getTimeStamp(char time_buffer[]);

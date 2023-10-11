@@ -8,6 +8,7 @@
 #define DATA_PROVIDER_HPP
 
 #include <Arduino.h>
+#include "constants.hpp"
 #include "HumidityData.hpp"
 
 // DataProvider to store all the information that could be forwarded
@@ -17,11 +18,10 @@
 class DataProvider
 {
     private:
-    HumidityData m_humidityData[10];
+    HumidityData m_humidityData[MAX_SENSORS_NO];
     char m_currentTime[20];
     float m_temperature;
     float m_roomHumidity;
-    bool m_pumpActive;
 
     public:
     DataProvider();
@@ -29,7 +29,7 @@ class DataProvider
     float& getTemperature();
     float& getRoomHumidity();
     char* getCurrentTime();
-    
+
     void setCurrentTime(char p_currentTime[]);
     void setTemperature(float p_temperature);
     void setRoomHumidity(float p_roomHumidity);

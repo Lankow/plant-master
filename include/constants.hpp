@@ -4,8 +4,13 @@
 *   Created on: 2023/09/26
 *   Author: Lankow
 */
+#ifndef CONSTANTS_HPP
+#define CONSTANTS_HPP
+
 #define ANALOG_PIN_MAX 4095
 #define ANALOG_PIN_MIN 0
+
+#define MAX_SENSORS_NO 10
 
 /* ESP PINS */
 #define PIN_LED_BUILTIN 2
@@ -31,3 +36,5 @@
 #define DAY_OFFSET 7200
 
 #define DHT_TYPE DHT11
+
+#endif // CONSTANTS_HPP

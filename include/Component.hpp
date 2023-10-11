@@ -1,15 +1,15 @@
 /*
-*   Handler.hpp
+*   Component.hpp
 *   ----------------------
 *   Created on: 2023/09/29
 *   Author: Lankow
 */
-#ifndef HANDLER_HPP
-#define HANDLER_HPP
+#ifndef COMPONENT_HPP
+#define COMPONENT_HPP
 
 #include <Arduino.h>
 #include "DataProvider.hpp"
-class Handler
+class Component
 {
   private:
     DataProvider* m_dataProvider;
@@ -24,4 +24,4 @@ class Handler
     virtual void cyclic();
 };
 
-#endif // HANDLER_HPP
+#endif // COMPONENT_HPP

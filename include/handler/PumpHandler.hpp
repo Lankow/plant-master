@@ -7,9 +7,9 @@
 #ifndef PUMP_HANDLER_HPP
 #define PUMP_HANDLER_HPP
 
-#include "Handler.hpp"
+#include "Component.hpp"
 
-class PumpHandler : public Handler{
+class PumpHandler : public Component{
 
     public:
       void checkAndPump();

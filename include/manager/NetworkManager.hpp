@@ -11,18 +11,14 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include "DataProvider.hpp"
+#include "Component.hpp"
 
-class NetworkManager 
-{   
+class NetworkManager : public Component {   
     private:
-    DataProvider* m_dataProvider;
-
     void updateTimeViaNTP();
     void startServer();
 
     public:
-    NetworkManager(DataProvider* p_dataProvider);
-
     void init();
 };
 #endif // NETWORK_HANDLER_HPP

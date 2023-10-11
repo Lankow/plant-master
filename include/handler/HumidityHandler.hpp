@@ -7,9 +7,9 @@
 #ifndef HUMIDITY_HANDLER_HPP
 #define HUMIDITY_HANDLER_HPP
 
-#include "Handler.hpp"
+#include "Component.hpp"
 
-class HumidityHandler : public Handler
+class HumidityHandler : public Component
 {
     private:
     uint8_t m_operatedPin;

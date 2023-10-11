@@ -6,8 +6,10 @@
 */
 #include "manager/DataManager.hpp"
 
-DataManager::DataManager(DataProvider* p_dataProvider) : m_dataProvider(p_dataProvider){};
+void DataManager::checkHumidity(){
+  
+};
 
-void DataManager::checkData(){
-
+void DataManager::cyclic(){
+  checkHumidity();
 };
