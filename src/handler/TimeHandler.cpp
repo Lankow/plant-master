@@ -12,7 +12,7 @@
 void TimeHandler::getTimeStamp(char time_buffer[]){
   struct tm timeinfo;
   if(!getLocalTime(&timeinfo)){
-    Serial.println("Encountered Error when retrieving system time...");
+    Logger::log("Encountered Error when retrieving system time...");
     return;
   }
 

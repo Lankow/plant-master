@@ -8,10 +8,12 @@
 
 DataProvider::DataProvider(): m_currentTime(""),
                               m_temperature(0),
-                              m_roomHumidity(0)
+                              m_roomHumidity(0),
+                              m_sensorToWater(NO_SENSOR)
                               {
-    for (int i = 0; i < 10; i++) {
-    m_humidityData[i] = HumidityData();
+    for (int i = 0; i < MAX_SENSORS_NO; i++) {
+    m_currentHumidityLvl[i] = ANALOG_PIN_MAX;
+    m_humidityThreshold[i] = ANALOG_PIN_MAX;
     }
 };
 
@@ -29,8 +31,16 @@ float& DataProvider::getRoomHumidity(){
     return m_roomHumidity;
 };
 
-HumidityData* DataProvider::getHumidityData(){
-    return m_humidityData;
+uint8_t&  DataProvider::getSensorToWater(){
+
+};
+
+uint16_t* DataProvider::getCurrentHumidityLvl(){
+
+};
+
+uint16_t* DataProvider::getHumidityThreshold(){
+
 };
 
 /* SETTERS */
@@ -55,19 +65,18 @@ void DataProvider::setRoomHumidity(float p_roomHumidity){
 
 void DataProvider::setCurrentHumidityLvl(uint8_t p_handlerId, uint16_t p_readHumidity){
     if(nullptr != &p_readHumidity){
-        m_humidityData[p_handlerId].setCurrentHumidityLvl(p_readHumidity);
-        Serial.println(m_humidityData[p_handlerId].getCurrentHumidityLvl());
+        m_currentHumidityLvl[p_handlerId] = p_readHumidity;
     }
 };
 
 void DataProvider::setHumidityThreshold(uint8_t p_handlerId, uint16_t p_newThreshold){
     if(nullptr != &p_newThreshold){
-        m_humidityData[p_handlerId].setHumidityThreshold(p_newThreshold);
+        m_humidityThreshold[p_handlerId] = p_newThreshold;
     } 
 };
 
-void DataProvider::setNeedsWatering(uint8_t p_handlerId, bool p_needsWatering){
-    if(nullptr != &p_needsWatering){
-        m_humidityData[p_handlerId].setNeedsWatering(p_needsWatering);
+void DataProvider::setSensorToWater(uint8_t p_sensorToWaterId){
+    if(nullptr != &p_sensorToWaterId){
+        m_sensorToWater = p_sensorToWaterId;
     } 
 };

@@ -10,20 +10,20 @@ TemperatureHandler::TemperatureHandler(int pin) : m_dht(pin, DHT11) {
   m_dht.begin();
 };
 
-void TemperatureHandler::readTemperature() {
+void TemperatureHandler::handleTemperature() {
   float t = m_dht.readTemperature();
   if (isnan(t)) {
-    Serial.println("Temperature read error.");
+    Logger::log("Temperature read error.");
   }
   else {
     getDataProvider()->setTemperature(t);
   }
 }
 
-void TemperatureHandler::readRoomHumidity() {
+void TemperatureHandler::handleRoomHumidity() {
   float t = m_dht.readHumidity();
   if (isnan(t)) {
-    Serial.println("Room Humidity read error.");
+    Logger::log("Room Humidity read error.");
   }
   else {
     getDataProvider()->setRoomHumidity(t);
@@ -31,7 +31,7 @@ void TemperatureHandler::readRoomHumidity() {
 }
 
 void TemperatureHandler::cyclic(){
-  Serial.println("TemperatureHandler - Cyclic Task");
-  readTemperature();
-  readRoomHumidity();
+  Logger::log("TemperatureHandler - Cyclic Task");
+  handleTemperature();
+  handleRoomHumidity();
 }

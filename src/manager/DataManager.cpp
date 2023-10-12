@@ -5,21 +5,19 @@
 *   Author: Lankow
 */
 #include "manager/DataManager.hpp"
-#include "HumidityData.hpp"
 
 void DataManager::checkHumidity(){
-  HumidityData* humidityData = getDataProvider()->getHumidityData();
+  uint16_t* currentHumidityLvl = getDataProvider()->getCurrentHumidityLvl();
+  uint16_t* humidityThreshold = getDataProvider()->getHumidityThreshold();
 
     for (int i = 0; i < MAX_SENSORS_NO; i++) {
-      if (humidityData[i].getCurrentHumidityLvl() < humidityData[i].getHumidityThreshold()) {
-        Serial.println("Needs Watering");
-        humidityData[i].setNeedsWatering(true);
-      }else{
-        Serial.println("Does not need Watering");
-        humidityData[i].setNeedsWatering(false);
+      if (currentHumidityLvl[i] < humidityThreshold[i]) {
+        Logger::log("Needs Watering");
+        getDataProvider()->setSensorToWater(i);
+        return;
       }
   }
-
+  getDataProvider()->setSensorToWater(NO_SENSOR);
 };
 
 void DataManager::cyclic(){

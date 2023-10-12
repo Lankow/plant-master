@@ -7,9 +7,16 @@
 #ifndef LOGGER_HPP
 #define LOGGER_HPP
 
+class Component;
+
 class Logger{
+  private:
+    Component* m_sdCardHandler;
+
   public:
-    void log(const char* message);
+    Logger(Component* p_sdCardHandler);
+
+    static void log(const char* message);
 };
 
 #endif // LOGGER_HPP

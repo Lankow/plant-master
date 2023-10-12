@@ -14,8 +14,8 @@ class TemperatureHandler : public Component{
   private:
   DHT m_dht;
 
-  void readTemperature();
-  void readRoomHumidity();
+  void handleTemperature();
+  void handleRoomHumidity();
 
   public:
   TemperatureHandler(int pin);

@@ -18,7 +18,7 @@ class HumidityHandler : public Component
     public:
     HumidityHandler(uint8_t pin);
     
-    void readHumidity();
+    void handleHumidity();
     void cyclic();
 };
 

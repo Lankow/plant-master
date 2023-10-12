@@ -9,6 +9,7 @@
 
 #include <Arduino.h>
 #include "DataProvider.hpp"
+#include "Logger.hpp"
 class Component
 {
   private:

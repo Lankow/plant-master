@@ -12,7 +12,7 @@
 class PumpHandler : public Component{
 
     public:
-      void checkAndPump();
+      void handlePump();
       void cyclic();
 
 };

@@ -9,5 +9,10 @@
 
 #include "Component.hpp"
 
-class ValvesHandler : public Component{};
-#endif // VALVES_HANDLER_HPP
+class ValveHandler : public Component{
+      
+    public:
+      void handleValves();
+      void cyclic();
+};
+#endif // VALVE_HANDLER_HPP

@@ -13,25 +13,25 @@ SDCardHandler::SDCardHandler(uint8_t pinSck, uint8_t pinMiso, uint8_t pinMosi, u
 
 void SDCardHandler::initSDCard(){
   if(!SD.begin()){
-    Serial.println("Card Mount Failed");
+    Logger::log("Card Mount Failed");
     return;
   }
   uint8_t cardType = SD.cardType();
 
   if(cardType == CARD_NONE){
-    Serial.println("No SD card attached");
+    Logger::log("No SD card attached");
     return;
   }
 
   Serial.print("SD Card Type: ");
   if(cardType == CARD_MMC){
-    Serial.println("MMC");
+    Logger::log("MMC");
   } else if(cardType == CARD_SD){
-    Serial.println("SDSC");
+    Logger::log("SDSC");
   } else if(cardType == CARD_SDHC){
-    Serial.println("SDHC");
+    Logger::log("SDHC");
   } else {
-    Serial.println("UNKNOWN");
+    Logger::log("UNKNOWN");
   }
   uint64_t cardSize = SD.cardSize() / (1024 * 1024);
   Serial.printf("SD Card Size: %lluMB\n", cardSize);
@@ -42,11 +42,11 @@ void SDCardHandler::listDir(fs::FS &fs, const char * dirname, uint8_t levels){
 
   File root = fs.open(dirname);
   if(!root){
-    Serial.println("Failed to open directory");
+    Logger::log("Failed to open directory");
     return;
   }
   if(!root.isDirectory()){
-    Serial.println("Not a directory");
+    Logger::log("Not a directory");
     return;
   }
 
@@ -71,18 +71,18 @@ void SDCardHandler::listDir(fs::FS &fs, const char * dirname, uint8_t levels){
 void SDCardHandler::createDir(fs::FS &fs, const char * path){
   Serial.printf("Creating Dir: %s\n", path);
   if(fs.mkdir(path)){
-    Serial.println("Dir created");
+    Logger::log("Dir created");
   } else {
-    Serial.println("mkdir failed");
+    Logger::log("mkdir failed");
   }
 }
 
 void SDCardHandler::removeDir(fs::FS &fs, const char * path){
   Serial.printf("Removing Dir: %s\n", path);
   if(fs.rmdir(path)){
-    Serial.println("Dir removed");
+    Logger::log("Dir removed");
   } else {
-    Serial.println("rmdir failed");
+    Logger::log("rmdir failed");
   }
 }
 
@@ -91,7 +91,7 @@ void SDCardHandler::readFile(fs::FS &fs, const char * path){
 
   File file = fs.open(path);
   if(!file){
-    Serial.println("Failed to open file for reading");
+    Logger::log("Failed to open file for reading");
     return;
   }
 
@@ -107,13 +107,13 @@ void SDCardHandler::writeFile(fs::FS &fs, const char * path, const char * messag
 
   File file = fs.open(path, FILE_WRITE);
   if(!file){
-    Serial.println("Failed to open file for writing");
+    Logger::log("Failed to open file for writing");
     return;
   }
   if(file.print(message)){
-    Serial.println("File written");
+    Logger::log("File written");
   } else {
-    Serial.println("Write failed");
+    Logger::log("Write failed");
   }
   file.close();
 }
@@ -123,13 +123,13 @@ void SDCardHandler::appendFile(fs::FS &fs, const char * path, const char * messa
 
   File file = fs.open(path, FILE_APPEND);
   if(!file){
-    Serial.println("Failed to open file for appending");
+    Logger::log("Failed to open file for appending");
     return;
   }
   if(file.print(message)){
-    Serial.println("Message appended");
+    Logger::log("Message appended");
   } else {
-    Serial.println("Append failed");
+    Logger::log("Append failed");
   }
   file.close();
 }
@@ -137,17 +137,17 @@ void SDCardHandler::appendFile(fs::FS &fs, const char * path, const char * messa
 void SDCardHandler::renameFile(fs::FS &fs, const char * path1, const char * path2){
   Serial.printf("Renaming file %s to %s\n", path1, path2);
   if (fs.rename(path1, path2)) {
-    Serial.println("File renamed");
+    Logger::log("File renamed");
   } else {
-    Serial.println("Rename failed");
+    Logger::log("Rename failed");
   }
 }
 
 void SDCardHandler::deleteFile(fs::FS &fs, const char * path){
   Serial.printf("Deleting file: %s\n", path);
   if(fs.remove(path)){
-    Serial.println("File deleted");
+    Logger::log("File deleted");
   } else {
-    Serial.println("Delete failed");
+    Logger::log("Delete failed");
   }
 }

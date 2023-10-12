@@ -37,4 +37,6 @@
 
 #define DHT_TYPE DHT11
 
+#define NO_SENSOR 0xFF
+
 #endif // CONSTANTS_HPP

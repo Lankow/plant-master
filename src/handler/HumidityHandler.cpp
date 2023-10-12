@@ -15,13 +15,13 @@ HumidityHandler::HumidityHandler(uint8_t p_operatedPin):
                                   m_idCounter++;
                                  };
 
-void HumidityHandler::readHumidity(){
+void HumidityHandler::handleHumidity(){
   if(nullptr != getDataProvider() ){
     getDataProvider()->setCurrentHumidityLvl(m_handlerId, analogRead(m_operatedPin));
   }
 };
 
  void HumidityHandler::cyclic() {
-  Serial.println("HumidityHandler - Cyclic Task");
-  readHumidity();
+  Logger::log("HumidityHandler - Cyclic Task");
+  handleHumidity();
 };
