@@ -32,15 +32,15 @@ float& DataProvider::getRoomHumidity(){
 };
 
 uint8_t&  DataProvider::getSensorToWater(){
-
+    return m_sensorToWater;
 };
 
 uint16_t* DataProvider::getCurrentHumidityLvl(){
-
+    return m_currentHumidityLvl;
 };
 
 uint16_t* DataProvider::getHumidityThreshold(){
-
+    return m_humidityThreshold;
 };
 
 /* SETTERS */

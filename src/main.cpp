@@ -16,10 +16,10 @@
 #include "manager/DataManager.hpp"
 
 Component* components[] = {
-  new SDCardHandler(PIN_17, PIN_19, PIN_23, PIN_5),
+  new SDCardHandler(PIN_18, PIN_19, PIN_23, PIN_5),
   new HumidityHandler(PIN_34),
   new HumidityHandler(PIN_35),
-  new TemperatureHandler(PIN_18),
+  new TemperatureHandler(PIN_21),
   new TimeHandler,
   new ValveHandler,
   new PumpHandler,

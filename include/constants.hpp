@@ -20,6 +20,8 @@
 #define PIN_17 17
 #define PIN_18 18
 #define PIN_19 19
+#define PIN_20 20
+#define PIN_21 21
 
 #define PIN_23 23
 

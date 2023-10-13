@@ -8,7 +8,6 @@
 
 SDCardHandler::SDCardHandler(uint8_t pinSck, uint8_t pinMiso, uint8_t pinMosi, uint8_t pinCs): m_spi(VSPI){
   m_spi.begin(pinSck, pinMiso, pinMosi, pinCs);
-  m_spi.setDataMode(SPI_MODE0);
 };
 
 void SDCardHandler::initSDCard(){
@@ -150,4 +149,9 @@ void SDCardHandler::deleteFile(fs::FS &fs, const char * path){
   } else {
     Logger::log("Delete failed");
   }
+}
+
+void SDCardHandler::init(){
+  Logger::log("SDCardHandler - Init");
+  initSDCard();
 }

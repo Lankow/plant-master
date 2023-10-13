@@ -17,5 +17,6 @@ void ValveHandler::handleValves(){
 };
 
 void ValveHandler::cyclic(){
+  Logger::log("ValveHandler - Cyclic Task");
   handleValves();
 };
