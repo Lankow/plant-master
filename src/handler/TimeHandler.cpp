@@ -9,12 +9,15 @@
 #include "handler/TimeHandler.hpp"
 #include "constants.hpp"
     
-void TimeHandler::getTimeStamp(char time_buffer[]){
+void TimeHandler::handleTimestamp(){
   struct tm timeinfo;
   if(!getLocalTime(&timeinfo)){
     Logger::log("Encountered Error when retrieving system time...");
     return;
   }
-
-  strftime(time_buffer,80,"%x - %H:%M:%S", &timeinfo);
+  getDataProvider()->setCurrentTime(timeinfo);
 };
+
+void TimeHandler::cyclic(){
+  handleTimestamp();
+}

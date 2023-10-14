@@ -11,7 +11,10 @@
 
 class TimeHandler : public Component
 {   
+    void handleTimestamp();
+    
     public:
-    void getTimeStamp(char time_buffer[]);
+    
+    void cyclic();
 };
 #endif // TIME_HANDLER_HPP

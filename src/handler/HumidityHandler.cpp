@@ -17,7 +17,15 @@ HumidityHandler::HumidityHandler(uint8_t p_operatedPin):
 
 void HumidityHandler::handleHumidity(){
   if(nullptr != getDataProvider() ){
-    getDataProvider()->setCurrentHumidityLvl(m_handlerId, analogRead(m_operatedPin));
+    uint16_t result = analogRead(m_operatedPin);
+
+    if(result != ANALOG_PIN_MAX){
+      getDataProvider()->setCurrentHumidityLvl(m_handlerId, result);
+      getDataProvider()->setHumidityActive(m_handlerId, true);
+    }else{
+      getDataProvider()->setHumidityActive(m_handlerId, false);    
+    }
+
   }
 };
 

@@ -40,5 +40,9 @@
 #define DHT_TYPE DHT11
 
 #define NO_SENSOR 0xFF
+#define FIRST_SENSOR 0
+#define LAST_SENSOR 10
+
+#define TIMESTAMP_LENGTH 19
 
 #endif // CONSTANTS_HPP

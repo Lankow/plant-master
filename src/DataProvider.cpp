@@ -14,6 +14,7 @@ DataProvider::DataProvider(): m_currentTime(""),
     for (int i = 0; i < MAX_SENSORS_NO; i++) {
     m_currentHumidityLvl[i] = ANALOG_PIN_MAX;
     m_humidityThreshold[i] = ANALOG_PIN_MAX;
+    m_humidityActive[i] = false;
     }
 };
 
@@ -43,11 +44,15 @@ uint16_t* DataProvider::getHumidityThreshold(){
     return m_humidityThreshold;
 };
 
+bool* DataProvider::getHumidityActive(){
+    return m_humidityActive;
+};
+
 /* SETTERS */
 
-void DataProvider::setCurrentTime(char p_currentTime[]){
-    if(nullptr != &p_currentTime){
-        // m_currentTime = p_currentTime;
+void DataProvider::setCurrentTime(tm p_timeinfo){
+    if(nullptr != &p_timeinfo){
+        strftime(m_currentTime,80,"%x - %H:%M:%S", &p_timeinfo);
     }
 };
 
@@ -72,6 +77,12 @@ void DataProvider::setCurrentHumidityLvl(uint8_t p_handlerId, uint16_t p_readHum
 void DataProvider::setHumidityThreshold(uint8_t p_handlerId, uint16_t p_newThreshold){
     if(nullptr != &p_newThreshold){
         m_humidityThreshold[p_handlerId] = p_newThreshold;
+    } 
+};
+
+void DataProvider::setHumidityActive(uint8_t p_handlerId, bool p_humidityState){
+    if(nullptr != &p_humidityState){
+        m_humidityActive[p_handlerId] = p_humidityState;
     } 
 };
 

@@ -44,31 +44,62 @@ void NetworkManager::updateTimeViaNTP(){
   }
 };
 
+String NetworkManager::buildHumidityResponse(uint8_t& p_handlerId){
+    if(p_handlerId >= FIRST_SENSOR && p_handlerId <= LAST_SENSOR){
+      uint16_t* currentHumidityLvl = getDataProvider()->getCurrentHumidityLvl();
+      uint16_t* humidityThreshold = getDataProvider()->getHumidityThreshold();
+      bool* humidityActive = getDataProvider()->getHumidityActive();
+
+      return String(p_handlerId) + " | " + String(currentHumidityLvl[p_handlerId]) + " | " + String(humidityThreshold[p_handlerId]) + " | " + humidityActive[p_handlerId];
+    }else{
+      return "Invalid Handler ID";
+    }
+}
+
 void NetworkManager::startServer(){
   if(NULL != &m_server){
     m_server.on("/humidity", HTTP_GET, [this](AsyncWebServerRequest *request){
-      // HumidityData humidityData = getDataProvider()->getHumidityDataById(0);
-      // String response = String(humidityData);
-      // request->send(200, "text/html", response);
-    });
+      if (request->args() == 0) // no arguments attached -> STATUS_BAD_REQUEST
+        return request->send(400, "text/plain", F("ERROR: Bad or no arguments"));
+      
+      uint8_t handlerId = request->arg("id").toInt();
+      String response = buildHumidityResponse(handlerId);
 
-    m_server.on("/time", HTTP_GET, [this](AsyncWebServerRequest *request){
-      String timeData = getDataProvider()->getCurrentTime();
-      String response = String(timeData);
       request->send(200, "text/html", response);
     });
 
-    m_server.on("/threshold", HTTP_POST, [this](AsyncWebServerRequest * request) 
+    m_server.on("/humidity", HTTP_POST, [this](AsyncWebServerRequest * request) 
     {
-      int paramsNr = request->params();
-      AsyncWebParameter * param = request->getParam(0);
-      int threshold = param->value().toInt();
+      if (request->args() == 0) // no arguments attached -> STATUS_BAD_REQUEST
+        return request->send(400, "text/plain", F("ERROR: Bad or no arguments"));
 
-      Serial.printf("Threshold to set: %d \n", threshold);
-      // getDataProvider()->setHumidityThreshold(param->value().toInt());
+      uint8_t handlerId = request->arg("id").toInt();    
+      uint16_t newThreshold = request->arg("threshold").toInt();
 
-      request->send(200);
-  });
+      getDataProvider()->setHumidityThreshold(handlerId, newThreshold);
+
+      request->send(200, "text/html", "Threshold updated successfully.");
+    });
+
+    m_server.on("/temperature", HTTP_GET, [this](AsyncWebServerRequest *request){
+      String response = String(getDataProvider()->getTemperature());
+      request->send(200, "text/html", response);
+    });
+
+    m_server.on("/room-humidity", HTTP_GET, [this](AsyncWebServerRequest *request){
+      String response = String(getDataProvider()->getRoomHumidity());
+      request->send(200, "text/html", response);
+    });
+
+    m_server.on("/sensor", HTTP_GET, [this](AsyncWebServerRequest *request){
+      String response = String(getDataProvider()->getSensorToWater());
+      request->send(200, "text/html", response);
+    });
+
+    m_server.on("/time", HTTP_GET, [this](AsyncWebServerRequest *request){
+      String response = getDataProvider()->getCurrentTime();
+      request->send(200, "text/html", response);
+    });
 
   m_server.begin();
   }
