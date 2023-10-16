@@ -12,25 +12,25 @@ SDCardHandler::SDCardHandler(uint8_t pinSck, uint8_t pinMiso, uint8_t pinMosi, u
 
 void SDCardHandler::initSDCard(){
   if(!SD.begin()){
-    Logger::log("Card Mount Failed");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "Card Mount Failed");
     return;
   }
   uint8_t cardType = SD.cardType();
 
   if(cardType == CARD_NONE){
-    Logger::log("No SD card attached");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "No SD card attached");
     return;
   }
 
   Serial.print("SD Card Type: ");
   if(cardType == CARD_MMC){
-    Logger::log("MMC");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "MMC");
   } else if(cardType == CARD_SD){
-    Logger::log("SDSC");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "SDSC");
   } else if(cardType == CARD_SDHC){
-    Logger::log("SDHC");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "SDHC");
   } else {
-    Logger::log("UNKNOWN");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "UNKNOWN");
   }
   uint64_t cardSize = SD.cardSize() / (1024 * 1024);
   Serial.printf("SD Card Size: %lluMB\n", cardSize);
@@ -41,11 +41,11 @@ void SDCardHandler::listDir(fs::FS &fs, const char * dirname, uint8_t levels){
 
   File root = fs.open(dirname);
   if(!root){
-    Logger::log("Failed to open directory");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "Failed to open directory");
     return;
   }
   if(!root.isDirectory()){
-    Logger::log("Not a directory");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "Not a directory");
     return;
   }
 
@@ -70,18 +70,18 @@ void SDCardHandler::listDir(fs::FS &fs, const char * dirname, uint8_t levels){
 void SDCardHandler::createDir(fs::FS &fs, const char * path){
   Serial.printf("Creating Dir: %s\n", path);
   if(fs.mkdir(path)){
-    Logger::log("Dir created");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "Dir created");
   } else {
-    Logger::log("mkdir failed");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "mkdir failed");
   }
 }
 
 void SDCardHandler::removeDir(fs::FS &fs, const char * path){
   Serial.printf("Removing Dir: %s\n", path);
   if(fs.rmdir(path)){
-    Logger::log("Dir removed");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "Dir removed");
   } else {
-    Logger::log("rmdir failed");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "rmdir failed");
   }
 }
 
@@ -90,7 +90,7 @@ void SDCardHandler::readFile(fs::FS &fs, const char * path){
 
   File file = fs.open(path);
   if(!file){
-    Logger::log("Failed to open file for reading");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "Failed to open file for reading");
     return;
   }
 
@@ -106,13 +106,13 @@ void SDCardHandler::writeFile(fs::FS &fs, const char * path, const char * messag
 
   File file = fs.open(path, FILE_WRITE);
   if(!file){
-    Logger::log("Failed to open file for writing");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "Failed to open file for writing");
     return;
   }
   if(file.print(message)){
-    Logger::log("File written");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "File written");
   } else {
-    Logger::log("Write failed");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "Write failed");
   }
   file.close();
 }
@@ -122,13 +122,13 @@ void SDCardHandler::appendFile(fs::FS &fs, const char * path, const char * messa
 
   File file = fs.open(path, FILE_APPEND);
   if(!file){
-    Logger::log("Failed to open file for appending");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "Failed to open file for appending");
     return;
   }
   if(file.print(message)){
-    Logger::log("Message appended");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "Message appended");
   } else {
-    Logger::log("Append failed");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "Append failed");
   }
   file.close();
 }
@@ -136,22 +136,22 @@ void SDCardHandler::appendFile(fs::FS &fs, const char * path, const char * messa
 void SDCardHandler::renameFile(fs::FS &fs, const char * path1, const char * path2){
   Serial.printf("Renaming file %s to %s\n", path1, path2);
   if (fs.rename(path1, path2)) {
-    Logger::log("File renamed");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "File renamed");
   } else {
-    Logger::log("Rename failed");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "Rename failed");
   }
 }
 
 void SDCardHandler::deleteFile(fs::FS &fs, const char * path){
   Serial.printf("Deleting file: %s\n", path);
   if(fs.remove(path)){
-    Logger::log("File deleted");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "File deleted");
   } else {
-    Logger::log("Delete failed");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "Delete failed");
   }
 }
 
 void SDCardHandler::init(){
-  Logger::log("SDCardHandler - Init");
+    Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "SDCardHandler - Init");
   initSDCard();
 }

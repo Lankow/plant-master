@@ -7,16 +7,19 @@
 #ifndef LOGGER_HPP
 #define LOGGER_HPP
 
-class Component;
+class SDCardHandler;
 
 class Logger{
   private:
-    Component* m_sdCardHandler;
+    SDCardHandler* m_sdCardHandler;
+    
+  public:  
+    Logger(SDCardHandler* p_sdCardHandler);
 
-  public:
-    Logger(Component* p_sdCardHandler);
+    enum LogType { FATAL, ERROR, WARN, INFO };
 
-    static void log(const char* message);
+    static void log(const char* p_timestamp, LogType p_logType, const char* p_message);
+
 };
 
 #endif // LOGGER_HPP

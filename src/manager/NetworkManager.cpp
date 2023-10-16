@@ -23,7 +23,7 @@ void NetworkManager::init() {
     connectionCounter++;
 
     if(connectionCounter >= MAX_CONNECTION_TRIES){
-      Logger::log("Encountered error when connecting to WiFi... \n");
+        Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "Encountered error when connecting to WiFi... \n");
       return;
     }
   }
@@ -40,7 +40,7 @@ void NetworkManager::updateTimeViaNTP(){
     configTime(GMT_OFFSET, DAY_OFFSET, NTP_SERVER_PL_0, NTP_SERVER_PL_1, NTP_SERVER_PL_2);
   }
   else{
-    Logger::log("WiFi connection not available - Time update is not possible...");
+      Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "WiFi connection not available - Time update is not possible...");
   }
 };
 

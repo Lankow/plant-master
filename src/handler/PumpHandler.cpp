@@ -16,6 +16,6 @@ void PumpHandler::handlePump(){
 };
 
 void PumpHandler::cyclic(){
-  Logger::log("PumpHandler - Cyclic Task");
+    Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "PumpHandler - Cyclic Task");
   handlePump();
 };

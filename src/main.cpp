@@ -16,39 +16,32 @@
 #include "manager/DataManager.hpp"
 
 Component* components[] = {
+  new TimeHandler,
   new SDCardHandler(PIN_18, PIN_19, PIN_23, PIN_5),
   new HumidityHandler(PIN_34),
   new HumidityHandler(PIN_35),
   new TemperatureHandler(PIN_21),
-  new TimeHandler,
   new ValveHandler,
   new PumpHandler,
   new NetworkManager,
   new DataManager,
 };
 
-Logger logger(components[0]);
 DataProvider dataProvider;
+Logger logger(static_cast<SDCardHandler*>(components[1]));
 
 void setup() {
   Serial.begin(921600);
-  Logger::log("Plant-Master Setup");
-
-  // Handlers Initialization
-  for (int i = 0; i < sizeof(components) / sizeof(components[0]); i++) {
-    components[i]->init();
-  }
-
-  // Handlers subscription to DataProvider
+  // Components Initialization
   for (int i = 0; i < sizeof(components) / sizeof(components[0]); i++) {
     components[i]->subscribeDataProvider(&dataProvider);
+    components[i]->init();
   }
 }
 
 void loop() {
   delay(1000);
-
-  // Triggering Cyclic Tasks for Handlers
+  // Triggering Cyclic Tasks for Components
   for (int i = 0; i < sizeof(components) / sizeof(components[0]); i++) {
     components[i]->cyclic();
   }
