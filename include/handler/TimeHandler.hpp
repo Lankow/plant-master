@@ -11,10 +11,10 @@
 
 class TimeHandler : public Component
 {   
-    void handleTimestamp();
+    void handleTime();
     
     public:
-    
+    void init();
     void cyclic();
 };
 #endif // TIME_HANDLER_HPP

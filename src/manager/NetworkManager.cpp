@@ -22,7 +22,7 @@ void NetworkManager::init() {
 
     connectionCounter++;
 
-    if(connectionCounter >= MAX_CONNECTION_TRIES){
+    if(connectionCounter >= MAX_RETRIES){
         Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "Encountered error when connecting to WiFi... \n");
       return;
     }

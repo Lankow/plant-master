@@ -9,7 +9,7 @@
 #include "handler/TimeHandler.hpp"
 #include "constants.hpp"
     
-void TimeHandler::handleTimestamp(){
+void TimeHandler::handleTime(){
   struct tm timeinfo;
   if(!getLocalTime(&timeinfo)){
       Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "Encountered Error when retrieving system time...");
@@ -18,7 +18,17 @@ void TimeHandler::handleTimestamp(){
   getDataProvider()->setCurrentTime(timeinfo);
 };
 
+void TimeHandler::init(){
+  Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "TimeHandler - Init");
+
+  for(int i=0; i<MAX_RETRIES; i++){
+    handleTime();
+    if(getDataProvider()->getCurrentTime() != DEFAULT_TIME) return;
+    delay(1000);
+  }
+}
+
 void TimeHandler::cyclic(){
-    Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "TimeHandler - Cyclic Task");
-  handleTimestamp();
+  Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "TimeHandler - Cyclic Task");
+  handleTime();
 }

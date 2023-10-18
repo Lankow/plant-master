@@ -28,7 +28,7 @@
 #define PIN_34 34
 #define PIN_35 35
 
-#define MAX_CONNECTION_TRIES 6
+#define MAX_RETRIES 10
 
 #define NTP_SERVER_PL_0 "0.pl.pool.ntp.org"
 #define NTP_SERVER_PL_1 "0.pl.pool.ntp.org"
@@ -43,6 +43,8 @@
 #define FIRST_SENSOR 0
 #define LAST_SENSOR 10
 
-#define TIMESTAMP_LENGTH 19
+#define TIMESTAMP_LENGTH 16
+
+#define DEFAULT_TIME "yymodd-hh-mm-ss"
 
 #endif // CONSTANTS_HPP

@@ -6,7 +6,7 @@
 */
 #include "DataProvider.hpp"
 
-DataProvider::DataProvider(): m_currentTime(""),
+DataProvider::DataProvider(): m_currentTime(DEFAULT_TIME),
                               m_temperature(0),
                               m_roomHumidity(0),
                               m_sensorToWater(NO_SENSOR)
@@ -52,7 +52,7 @@ bool* DataProvider::getHumidityActive(){
 
 void DataProvider::setCurrentTime(tm p_timeinfo){
     if(nullptr != &p_timeinfo){
-        strftime(m_currentTime,80,"%x - %H:%M:%S", &p_timeinfo);
+        strftime(m_currentTime,80,"%y%m%d-%H-%M-%S", &p_timeinfo);
     }
 };
 

@@ -14,6 +14,11 @@
     "streambuf": "cpp",
     "cmath": "cpp",
     "typeinfo": "cpp",
-    "regex": "cpp"
+    "regex": "cpp",
+    "memory": "cpp",
+    "istream": "cpp",
+    "functional": "cpp",
+    "tuple": "cpp",
+    "utility": "cpp"
   }
 }

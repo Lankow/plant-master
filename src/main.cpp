@@ -16,6 +16,7 @@
 #include "manager/DataManager.hpp"
 
 Component* components[] = {
+  new NetworkManager,
   new TimeHandler,
   new SDCardHandler(PIN_18, PIN_19, PIN_23, PIN_5),
   new HumidityHandler(PIN_34),
@@ -23,7 +24,6 @@ Component* components[] = {
   new TemperatureHandler(PIN_21),
   new ValveHandler,
   new PumpHandler,
-  new NetworkManager,
   new DataManager,
 };
 
