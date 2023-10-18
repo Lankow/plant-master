@@ -10,9 +10,8 @@
 
 Logger::Logger(SDCardHandler* p_sdCardHandler) : m_sdCardHandler(p_sdCardHandler){};
 
-void   Logger::log(const char* p_timestamp, LogType p_logType, const char* p_message) {
+void Logger::log(LogType p_logType, const char* p_message) {
     String logType;
-    String timestamp = p_timestamp;
 
     switch (p_logType) {
         case LogType::FATAL:
@@ -25,5 +24,5 @@ void   Logger::log(const char* p_timestamp, LogType p_logType, const char* p_mes
             logType = "INFO";
     }
 
-    Serial.println(timestamp + " - " + logType + " - " + p_message);
+    Serial.println(logType + " - " + p_message);
 }

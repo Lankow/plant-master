@@ -18,7 +18,7 @@ class Logger{
 
     enum LogType { FATAL, ERROR, WARN, INFO };
 
-    static void log(const char* p_timestamp, LogType p_logType, const char* p_message);
+    static void log(LogType p_logType, const char* p_message);
 
 };
 

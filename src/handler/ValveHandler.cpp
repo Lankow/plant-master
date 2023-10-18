@@ -17,6 +17,6 @@ void ValveHandler::handleValves(){
 };
 
 void ValveHandler::cyclic(){
-    Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "ValveHandler - Cyclic Task");
+    Logger::log(Logger::INFO, "ValveHandler - Cyclic Task");
   handleValves();
 };

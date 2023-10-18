@@ -30,6 +30,6 @@ void HumidityHandler::handleHumidity(){
 };
 
  void HumidityHandler::cyclic() {
-  Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "HumidityHandler - Cyclic Task");
+  Logger::log(Logger::INFO, "HumidityHandler - Cyclic Task");
   handleHumidity();
 };

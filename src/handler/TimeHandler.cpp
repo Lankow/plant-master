@@ -12,15 +12,14 @@
 void TimeHandler::handleTime(){
   struct tm timeinfo;
   if(!getLocalTime(&timeinfo)){
-      Logger::log(getDataProvider()->getCurrentTime(), Logger::ERROR, "Encountered Error when retrieving system time...");
+      Logger::log(Logger::ERROR, "Encountered Error when retrieving system time...");
     return;
   }
   getDataProvider()->setCurrentTime(timeinfo);
 };
 
 void TimeHandler::init(){
-  Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "TimeHandler - Init");
-
+  Logger::log(Logger::INFO, "TimeHandler - Init");
   for(int i=0; i<MAX_RETRIES; i++){
     handleTime();
     if(getDataProvider()->getCurrentTime() != DEFAULT_TIME) return;
@@ -29,6 +28,6 @@ void TimeHandler::init(){
 }
 
 void TimeHandler::cyclic(){
-  Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "TimeHandler - Cyclic Task");
+  Logger::log(Logger::INFO, "TimeHandler - Cyclic Task");
   handleTime();
 }

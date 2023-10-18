@@ -13,7 +13,7 @@ void DataManager::checkHumidity(){
 
     for (int i = 0; i < MAX_SENSORS_NO; i++) {
       if (currentHumidityLvl[i] < humidityThreshold[i] && humidityActive[i]){
-          Logger::log(getDataProvider()->getCurrentTime(), Logger::INFO, "Needs Watering");
+          Logger::log(Logger::INFO, "Needs Watering");
         getDataProvider()->setSensorToWater(i);
         return;
       }
