@@ -9,17 +9,22 @@
 
 #include <Arduino.h>
 #include "DataProvider.hpp"
-#include "Logger.hpp"
+
+class Logger;
+
 class Component
 {
   private:
     DataProvider* m_dataProvider;
+    Logger* m_logger;
 
   protected:
     DataProvider* getDataProvider() const;
+    Logger* getLogger() const;
 
   public:
     void subscribeDataProvider(DataProvider *p_dataProvider);
+    void subscribeLogger(Logger *p_logger);
     
     virtual void init();
     virtual void cyclic();

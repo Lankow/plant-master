@@ -5,6 +5,7 @@
 *   Author: Lankow
 */
 #include "handler/PumpHandler.hpp"
+#include "Logger.hpp"
 
 void PumpHandler::handlePump(){
   uint8_t sensorToWater = getDataProvider()->getSensorToWater();
@@ -16,6 +17,6 @@ void PumpHandler::handlePump(){
 };
 
 void PumpHandler::cyclic(){
-    Logger::log(Logger::INFO, "PumpHandler - Cyclic Task");
+  getLogger()->log(Logger::INFO, "PumpHandler - Cyclic Task");
   handlePump();
 };

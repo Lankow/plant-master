@@ -12,8 +12,18 @@ void Component::subscribeDataProvider(DataProvider *p_dataProvider){
   }
 };
 
+void Component::subscribeLogger(Logger *p_logger){
+  if(NULL != p_logger){
+    m_logger = p_logger;
+  }
+};
+
 DataProvider* Component::getDataProvider() const{
         return m_dataProvider;
+}
+
+Logger* Component::getLogger() const{
+        return m_logger;
 }
 
 void Component::init(){};

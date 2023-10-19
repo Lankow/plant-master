@@ -5,6 +5,7 @@
 *   Author: Lankow
 */
 #include "handler/SDCardHandler.hpp"
+#include "Logger.hpp"
 
 SDCardHandler::SDCardHandler(uint8_t pinSck, uint8_t pinMiso, uint8_t pinMosi, uint8_t pinCs): m_spi(VSPI){
   m_spi.begin(pinSck, pinMiso, pinMosi, pinCs);
@@ -12,13 +13,13 @@ SDCardHandler::SDCardHandler(uint8_t pinSck, uint8_t pinMiso, uint8_t pinMosi, u
 
 void SDCardHandler::initSDCard(){
   if(!SD.begin()){
-      Logger::log(Logger::ERROR, "Card Mount Failed");
+      getLogger()->log(Logger::ERROR, "Card Mount Failed");
     return;
   }
   uint8_t cardType = SD.cardType();
 
   if(cardType == CARD_NONE){
-      Logger::log(Logger::ERROR, "No SD card attached");
+      getLogger()->log(Logger::ERROR, "No SD card attached");
     return;
   }
 
@@ -26,10 +27,10 @@ void SDCardHandler::initSDCard(){
   Serial.printf("SD Card Size: %lluMB\n", cardSize);
 }
 
-void SDCardHandler::writeFile(fs::FS &fs, const char * path, const char * message){
+void SDCardHandler::startLogs(const char * path, const char * message){
   Serial.printf("Writing file: %s\n", path);
 
-  File file = fs.open(path, FILE_WRITE);
+  File file = SD.open(path, FILE_WRITE);
   if(!file){
     Serial.println("Failed to open file for writing");
     return;
@@ -42,10 +43,8 @@ void SDCardHandler::writeFile(fs::FS &fs, const char * path, const char * messag
   file.close();
 }
 
-void SDCardHandler::appendFile(fs::FS &fs, const char * path, const char * message){
-  Serial.printf("Appending to file: %s\n", path);
-
-  File file = fs.open(path, FILE_APPEND);
+void SDCardHandler::appendLogs(const char * message){
+  File file = SD.open(m_logName, FILE_APPEND);
   if(!file){
     Serial.println("Failed to open file for appending");
     return;
@@ -58,19 +57,9 @@ void SDCardHandler::appendFile(fs::FS &fs, const char * path, const char * messa
   file.close();
 }
 
-void renameFile(fs::FS &fs, const char * path1, const char * path2){
-  Serial.printf("Renaming file %s to %s\n", path1, path2);
-  if (fs.rename(path1, path2)) {
-    Serial.println("File renamed");
-  } else {
-    Serial.println("Rename failed");
-  }
-}
-
 void SDCardHandler::init(){
-  Logger::log(Logger::INFO, "SDCardHandler - Init");
-
+  getLogger()->log(Logger::INFO, "SDCardHandler - Init");
   initSDCard();
-  String logTime = "/log-" + String(getDataProvider()->getCurrentTime()) + ".txt";
-  writeFile(SD, logTime.c_str(), "log");
+  m_logName = "/log-" + String(getDataProvider()->getCurrentTime()) + ".txt";
+  startLogs(m_logName.c_str(), "Plant-Master-Logs-Init");
 }

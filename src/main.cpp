@@ -3,6 +3,7 @@
 #include "constants.hpp"
 #include "DataProvider.hpp"
 
+#include "Component.hpp"
 #include "Logger.hpp"
 
 #include "handler/HumidityHandler.hpp"
@@ -14,6 +15,8 @@
 
 #include "manager/NetworkManager.hpp"
 #include "manager/DataManager.hpp"
+
+
 
 Component* components[] = {
   new NetworkManager,
@@ -28,13 +31,14 @@ Component* components[] = {
 };
 
 DataProvider dataProvider;
-Logger logger(static_cast<SDCardHandler*>(components[1]));
+Logger logger(static_cast<SDCardHandler*>(components[2]));
 
 void setup() {
   Serial.begin(921600);
   // Components Initialization
   for (int i = 0; i < sizeof(components) / sizeof(components[0]); i++) {
     components[i]->subscribeDataProvider(&dataProvider);
+    components[i]->subscribeLogger(&logger);
     components[i]->init();
   }
 }

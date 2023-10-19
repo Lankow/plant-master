@@ -5,6 +5,7 @@
 *   Author: Lankow
 */
 #include "manager/DataManager.hpp"
+#include "Logger.hpp"
 
 void DataManager::checkHumidity(){
   uint16_t* currentHumidityLvl = getDataProvider()->getCurrentHumidityLvl();
@@ -13,7 +14,7 @@ void DataManager::checkHumidity(){
 
     for (int i = 0; i < MAX_SENSORS_NO; i++) {
       if (currentHumidityLvl[i] < humidityThreshold[i] && humidityActive[i]){
-          Logger::log(Logger::INFO, "Needs Watering");
+          getLogger()->log(Logger::INFO, "Needs Watering");
         getDataProvider()->setSensorToWater(i);
         return;
       }

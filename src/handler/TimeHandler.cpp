@@ -8,18 +8,19 @@
 
 #include "handler/TimeHandler.hpp"
 #include "constants.hpp"
-    
+#include "Logger.hpp"
+
 void TimeHandler::handleTime(){
   struct tm timeinfo;
   if(!getLocalTime(&timeinfo)){
-      Logger::log(Logger::ERROR, "Encountered Error when retrieving system time...");
+      getLogger()->log(Logger::ERROR, "Encountered Error when retrieving system time...");
     return;
   }
   getDataProvider()->setCurrentTime(timeinfo);
 };
 
 void TimeHandler::init(){
-  Logger::log(Logger::INFO, "TimeHandler - Init");
+  getLogger()->log(Logger::INFO, "TimeHandler - Init");
   for(int i=0; i<MAX_RETRIES; i++){
     handleTime();
     if(getDataProvider()->getCurrentTime() != DEFAULT_TIME) return;
@@ -28,6 +29,6 @@ void TimeHandler::init(){
 }
 
 void TimeHandler::cyclic(){
-  Logger::log(Logger::INFO, "TimeHandler - Cyclic Task");
+  getLogger()->log(Logger::INFO, "TimeHandler - Cyclic Task");
   handleTime();
 }

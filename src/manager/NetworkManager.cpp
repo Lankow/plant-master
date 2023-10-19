@@ -7,6 +7,7 @@
 #include "manager/NetworkManager.hpp"
 #include "config.hpp"
 #include "constants.hpp"
+#include "Logger.hpp"
 
 AsyncWebServer m_server(80);
 
@@ -23,7 +24,7 @@ void NetworkManager::init() {
     connectionCounter++;
 
     if(connectionCounter >= MAX_RETRIES){
-        Logger::log(Logger::ERROR, "Encountered error when connecting to WiFi... \n");
+        getLogger()->log(Logger::ERROR, "Encountered error when connecting to WiFi... \n");
       return;
     }
   }
@@ -40,7 +41,7 @@ void NetworkManager::updateTimeViaNTP(){
     configTime(GMT_OFFSET, DAY_OFFSET, NTP_SERVER_PL_0, NTP_SERVER_PL_1, NTP_SERVER_PL_2);
   }
   else{
-      Logger::log(Logger::ERROR, "WiFi connection not available - Time update is not possible...");
+      getLogger()->log(Logger::ERROR, "WiFi connection not available - Time update is not possible...");
   }
 };
 

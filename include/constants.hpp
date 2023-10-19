@@ -44,6 +44,8 @@
 #define LAST_SENSOR 10
 
 #define TIMESTAMP_LENGTH 16
+#define LOGNAME_LENGTH  24
+#define SYSTIME_LENGTH  16
 
 #define DEFAULT_TIME "yymodd-hh-mm-ss"
 

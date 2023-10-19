@@ -6,20 +6,23 @@
 */
 #ifndef LOGGER_HPP
 #define LOGGER_HPP
-
-class SDCardHandler;
+#include "constants.hpp"
+#include "handler/SDCardHandler.hpp"
 
 class Logger{
-  private:
-    SDCardHandler* m_sdCardHandler;
-    
   public:  
     Logger(SDCardHandler* p_sdCardHandler);
 
     enum LogType { FATAL, ERROR, WARN, INFO };
 
-    static void log(LogType p_logType, const char* p_message);
+    void log(LogType p_logType, const char* p_message);
+  
+  private:
+    SDCardHandler* m_sdCardHandler;
+    String m_formattedSysTime[SYSTIME_LENGTH];
 
+    String formatSysTime();
+    String formatLogType(LogType p_logType);
 };
 
 #endif // LOGGER_HPP

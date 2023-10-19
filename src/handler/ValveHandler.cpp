@@ -5,6 +5,7 @@
 *   Author: Lankow
 */
 #include "handler/ValveHandler.hpp"
+#include "Logger.hpp"
 
 void ValveHandler::handleValves(){
   uint8_t sensorToWater = getDataProvider()->getSensorToWater();
@@ -17,6 +18,6 @@ void ValveHandler::handleValves(){
 };
 
 void ValveHandler::cyclic(){
-    Logger::log(Logger::INFO, "ValveHandler - Cyclic Task");
+    getLogger()->log(Logger::INFO, "ValveHandler - Cyclic Task");
   handleValves();
 };
