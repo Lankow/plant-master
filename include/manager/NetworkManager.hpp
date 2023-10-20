@@ -18,8 +18,6 @@ class NetworkManager : public Component {
     void updateTimeViaNTP();
     void startServer();
 
-    String buildHumidityResponse(uint8_t& p_handlerId);
-
     public:
     void init();
 };
