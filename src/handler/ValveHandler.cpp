@@ -7,17 +7,20 @@
 #include "handler/ValveHandler.hpp"
 #include "Logger.hpp"
 
-void ValveHandler::handleValves(){
-  uint8_t sensorToWater = getDataProvider()->getSensorToWater();
-  
-  if(sensorToWater != NO_SENSOR){
-    /* Open Valve */
-  }else{
-    /* Close Valve */
-  }
-};
+void ValveHandler::handleValves() {
+    uint8_t sensorToWater = getDataProvider()->getSensorToWater();
 
-void ValveHandler::cyclic(){
+    switch (sensorToWater) {
+        case NO_SENSOR:
+            // Close Valve
+            break;
+        default:
+            // Open Valve
+            break;
+    }
+}
+
+void ValveHandler::cyclic() {
     getLogger()->log(Logger::INFO, "ValveHandler - Cyclic Task");
-  handleValves();
-};
+    handleValves();
+}

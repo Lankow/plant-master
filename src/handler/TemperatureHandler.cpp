@@ -32,7 +32,7 @@ void TemperatureHandler::handleRoomHumidity() {
 }
 
 void TemperatureHandler::cyclic(){
-    getLogger()->log(Logger::INFO, "TemperatureHandler - Cyclic Task");
+  getLogger()->log(Logger::INFO, "TemperatureHandler - Cyclic Task");
   handleTemperature();
   handleRoomHumidity();
 }

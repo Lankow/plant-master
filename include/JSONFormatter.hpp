@@ -12,7 +12,9 @@ class JSONFormatter{
   private: 
     DataProvider* m_dataProvider;
     String buildHumidityJson();
-    
+    String createSensorJson(int sensorIndex);
+    String createJsonProperty(const String& name, const String& value);
+
   public:
     enum JSONType {
       ROOM_HUMIDITY,

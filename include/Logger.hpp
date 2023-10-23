@@ -23,6 +23,7 @@ class Logger{
 
     String formatSysTime();
     String formatLogType(LogType p_logType);
+    void outputLogMessage(const String& logMessage);
 };
 
 #endif // LOGGER_HPP

@@ -12,7 +12,8 @@
 class TimeHandler : public Component
 {   
     void handleTime();
-    
+    bool retrieveTimeWithRetries(int maxRetries, int retryDelayMs); 
+
     public:
     void init();
     void cyclic();

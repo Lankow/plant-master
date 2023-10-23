@@ -7,9 +7,9 @@
 #include <Arduino.h>
 #include "Logger.hpp"
 
-Logger::Logger(SDCardHandler* p_sdCardHandler) : m_sdCardHandler(p_sdCardHandler){};
+Logger::Logger(SDCardHandler* p_sdCardHandler) : m_sdCardHandler(p_sdCardHandler) {}
 
-String Logger::formatSysTime(){
+String Logger::formatSysTime() {
     long milliseconds = millis();
 
     int seconds = milliseconds / 1000;
@@ -22,9 +22,9 @@ String Logger::formatSysTime(){
     minutes %= 60;
 
     return String(hours) + ":" + String(minutes) + ":" + String(seconds) + ":" + String(milliseconds);
-};
+}
 
-String Logger::formatLogType(LogType p_logType){
+String Logger::formatLogType(LogType p_logType) {
     switch (p_logType) {
         case LogType::FATAL:
             return "FATAL";
@@ -35,10 +35,14 @@ String Logger::formatLogType(LogType p_logType){
         case LogType::INFO:
             return "INFO";
     }
-};
+}
 
 void Logger::log(LogType p_logType, const char* p_message) {
     String logMessage = formatSysTime() + " - " + formatLogType(p_logType) + " - " + p_message;
-    Serial.println(logMessage);
+    outputLogMessage(logMessage);
     m_sdCardHandler->appendLogs(logMessage.c_str());
+}
+
+void Logger::outputLogMessage(const String& logMessage) {
+    Serial.println(logMessage);
 }

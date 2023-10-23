@@ -5,30 +5,38 @@
 *   Author: Lankow
 */
 #include <Arduino.h>
-
 #include "handler/TimeHandler.hpp"
 #include "constants.hpp"
 #include "Logger.hpp"
 
-void TimeHandler::handleTime(){
-  struct tm timeinfo;
-  if(!getLocalTime(&timeinfo)){
-      getLogger()->log(Logger::ERROR, "Encountered Error when retrieving system time...");
-    return;
-  }
-  getDataProvider()->setCurrentTime(timeinfo);
-};
-
-void TimeHandler::init(){
-  getLogger()->log(Logger::INFO, "TimeHandler - Init");
-  for(int i=0; i<MAX_RETRIES; i++){
-    handleTime();
-    if(getDataProvider()->getCurrentTime() != DEFAULT_TIME) return;
-    delay(1000);
-  }
+void TimeHandler::handleTime() {
+    struct tm timeinfo;
+    if (!getLocalTime(&timeinfo)) {
+        getLogger()->log(Logger::ERROR, "Encountered Error when retrieving system time...");
+        return;
+    }
+    getDataProvider()->setCurrentTime(timeinfo);
 }
 
-void TimeHandler::cyclic(){
-  getLogger()->log(Logger::INFO, "TimeHandler - Cyclic Task");
-  handleTime();
+bool TimeHandler::retrieveTimeWithRetries(int maxRetries, int retryDelayMs) {
+    for (int i = 0; i < maxRetries; i++) {
+        handleTime();
+        if (getDataProvider()->getCurrentTime() != DEFAULT_TIME) {
+            return true;
+        }
+        delay(retryDelayMs);
+    }
+    return false;
+}
+
+void TimeHandler::init() {
+    getLogger()->log(Logger::INFO, "TimeHandler - Init");
+    if (!retrieveTimeWithRetries(MAX_RETRIES, 1000)) {
+        getLogger()->log(Logger::ERROR, "Failed to retrieve system time.");
+    }
+}
+
+void TimeHandler::cyclic() {
+    getLogger()->log(Logger::INFO, "TimeHandler - Cyclic Task");
+    handleTime();
 }

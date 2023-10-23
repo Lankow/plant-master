@@ -7,16 +7,20 @@
 #include "handler/PumpHandler.hpp"
 #include "Logger.hpp"
 
-void PumpHandler::handlePump(){
-  uint8_t sensorToWater = getDataProvider()->getSensorToWater();
-  if(sensorToWater != NO_SENSOR){
-    /* Launch Pump */
-  }else{
-    /* Turn off Pump */
-  }
-};
+void PumpHandler::handlePump() {
+    uint8_t sensorToWater = getDataProvider()->getSensorToWater();
 
-void PumpHandler::cyclic(){
-  getLogger()->log(Logger::INFO, "PumpHandler - Cyclic Task");
-  handlePump();
-};
+    switch (sensorToWater) {
+        case NO_SENSOR:
+            // Turn off Pump
+            break;
+        default:
+            // Launch Pump
+            break;
+    }
+}
+
+void PumpHandler::cyclic() {
+    getLogger()->log(Logger::INFO, "PumpHandler - Cyclic Task");
+    handlePump();
+}

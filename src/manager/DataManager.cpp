@@ -7,21 +7,24 @@
 #include "manager/DataManager.hpp"
 #include "Logger.hpp"
 
-void DataManager::checkHumidity(){
-  uint16_t* currentHumidityLvl = getDataProvider()->getCurrentHumidityLvl();
-  uint16_t* humidityThreshold = getDataProvider()->getHumidityThreshold();
-  bool* humidityActive = getDataProvider()->getHumidityActive();
+void DataManager::checkHumidity() {
+    DataProvider* dataProvider = getDataProvider();
+
+    uint16_t* currentHumidityLvl = dataProvider->getCurrentHumidityLvl();
+    uint16_t* humidityThreshold = dataProvider->getHumidityThreshold();
+    bool* humidityActive = dataProvider->getHumidityActive();
 
     for (int i = 0; i < MAX_SENSORS_NO; i++) {
-      if (currentHumidityLvl[i] < humidityThreshold[i] && humidityActive[i]){
-          getLogger()->log(Logger::INFO, "Needs Watering");
-        getDataProvider()->setSensorToWater(i);
-        return;
-      }
-  }
-  getDataProvider()->setSensorToWater(NO_SENSOR);
-};
+        if (currentHumidityLvl[i] < humidityThreshold[i] && humidityActive[i]) {
+            getLogger()->log(Logger::INFO, "Needs Watering");
+            dataProvider->setSensorToWater(i);
+            return; // Early return when a sensor needs watering
+        }
+    }
 
-void DataManager::cyclic(){
-  checkHumidity();
-};
+    dataProvider->setSensorToWater(NO_SENSOR);
+}
+
+void DataManager::cyclic() {
+    checkHumidity();
+}
