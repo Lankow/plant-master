@@ -1,25 +1,29 @@
 /*
-*   SDCardHandler.cpp
-*   ----------------------
-*   Created on: 2023/10/06
-*   Author: Lankow
-*/
+ *   SDCardHandler.cpp
+ *   ----------------------
+ *   Created on: 2023/10/06
+ *   Author: Lankow
+ */
 #include "handler/SDCardHandler.hpp"
 #include "Logger.hpp"
 
-SDCardHandler::SDCardHandler(uint8_t pinSck, uint8_t pinMiso, uint8_t pinMosi, uint8_t pinCs): m_spi(VSPI){
+SDCardHandler::SDCardHandler(uint8_t pinSck, uint8_t pinMiso, uint8_t pinMosi, uint8_t pinCs) : m_spi(VSPI)
+{
   m_spi.begin(pinSck, pinMiso, pinMosi, pinCs);
 };
 
-void SDCardHandler::initSDCard(){
-  if(!SD.begin()){
-      getLogger()->log(Logger::ERROR, "Card Mount Failed");
+void SDCardHandler::initSDCard()
+{
+  if (!SD.begin())
+  {
+    getLogger()->log(Logger::ERROR, "Card Mount Failed");
     return;
   }
   uint8_t cardType = SD.cardType();
 
-  if(cardType == CARD_NONE){
-      getLogger()->log(Logger::ERROR, "No SD card attached");
+  if (cardType == CARD_NONE)
+  {
+    getLogger()->log(Logger::ERROR, "No SD card attached");
     return;
   }
 
@@ -27,37 +31,48 @@ void SDCardHandler::initSDCard(){
   Serial.printf("SD Card Size: %lluMB\n", cardSize);
 }
 
-void SDCardHandler::startLogs(const char * path, const char * message){
+void SDCardHandler::startLogs(const char *path, const char *message)
+{
   Serial.printf("Writing file: %s\n", path);
 
   File file = SD.open(path, FILE_WRITE);
-  if(!file){
+  if (!file)
+  {
     Serial.println("Failed to open file for writing");
     return;
   }
-  if(file.print(message)){
+  if (file.print(message))
+  {
     Serial.println("File written");
-  } else {
+  }
+  else
+  {
     Serial.println("Write failed");
   }
   file.close();
 }
 
-void SDCardHandler::appendLogs(const char * message){
+void SDCardHandler::appendLogs(const char *message)
+{
   File file = SD.open(m_logName, FILE_APPEND);
-  if(!file){
+  if (!file)
+  {
     Serial.println("Failed to open file for appending");
     return;
   }
-  if(file.print(message)){
-      Serial.println("Message appended");
-  } else {
+  if (file.print(message))
+  {
+    Serial.println("Message appended");
+  }
+  else
+  {
     Serial.println("Append failed");
   }
   file.close();
 }
 
-void SDCardHandler::init(){
+void SDCardHandler::init()
+{
   getLogger()->log(Logger::INFO, "SDCardHandler - Init");
   initSDCard();
   m_logName = "/log-" + String(getDataProvider()->getCurrentTime()) + ".txt";

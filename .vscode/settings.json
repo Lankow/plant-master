@@ -21,4 +21,7 @@
     "tuple": "cpp",
     "utility": "cpp"
   }
+  "atOnSave": true,
 }
+
+

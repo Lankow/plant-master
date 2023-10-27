@@ -1,9 +1,9 @@
 /*
-*   constants.hpp
-*   ----------------------
-*   Created on: 2023/09/26
-*   Author: Lankow
-*/
+ *   constants.hpp
+ *   ----------------------
+ *   Created on: 2023/09/26
+ *   Author: Lankow
+ */
 #ifndef CONSTANTS_HPP
 #define CONSTANTS_HPP
 
@@ -15,7 +15,7 @@
 /* ESP PINS */
 #define PIN_LED_BUILTIN 2
 
-#define PIN_5  5
+#define PIN_5 5
 
 #define PIN_17 17
 #define PIN_18 18
@@ -44,8 +44,8 @@
 #define LAST_SENSOR 10
 
 #define TIMESTAMP_LENGTH 16
-#define LOGNAME_LENGTH  24
-#define SYSTIME_LENGTH  16
+#define LOGNAME_LENGTH 24
+#define SYSTIME_LENGTH 16
 
 #define DEFAULT_TIME "yymodd-hh-mm-ss"
 

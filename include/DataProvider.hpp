@@ -1,9 +1,9 @@
 /*
-*   DataProvider.hpp
-*   ----------------------
-*   Created on: 2023/09/29
-*   Author: Lankow
-*/
+ *   DataProvider.hpp
+ *   ----------------------
+ *   Created on: 2023/09/29
+ *   Author: Lankow
+ */
 #ifndef DATA_PROVIDER_HPP
 #define DATA_PROVIDER_HPP
 
@@ -12,7 +12,7 @@
 
 class DataProvider
 {
-    private:
+private:
     uint16_t m_currentHumidityLvl[MAX_SENSORS_NO];
     uint16_t m_humidityThreshold[MAX_SENSORS_NO];
     bool m_humidityActive[MAX_SENSORS_NO];
@@ -22,16 +22,16 @@ class DataProvider
     float m_temperature;
     float m_roomHumidity;
 
-    public:
+public:
     DataProvider();
 
-    float& getTemperature();
-    float& getRoomHumidity();
-    char* getCurrentTime();
-    uint8_t& getSensorToWater();
-    uint16_t* getCurrentHumidityLvl();
-    uint16_t* getHumidityThreshold();
-    bool* getHumidityActive();
+    float &getTemperature();
+    float &getRoomHumidity();
+    char *getCurrentTime();
+    uint8_t &getSensorToWater();
+    uint16_t *getCurrentHumidityLvl();
+    uint16_t *getHumidityThreshold();
+    bool *getHumidityActive();
 
     void setCurrentTime(tm p_timeinfo);
     void setTemperature(float p_temperature);

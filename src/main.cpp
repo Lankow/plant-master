@@ -26,36 +26,41 @@ DataManager dataManager;
 DataProvider dataProvider;
 Logger logger(&sdCardHandler);
 
-Component* components[] = {
-  &networkManager,
-  &timeHandler,
-  &sdCardHandler,
-  &humidityHandler1,
-  &humidityHandler2,
-  &temperatureHandler,
-  &valveHandler,
-  &pumpHandler,
-  &dataManager,
+Component *components[] = {
+    &networkManager,
+    &timeHandler,
+    &sdCardHandler,
+    &humidityHandler1,
+    &humidityHandler2,
+    &temperatureHandler,
+    &valveHandler,
+    &pumpHandler,
+    &dataManager,
 };
 
-void setup() {
+void setup()
+{
   Serial.begin(921600);
   // Subscribe data provider and logger for each component.
-  for (Component* component : components) {
+  for (Component *component : components)
+  {
     component->subscribeDataProvider(&dataProvider);
     component->subscribeLogger(&logger);
   }
 
   // Initialize components.
-  for (Component* component : components) {
+  for (Component *component : components)
+  {
     component->init();
   }
 }
 
-void loop() {
+void loop()
+{
   delay(1000);
   // Trigger cyclic tasks for components.
-  for (Component* component : components) {
+  for (Component *component : components)
+  {
     component->cyclic();
   }
 }

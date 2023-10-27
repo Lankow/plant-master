@@ -1,9 +1,9 @@
 /*
-*   SDCardHandler.hpp
-*   ----------------------
-*   Created on: 2023/10/06
-*   Author: Lankow
-*/
+ *   SDCardHandler.hpp
+ *   ----------------------
+ *   Created on: 2023/10/06
+ *   Author: Lankow
+ */
 #include "FS.h"
 #include "SD.h"
 #include "SPI.h"
@@ -14,19 +14,19 @@
 
 class SDCardHandler : public Component
 {
-  private: 
-    SPIClass m_spi;
-    String m_logName;
+private:
+  SPIClass m_spi;
+  String m_logName;
 
-    void initSDCard();
-  
-    void startLogs(const char * path, const char * message);
-    void appendLogs(const char * message);
+  void initSDCard();
 
-  public:
-    SDCardHandler(uint8_t pinSck, uint8_t pinMiso, uint8_t pinMosi, uint8_t pinCs);
+  void startLogs(const char *path, const char *message);
+  void appendLogs(const char *message);
 
-    void init();
+public:
+  SDCardHandler(uint8_t pinSck, uint8_t pinMiso, uint8_t pinMosi, uint8_t pinCs);
+
+  void init();
 
   friend class Logger;
 };
