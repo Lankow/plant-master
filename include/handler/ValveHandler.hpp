@@ -11,7 +11,6 @@
 
 class ValveHandler : public Component
 {
-
 public:
   void handleValves();
   void cyclic();

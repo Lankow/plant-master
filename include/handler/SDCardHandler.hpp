@@ -14,6 +14,13 @@
 
 class SDCardHandler : public Component
 {
+public:
+  SDCardHandler(uint8_t pinSck, uint8_t pinMiso, uint8_t pinMosi, uint8_t pinCs);
+
+  void init();
+
+  friend class Logger;
+
 private:
   SPIClass m_spi;
   String m_logName;
@@ -22,13 +29,6 @@ private:
 
   void startLogs(const char *path, const char *message);
   void appendLogs(const char *message);
-
-public:
-  SDCardHandler(uint8_t pinSck, uint8_t pinMiso, uint8_t pinMosi, uint8_t pinCs);
-
-  void init();
-
-  friend class Logger;
 };
 
 #endif // SD_CARD_HANDLER_HPP

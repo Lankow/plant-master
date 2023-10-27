@@ -11,15 +11,15 @@
 
 class HumidityHandler : public Component
 {
-private:
-    uint8_t m_operatedPin;
-    uint8_t m_handlerId;
-
 public:
     HumidityHandler(uint8_t pin);
 
     void handleHumidity();
     void cyclic();
+
+private:
+    uint8_t m_operatedPin;
+    uint8_t m_handlerId;
 };
 
 #endif // HUMIDITY_HANDLER_HPP

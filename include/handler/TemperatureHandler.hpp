@@ -12,15 +12,15 @@
 
 class TemperatureHandler : public Component
 {
+public:
+  TemperatureHandler(int pin);
+
+  void cyclic();
+
 private:
   DHT m_dht;
 
   void handleTemperature();
   void handleRoomHumidity();
-
-public:
-  TemperatureHandler(int pin);
-
-  void cyclic();
 };
 #endif // TEMPERATURE_HANDLER_HPP

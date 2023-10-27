@@ -11,12 +11,12 @@
 
 class TimeHandler : public Component
 {
-private:
-    void handleTime();
-    bool retrieveTimeWithRetries(int maxRetries, int retryDelayMs);
-
 public:
     void init();
     void cyclic();
+
+private:
+    void handleTime();
+    bool retrieveTimeWithRetries(int maxRetries, int retryDelayMs);
 };
 #endif // TIME_HANDLER_HPP

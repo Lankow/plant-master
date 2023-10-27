@@ -10,12 +10,6 @@
 
 class JSONFormatter
 {
-private:
-  DataProvider *m_dataProvider;
-  String buildHumidityJson();
-  String createSensorJson(int sensorIndex);
-  String createJsonProperty(const String &name, const String &value);
-
 public:
   enum JSONType
   {
@@ -29,6 +23,10 @@ public:
   JSONFormatter(DataProvider *p_dataProvider);
   String serialize(JSONType p_jsonType);
 
-protected:
+private:
+  DataProvider *m_dataProvider;
+  String buildHumidityJson();
+  String createSensorJson(int sensorIndex);
+  String createJsonProperty(const String &name, const String &value);
 };
 #endif // JSON_FORMATTER_HPP

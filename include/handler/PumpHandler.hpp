@@ -11,7 +11,6 @@
 
 class PumpHandler : public Component
 {
-
 public:
   void handlePump();
   void cyclic();

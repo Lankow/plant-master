@@ -12,16 +12,6 @@
 
 class DataProvider
 {
-private:
-    uint16_t m_currentHumidityLvl[MAX_SENSORS_NO];
-    uint16_t m_humidityThreshold[MAX_SENSORS_NO];
-    bool m_humidityActive[MAX_SENSORS_NO];
-    uint8_t m_sensorToWater;
-
-    char m_currentTime[TIMESTAMP_LENGTH];
-    float m_temperature;
-    float m_roomHumidity;
-
 public:
     DataProvider();
 
@@ -42,5 +32,15 @@ public:
     void setHumidityActive(uint8_t p_handlerId, bool p_humidityState);
 
     void setSensorToWater(uint8_t p_sensorToWaterId);
+
+private:
+    uint16_t m_currentHumidityLvl[MAX_SENSORS_NO];
+    uint16_t m_humidityThreshold[MAX_SENSORS_NO];
+    bool m_humidityActive[MAX_SENSORS_NO];
+    uint8_t m_sensorToWater;
+
+    char m_currentTime[TIMESTAMP_LENGTH];
+    float m_temperature;
+    float m_roomHumidity;
 };
 #endif // DATA_PROVIDER_HPP
