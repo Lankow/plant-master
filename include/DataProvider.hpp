@@ -16,12 +16,12 @@ class DataProvider
 public:
     DataProvider();
 
-    float &getTemperature();
-    float &getRoomHumidity();
+    float getTemperature();
+    float getRoomHumidity();
     char *getCurrentTime();
 
     HumidityData *getHumidityData();
-    uint8_t &getSensorToWater();
+    uint8_t getSensorToWater();
 
     void setCurrentTime(tm timeinfo);
     void setTemperature(float temperature);

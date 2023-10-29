@@ -25,17 +25,17 @@ char *DataProvider::getCurrentTime()
     return m_currentTime;
 }
 
-float &DataProvider::getTemperature()
+float DataProvider::getTemperature()
 {
     return m_temperature;
 }
 
-float &DataProvider::getRoomHumidity()
+float DataProvider::getRoomHumidity()
 {
     return m_roomHumidity;
 }
 
-uint8_t &DataProvider::getSensorToWater()
+uint8_t DataProvider::getSensorToWater()
 {
     return m_sensorToWater;
 }
