@@ -12,7 +12,7 @@
 class Logger
 {
 public:
-  Logger(SDCardHandler *p_sdCardHandler);
+  Logger(SDCardHandler *sdCardHandler);
 
   enum LogType
   {
@@ -22,14 +22,14 @@ public:
     INFO
   };
 
-  void log(LogType p_logType, const char *p_message);
+  void log(LogType logType, const char *message);
 
 private:
   SDCardHandler *m_sdCardHandler;
   String m_formattedSysTime[SYSTIME_LENGTH];
 
   String formatSysTime();
-  String formatLogType(LogType p_logType);
+  String formatLogType(LogType logType);
   void outputLogMessage(const String &logMessage);
 };
 

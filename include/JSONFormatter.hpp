@@ -20,8 +20,8 @@ public:
     SENSOR
   };
 
-  JSONFormatter(DataProvider *p_dataProvider);
-  String serialize(JSONType p_jsonType);
+  JSONFormatter(DataProvider *dataProvider);
+  String serialize(JSONType jsonType);
 
 private:
   DataProvider *m_dataProvider;

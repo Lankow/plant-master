@@ -6,7 +6,7 @@
  */
 #include "JSONFormatter.hpp"
 
-JSONFormatter::JSONFormatter(DataProvider *p_dataProvider) : m_dataProvider(p_dataProvider){};
+JSONFormatter::JSONFormatter(DataProvider *dataProvider) : m_dataProvider(dataProvider){};
 
 String JSONFormatter::createSensorJson(int sensorIndex)
 {
@@ -38,9 +38,9 @@ String JSONFormatter::buildHumidityJson()
     return jsonStr;
 }
 
-String JSONFormatter::serialize(JSONType p_jsonType)
+String JSONFormatter::serialize(JSONType jsonType)
 {
-    switch (p_jsonType)
+    switch (jsonType)
     {
     case ROOM_HUMIDITY:
         return createJsonProperty("room-humidity", String(m_dataProvider->getRoomHumidity()));

@@ -23,12 +23,12 @@ public:
     HumidityData *getHumidityData();
     uint8_t &getSensorToWater();
 
-    void setCurrentTime(tm p_timeinfo);
-    void setTemperature(float p_temperature);
-    void setRoomHumidity(float p_roomHumidity);
+    void setCurrentTime(tm timeinfo);
+    void setTemperature(float temperature);
+    void setRoomHumidity(float roomHumidity);
 
-    void setHumidityData(uint8_t p_handlerId, HumidityData p_humidityData);
-    void setSensorToWater(uint8_t p_sensorToWaterId);
+    void setHumidityData(uint8_t handlerId, HumidityData humidityData);
+    void setSensorToWater(uint8_t sensorToWaterId);
 
 private:
     char m_currentTime[TIMESTAMP_LENGTH];

@@ -22,17 +22,17 @@ bool HumidityData::getHumidityActive()
   return m_humidityActive;
 };
 
-void HumidityData::setCurrentHumidityLvl(uint16_t p_readHumidity)
+void HumidityData::setCurrentHumidityLvl(uint16_t readHumidity)
 {
-  m_currentHumidityLvl = p_readHumidity;
+  m_currentHumidityLvl = readHumidity;
 };
 
-void HumidityData::setHumidityThreshold(uint16_t p_newThreshold)
+void HumidityData::setHumidityThreshold(uint16_t newThreshold)
 {
-  m_humidityThreshold = p_newThreshold;
+  m_humidityThreshold = newThreshold;
 };
 
-void HumidityData::setHumidityActive(bool p_humidityState)
+void HumidityData::setHumidityActive(bool humidityState)
 {
-  m_humidityActive = p_humidityState;
+  m_humidityActive = humidityState;
 };

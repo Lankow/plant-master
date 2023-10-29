@@ -47,27 +47,27 @@ HumidityData *DataProvider::getHumidityData()
 
 /* SETTERS */
 
-void DataProvider::setCurrentTime(tm p_timeinfo)
+void DataProvider::setCurrentTime(tm timeinfo)
 {
-    strftime(m_currentTime, 80, "%y%m%d-%H-%M-%S", &p_timeinfo);
+    strftime(m_currentTime, 80, "%y%m%d-%H-%M-%S", &timeinfo);
 }
 
-void DataProvider::setTemperature(float p_temperature)
+void DataProvider::setTemperature(float temperature)
 {
-    m_temperature = p_temperature;
+    m_temperature = temperature;
 }
 
-void DataProvider::setRoomHumidity(float p_roomHumidity)
+void DataProvider::setRoomHumidity(float roomHumidity)
 {
-    m_roomHumidity = p_roomHumidity;
+    m_roomHumidity = roomHumidity;
 }
 
-void DataProvider::setSensorToWater(uint8_t p_sensorToWaterId)
+void DataProvider::setSensorToWater(uint8_t sensorToWaterId)
 {
-    m_sensorToWater = p_sensorToWaterId;
+    m_sensorToWater = sensorToWaterId;
 }
 
-void DataProvider::setHumidityData(uint8_t p_handlerId, HumidityData p_humidityData)
+void DataProvider::setHumidityData(uint8_t handlerId, HumidityData humidityData)
 {
-    m_humidityData[p_handlerId] = p_humidityData;
+    m_humidityData[handlerId] = humidityData;
 }

@@ -41,7 +41,7 @@ Component *components[] = {
 void setup()
 {
   Serial.begin(921600);
-  // Subscribe data provider and logger for each component.
+  // Set data provider and logger for each component.
   for (Component *component : components)
   {
     component->setDataProvider(&dataProvider);

@@ -7,12 +7,12 @@
 #include "Component.hpp"
 #include "Logger.hpp"
 
-void Component::setDataProvider(DataProvider *p_dataProvider)
+void Component::setDataProvider(DataProvider *dataProvider)
 {
-  m_dataProvider = p_dataProvider;
+  m_dataProvider = dataProvider;
 };
 
-void Component::setLogger(Logger *p_logger)
+void Component::setLogger(Logger *logger)
 {
-  m_logger = p_logger;
+  m_logger = logger;
 };

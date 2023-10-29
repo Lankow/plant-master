@@ -15,8 +15,8 @@ class Logger;
 class Component
 {
 public:
-  void setDataProvider(DataProvider *p_dataProvider);
-  void setLogger(Logger *p_logger);
+  void setDataProvider(DataProvider *dataProvider);
+  void setLogger(Logger *logger);
 
   virtual void init() = 0;
   virtual void cyclic() = 0;
