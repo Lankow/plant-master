@@ -37,6 +37,8 @@ String Logger::formatLogType(LogType p_logType)
         return "WARN";
     case LogType::INFO:
         return "INFO";
+    default:
+        return "UNKNOWN";
     }
 }
 
