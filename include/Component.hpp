@@ -15,17 +15,13 @@ class Logger;
 class Component
 {
 public:
-  void subscribeDataProvider(DataProvider *p_dataProvider);
-  void subscribeLogger(Logger *p_logger);
+  void setDataProvider(DataProvider *p_dataProvider);
+  void setLogger(Logger *p_logger);
 
-  virtual void init();
-  virtual void cyclic();
+  virtual void init() = 0;
+  virtual void cyclic() = 0;
 
 protected:
-  DataProvider *getDataProvider() const;
-  Logger *getLogger() const;
-
-private:
   DataProvider *m_dataProvider;
   Logger *m_logger;
 };

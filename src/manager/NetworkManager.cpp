@@ -15,7 +15,7 @@ JSONFormatter m_JSONFormatter(nullptr);
 
 void NetworkManager::init()
 {
-  m_JSONFormatter = JSONFormatter(getDataProvider());
+  m_JSONFormatter = JSONFormatter(m_dataProvider);
   uint8_t connectionCounter = 0;
 
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -30,7 +30,7 @@ void NetworkManager::init()
 
     if (connectionCounter >= MAX_RETRIES)
     {
-      getLogger()->log(Logger::ERROR, "Encountered error when connecting to WiFi... \n");
+      m_logger->log(Logger::ERROR, "Encountered error when connecting to WiFi... \n");
       return;
     }
   }
@@ -42,6 +42,11 @@ void NetworkManager::init()
   startServer();
 };
 
+void NetworkManager::cyclic()
+{
+  m_logger->log(Logger::INFO, "NetworkManager - Cyclic Task");
+};
+
 void NetworkManager::updateTimeViaNTP()
 {
   if (WiFi.status() == WL_CONNECTED)
@@ -50,7 +55,7 @@ void NetworkManager::updateTimeViaNTP()
   }
   else
   {
-    getLogger()->log(Logger::ERROR, "WiFi connection not available - Time update is not possible...");
+    m_logger->log(Logger::ERROR, "WiFi connection not available - Time update is not possible...");
   }
 };
 
@@ -81,7 +86,7 @@ void NetworkManager::startServer()
       uint8_t handlerId = request->arg("id").toInt();    
       uint16_t newThreshold = request->arg("threshold").toInt();
 
-      getDataProvider()->setHumidityThreshold(handlerId, newThreshold);
+      m_dataProvider->getHumidityData()[handlerId].setHumidityThreshold(newThreshold);
 
       request->send(200, "text/html", "Threshold updated successfully."); });
 

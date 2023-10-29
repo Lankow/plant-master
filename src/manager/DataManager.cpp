@@ -9,26 +9,28 @@
 
 void DataManager::checkHumidity()
 {
-    DataProvider *dataProvider = getDataProvider();
-
-    uint16_t *currentHumidityLvl = dataProvider->getCurrentHumidityLvl();
-    uint16_t *humidityThreshold = dataProvider->getHumidityThreshold();
-    bool *humidityActive = dataProvider->getHumidityActive();
+    HumidityData *humidityData = m_dataProvider->getHumidityData();
 
     for (int i = 0; i < MAX_SENSORS_NO; i++)
     {
-        if (currentHumidityLvl[i] < humidityThreshold[i] && humidityActive[i])
+        if (humidityData[i].getCurrentHumidityLvl() < humidityData[i].getHumidityThreshold() && humidityData[i].getHumidityActive())
         {
-            getLogger()->log(Logger::INFO, "Needs Watering");
-            dataProvider->setSensorToWater(i);
+            m_logger->log(Logger::INFO, "Needs Watering");
+            m_dataProvider->setSensorToWater(i);
             return; // Early return when a sensor needs watering
         }
     }
 
-    dataProvider->setSensorToWater(NO_SENSOR);
+    m_dataProvider->setSensorToWater(NO_SENSOR);
+}
+
+void DataManager::init()
+{
+    m_logger->log(Logger::INFO, "DataManager - Init");
 }
 
 void DataManager::cyclic()
 {
+    m_logger->log(Logger::INFO, "DataManager - Cyclic Task");
     checkHumidity();
 }

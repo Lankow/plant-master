@@ -14,9 +14,7 @@ DataProvider::DataProvider()
 {
     for (int i = 0; i < MAX_SENSORS_NO; i++)
     {
-        m_currentHumidityLvl[i] = ANALOG_PIN_MAX;
-        m_humidityThreshold[i] = ANALOG_PIN_MAX;
-        m_humidityActive[i] = false;
+        m_humidityData[i] = HumidityData();
     }
 }
 
@@ -42,19 +40,9 @@ uint8_t &DataProvider::getSensorToWater()
     return m_sensorToWater;
 }
 
-uint16_t *DataProvider::getCurrentHumidityLvl()
+HumidityData *DataProvider::getHumidityData()
 {
-    return m_currentHumidityLvl;
-}
-
-uint16_t *DataProvider::getHumidityThreshold()
-{
-    return m_humidityThreshold;
-}
-
-bool *DataProvider::getHumidityActive()
-{
-    return m_humidityActive;
+    return m_humidityData;
 }
 
 /* SETTERS */
@@ -79,17 +67,7 @@ void DataProvider::setSensorToWater(uint8_t p_sensorToWaterId)
     m_sensorToWater = p_sensorToWaterId;
 }
 
-void DataProvider::setCurrentHumidityLvl(uint8_t p_handlerId, uint16_t p_readHumidity)
+void DataProvider::setHumidityData(uint8_t p_handlerId, HumidityData p_humidityData)
 {
-    m_currentHumidityLvl[p_handlerId] = p_readHumidity;
-}
-
-void DataProvider::setHumidityThreshold(uint8_t p_handlerId, uint16_t p_newThreshold)
-{
-    m_humidityThreshold[p_handlerId] = p_newThreshold;
-}
-
-void DataProvider::setHumidityActive(uint8_t p_handlerId, bool p_humidityState)
-{
-    m_humidityActive[p_handlerId] = p_humidityState;
+    m_humidityData[p_handlerId] = p_humidityData;
 }

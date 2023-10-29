@@ -17,11 +17,11 @@ void TemperatureHandler::handleTemperature()
   float t = m_dht.readTemperature();
   if (isnan(t))
   {
-    getLogger()->log(Logger::ERROR, "Temperature read error.");
+    m_logger->log(Logger::ERROR, "Temperature read error.");
   }
   else
   {
-    getDataProvider()->setTemperature(t);
+    m_dataProvider->setTemperature(t);
   }
 }
 
@@ -30,17 +30,22 @@ void TemperatureHandler::handleRoomHumidity()
   float t = m_dht.readHumidity();
   if (isnan(t))
   {
-    getLogger()->log(Logger::ERROR, "Room Humidity read error.");
+    m_logger->log(Logger::ERROR, "Room Humidity read error.");
   }
   else
   {
-    getDataProvider()->setRoomHumidity(t);
+    m_dataProvider->setRoomHumidity(t);
   }
+}
+
+void TemperatureHandler::init()
+{
+  m_logger->log(Logger::INFO, "TemperatureHandler - Init");
 }
 
 void TemperatureHandler::cyclic()
 {
-  getLogger()->log(Logger::INFO, "TemperatureHandler - Cyclic Task");
+  m_logger->log(Logger::INFO, "TemperatureHandler - Cyclic Task");
   handleTemperature();
   handleRoomHumidity();
 }

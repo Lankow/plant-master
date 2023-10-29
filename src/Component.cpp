@@ -5,33 +5,14 @@
  *   Author: Lankow
  */
 #include "Component.hpp"
+#include "Logger.hpp"
 
-void Component::subscribeDataProvider(DataProvider *p_dataProvider)
+void Component::setDataProvider(DataProvider *p_dataProvider)
 {
-  if (NULL != p_dataProvider)
-  {
-    m_dataProvider = p_dataProvider;
-  }
+  m_dataProvider = p_dataProvider;
 };
 
-void Component::subscribeLogger(Logger *p_logger)
+void Component::setLogger(Logger *p_logger)
 {
-  if (NULL != p_logger)
-  {
-    m_logger = p_logger;
-  }
+  m_logger = p_logger;
 };
-
-DataProvider *Component::getDataProvider() const
-{
-  return m_dataProvider;
-}
-
-Logger *Component::getLogger() const
-{
-  return m_logger;
-}
-
-void Component::init(){};
-
-void Component::cyclic(){};

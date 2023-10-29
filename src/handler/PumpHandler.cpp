@@ -9,7 +9,7 @@
 
 void PumpHandler::handlePump()
 {
-    uint8_t sensorToWater = getDataProvider()->getSensorToWater();
+    uint8_t sensorToWater = m_dataProvider->getSensorToWater();
 
     switch (sensorToWater)
     {
@@ -22,8 +22,13 @@ void PumpHandler::handlePump()
     }
 }
 
+void PumpHandler::init()
+{
+    m_logger->log(Logger::INFO, "PumpHandler - Init");
+}
+
 void PumpHandler::cyclic()
 {
-    getLogger()->log(Logger::INFO, "PumpHandler - Cyclic Task");
+    m_logger->log(Logger::INFO, "PumpHandler - Cyclic Task");
     handlePump();
 }

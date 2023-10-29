@@ -11,31 +11,30 @@
 static uint8_t m_idCounter;
 
 HumidityHandler::HumidityHandler(uint8_t p_operatedPin)
-    : m_operatedPin(p_operatedPin), m_handlerId(m_idCounter++) {}
+    : m_operatedPin(p_operatedPin), m_handlerId(m_idCounter++){};
 
 void HumidityHandler::handleHumidity()
 {
-    auto dataProvider = getDataProvider();
-    if (!dataProvider)
-    {
-        return; // Exit early if dataProvider is nullptr
-    }
-
     uint16_t result = analogRead(m_operatedPin);
 
     if (result != ANALOG_PIN_MAX)
     {
-        dataProvider->setCurrentHumidityLvl(m_handlerId, result);
-        dataProvider->setHumidityActive(m_handlerId, true);
+        m_dataProvider->getHumidityData()[m_handlerId].setCurrentHumidityLvl(result);
+        m_dataProvider->getHumidityData()[m_handlerId].setHumidityActive(true);
     }
     else
     {
-        dataProvider->setHumidityActive(m_handlerId, false);
+        m_dataProvider->getHumidityData()[m_handlerId].setHumidityActive(false);
     }
+}
+
+void HumidityHandler::init()
+{
+    m_logger->log(Logger::INFO, "HumidityHandler - Init");
 }
 
 void HumidityHandler::cyclic()
 {
-    getLogger()->log(Logger::INFO, "HumidityHandler - Cyclic Task");
+    m_logger->log(Logger::INFO, "HumidityHandler - Cyclic Task");
     handleHumidity();
 }

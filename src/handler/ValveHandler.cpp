@@ -9,7 +9,7 @@
 
 void ValveHandler::handleValves()
 {
-    uint8_t sensorToWater = getDataProvider()->getSensorToWater();
+    uint8_t sensorToWater = m_dataProvider->getSensorToWater();
 
     switch (sensorToWater)
     {
@@ -22,8 +22,13 @@ void ValveHandler::handleValves()
     }
 }
 
+void ValveHandler::init()
+{
+    m_logger->log(Logger::INFO, "ValveHandler - Init");
+}
+
 void ValveHandler::cyclic()
 {
-    getLogger()->log(Logger::INFO, "ValveHandler - Cyclic Task");
+    m_logger->log(Logger::INFO, "ValveHandler - Cyclic Task");
     handleValves();
 }

@@ -15,7 +15,8 @@ class TemperatureHandler : public Component
 public:
   TemperatureHandler(int pin);
 
-  void cyclic();
+  void init() override;
+  void cyclic() override;
 
 private:
   DHT m_dht;

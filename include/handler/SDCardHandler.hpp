@@ -17,7 +17,8 @@ class SDCardHandler : public Component
 public:
   SDCardHandler(uint8_t pinSck, uint8_t pinMiso, uint8_t pinMosi, uint8_t pinCs);
 
-  void init();
+  void init() override;
+  void cyclic() override;
 
   friend class Logger;
 

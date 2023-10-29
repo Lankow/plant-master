@@ -14,10 +14,10 @@ void TimeHandler::handleTime()
     struct tm timeinfo;
     if (!getLocalTime(&timeinfo))
     {
-        getLogger()->log(Logger::ERROR, "Encountered Error when retrieving system time...");
+        m_logger->log(Logger::ERROR, "Encountered Error when retrieving system time...");
         return;
     }
-    getDataProvider()->setCurrentTime(timeinfo);
+    m_dataProvider->setCurrentTime(timeinfo);
 }
 
 bool TimeHandler::retrieveTimeWithRetries(int maxRetries, int retryDelayMs)
@@ -25,7 +25,7 @@ bool TimeHandler::retrieveTimeWithRetries(int maxRetries, int retryDelayMs)
     for (int i = 0; i < maxRetries; i++)
     {
         handleTime();
-        if (getDataProvider()->getCurrentTime() != DEFAULT_TIME)
+        if (m_dataProvider->getCurrentTime() != DEFAULT_TIME)
         {
             return true;
         }
@@ -36,15 +36,15 @@ bool TimeHandler::retrieveTimeWithRetries(int maxRetries, int retryDelayMs)
 
 void TimeHandler::init()
 {
-    getLogger()->log(Logger::INFO, "TimeHandler - Init");
+    m_logger->log(Logger::INFO, "TimeHandler - Init");
     if (!retrieveTimeWithRetries(MAX_RETRIES, 1000))
     {
-        getLogger()->log(Logger::ERROR, "Failed to retrieve system time.");
+        m_logger->log(Logger::ERROR, "Failed to retrieve system time.");
     }
 }
 
 void TimeHandler::cyclic()
 {
-    getLogger()->log(Logger::INFO, "TimeHandler - Cyclic Task");
+    m_logger->log(Logger::INFO, "TimeHandler - Cyclic Task");
     handleTime();
 }

@@ -16,14 +16,14 @@ void SDCardHandler::initSDCard()
 {
   if (!SD.begin())
   {
-    getLogger()->log(Logger::ERROR, "Card Mount Failed");
+    m_logger->log(Logger::ERROR, "Card Mount Failed");
     return;
   }
   uint8_t cardType = SD.cardType();
 
   if (cardType == CARD_NONE)
   {
-    getLogger()->log(Logger::ERROR, "No SD card attached");
+    m_logger->log(Logger::ERROR, "No SD card attached");
     return;
   }
 
@@ -73,8 +73,13 @@ void SDCardHandler::appendLogs(const char *message)
 
 void SDCardHandler::init()
 {
-  getLogger()->log(Logger::INFO, "SDCardHandler - Init");
+  m_logger->log(Logger::INFO, "SDCardHandler - Init");
   initSDCard();
-  m_logName = "/log-" + String(getDataProvider()->getCurrentTime()) + ".txt";
+  m_logName = "/log-" + String(m_dataProvider->getCurrentTime()) + ".txt";
   startLogs(m_logName.c_str(), "Plant-Master-Logs-Init");
+}
+
+void SDCardHandler::cyclic()
+{
+  m_logger->log(Logger::INFO, "SDCardHandler - Cyclic Task");
 }

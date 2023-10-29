@@ -13,6 +13,7 @@ class ValveHandler : public Component
 {
 public:
   void handleValves();
-  void cyclic();
+  void init() override;
+  void cyclic() override;
 };
 #endif // VALVE_HANDLER_HPP

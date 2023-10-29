@@ -13,6 +13,7 @@ class PumpHandler : public Component
 {
 public:
   void handlePump();
-  void cyclic();
+  void init() override;
+  void cyclic() override;
 };
 #endif // PUMP_HANDLER_HPP

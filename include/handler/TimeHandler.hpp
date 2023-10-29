@@ -12,8 +12,8 @@
 class TimeHandler : public Component
 {
 public:
-    void init();
-    void cyclic();
+    void init() override;
+    void cyclic() override;
 
 private:
     void handleTime();

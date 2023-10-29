@@ -44,8 +44,8 @@ void setup()
   // Subscribe data provider and logger for each component.
   for (Component *component : components)
   {
-    component->subscribeDataProvider(&dataProvider);
-    component->subscribeLogger(&logger);
+    component->setDataProvider(&dataProvider);
+    component->setLogger(&logger);
   }
 
   // Initialize components.

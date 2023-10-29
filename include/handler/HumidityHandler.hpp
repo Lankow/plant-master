@@ -15,7 +15,8 @@ public:
     HumidityHandler(uint8_t pin);
 
     void handleHumidity();
-    void cyclic();
+    void init() override;
+    void cyclic() override;
 
 private:
     uint8_t m_operatedPin;
