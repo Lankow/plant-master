@@ -61,25 +61,23 @@ void NetworkManager::updateTimeViaNTP()
 
 void NetworkManager::startServer()
 {
-  if (NULL != &m_server)
-  {
-    m_server.on("/humidity", HTTP_GET, [this](AsyncWebServerRequest *request)
-                { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::HUMIDITY)); });
+  m_server.on("/humidity", HTTP_GET, [this](AsyncWebServerRequest *request)
+              { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::HUMIDITY)); });
 
-    m_server.on("/temperature", HTTP_GET, [this](AsyncWebServerRequest *request)
-                { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::TEMPERATURE)); });
+  m_server.on("/temperature", HTTP_GET, [this](AsyncWebServerRequest *request)
+              { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::TEMPERATURE)); });
 
-    m_server.on("/room-humidity", HTTP_GET, [this](AsyncWebServerRequest *request)
-                { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::ROOM_HUMIDITY)); });
+  m_server.on("/room-humidity", HTTP_GET, [this](AsyncWebServerRequest *request)
+              { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::ROOM_HUMIDITY)); });
 
-    m_server.on("/sensor", HTTP_GET, [this](AsyncWebServerRequest *request)
-                { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::SENSOR)); });
+  m_server.on("/sensor", HTTP_GET, [this](AsyncWebServerRequest *request)
+              { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::SENSOR)); });
 
-    m_server.on("/time", HTTP_GET, [this](AsyncWebServerRequest *request)
-                { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::TIME)); });
+  m_server.on("/time", HTTP_GET, [this](AsyncWebServerRequest *request)
+              { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::TIME)); });
 
-    m_server.on("/humidity", HTTP_POST, [this](AsyncWebServerRequest *request)
-                {
+  m_server.on("/humidity", HTTP_POST, [this](AsyncWebServerRequest *request)
+              {
       if (request->args() == 0) // no arguments attached -> STATUS_BAD_REQUEST
         return request->send(400, "application/json", F("ERROR: Bad or no arguments"));
 
@@ -90,6 +88,5 @@ void NetworkManager::startServer()
 
       request->send(200, "text/html", "Threshold updated successfully."); });
 
-    m_server.begin();
-  }
+  m_server.begin();
 };
