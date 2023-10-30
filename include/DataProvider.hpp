@@ -20,15 +20,17 @@ public:
     float getRoomHumidity() const;
     uint8_t getSensorToWater() const;
 
-    char *getCurrentTime();
-    HumidityData *getHumidityData();
+    const char *getCurrentTime() const;
+    const HumidityData *getHumidityData() const;
 
     void setTemperature(float temperature);
     void setRoomHumidity(float roomHumidity);
     void setSensorToWater(uint8_t sensorToWaterId);
-
     void setCurrentTime(tm timeinfo);
-    void setHumidityData(uint8_t handlerId, HumidityData humidityData);
+
+    void setHandlerHumidityLvl(uint8_t handlerId, uint16_t humidityLvl);
+    void setHandlerThreshold(uint8_t handlerId, uint16_t threshold);
+    void setHandlerActive(uint8_t handlerId, bool isActive);
 
 private:
     char m_currentTime[TIMESTAMP_LENGTH] = DEFAULT_TIME;

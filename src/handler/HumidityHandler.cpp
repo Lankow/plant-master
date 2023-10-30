@@ -19,12 +19,12 @@ void HumidityHandler::handleHumidity()
 
     if (result != ANALOG_PIN_MAX)
     {
-        m_dataProvider->getHumidityData()[m_handlerId].setCurrentHumidityLvl(result);
-        m_dataProvider->getHumidityData()[m_handlerId].setHumidityActive(true);
+        m_dataProvider->setHandlerHumidityLvl(m_handlerId, result);
+        m_dataProvider->setHandlerActive(m_handlerId, true);
     }
     else
     {
-        m_dataProvider->getHumidityData()[m_handlerId].setHumidityActive(false);
+        m_dataProvider->setHandlerActive(m_handlerId, false);
     }
 }
 

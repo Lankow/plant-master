@@ -9,7 +9,7 @@
 
 void DataManager::checkHumidity()
 {
-    HumidityData *humidityData = m_dataProvider->getHumidityData();
+    const HumidityData *humidityData = m_dataProvider->getHumidityData();
 
     for (int i = 0; i < MAX_SENSORS_NO; i++)
     {

@@ -86,7 +86,7 @@ void NetworkManager::startServer()
       uint8_t handlerId = request->arg("id").toInt();    
       uint16_t newThreshold = request->arg("threshold").toInt();
 
-      m_dataProvider->getHumidityData()[handlerId].setHumidityThreshold(newThreshold);
+      m_dataProvider->setHandlerThreshold(handlerId, newThreshold);
 
       request->send(200, "text/html", "Threshold updated successfully."); });
 

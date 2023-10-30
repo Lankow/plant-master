@@ -10,7 +10,7 @@ JSONFormatter::JSONFormatter(DataProvider *dataProvider) : m_dataProvider(dataPr
 
 String JSONFormatter::createSensorJson(int sensorIndex)
 {
-    HumidityData *humidityData = m_dataProvider->getHumidityData();
+    const HumidityData *humidityData = m_dataProvider->getHumidityData();
 
     String sensorJson = "{\"lvl\":" + String(humidityData[sensorIndex].getCurrentHumidityLvl()) + ",";
     sensorJson += "\"threshold\":" + String(humidityData[sensorIndex].getHumidityThreshold()) + ",";

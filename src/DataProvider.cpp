@@ -31,12 +31,12 @@ uint8_t DataProvider::getSensorToWater() const
     return m_sensorToWater;
 }
 
-char *DataProvider::getCurrentTime()
+const char *DataProvider::getCurrentTime() const
 {
     return m_currentTime;
 }
 
-HumidityData *DataProvider::getHumidityData()
+const HumidityData *DataProvider::getHumidityData() const
 {
     return m_humidityData;
 }
@@ -63,7 +63,17 @@ void DataProvider::setSensorToWater(uint8_t sensorToWaterId)
     m_sensorToWater = sensorToWaterId;
 }
 
-void DataProvider::setHumidityData(uint8_t handlerId, HumidityData humidityData)
+void DataProvider::setHandlerHumidityLvl(uint8_t handlerId, uint16_t humidityLvl)
 {
-    m_humidityData[handlerId] = humidityData;
-}
+    m_humidityData[handlerId].setCurrentHumidityLvl(humidityLvl);
+};
+
+void DataProvider::setHandlerThreshold(uint8_t handlerId, uint16_t threshold)
+{
+    m_humidityData[handlerId].setHumidityThreshold(threshold);
+};
+
+void DataProvider::setHandlerActive(uint8_t handlerId, bool isActive)
+{
+    m_humidityData[handlerId].setHumidityActive(isActive);
+};
