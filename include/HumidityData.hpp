@@ -13,9 +13,9 @@
 class HumidityData
 {
 public:
-  uint16_t getCurrentHumidityLvl();
-  uint16_t getHumidityThreshold();
-  bool getHumidityActive();
+  uint16_t getCurrentHumidityLvl() const;
+  uint16_t getHumidityThreshold() const;
+  bool getHumidityActive() const;
 
   void setCurrentHumidityLvl(uint16_t readHumidity);
   void setHumidityThreshold(uint16_t newThreshold);

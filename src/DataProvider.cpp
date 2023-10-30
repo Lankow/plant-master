@@ -7,10 +7,6 @@
 #include "DataProvider.hpp"
 
 DataProvider::DataProvider()
-    : m_currentTime(DEFAULT_TIME),
-      m_temperature(0),
-      m_roomHumidity(0),
-      m_sensorToWater(NO_SENSOR)
 {
     for (int i = 0; i < MAX_SENSORS_NO; i++)
     {
@@ -20,24 +16,24 @@ DataProvider::DataProvider()
 
 /* GETTERS */
 
-char *DataProvider::getCurrentTime()
-{
-    return m_currentTime;
-}
-
-float DataProvider::getTemperature()
+float DataProvider::getTemperature() const
 {
     return m_temperature;
 }
 
-float DataProvider::getRoomHumidity()
+float DataProvider::getRoomHumidity() const
 {
     return m_roomHumidity;
 }
 
-uint8_t DataProvider::getSensorToWater()
+uint8_t DataProvider::getSensorToWater() const
 {
     return m_sensorToWater;
+}
+
+char *DataProvider::getCurrentTime()
+{
+    return m_currentTime;
 }
 
 HumidityData *DataProvider::getHumidityData()

@@ -7,17 +7,17 @@
 #include "HumidityData.hpp"
 #include "constants.hpp"
 
-uint16_t HumidityData::getCurrentHumidityLvl()
+uint16_t HumidityData::getCurrentHumidityLvl() const
 {
   return m_currentHumidityLvl;
 };
 
-uint16_t HumidityData::getHumidityThreshold()
+uint16_t HumidityData::getHumidityThreshold() const
 {
   return m_humidityThreshold;
 };
 
-bool HumidityData::getHumidityActive()
+bool HumidityData::getHumidityActive() const
 {
   return m_humidityActive;
 };

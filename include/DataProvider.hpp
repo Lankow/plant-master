@@ -16,26 +16,26 @@ class DataProvider
 public:
     DataProvider();
 
-    float getTemperature();
-    float getRoomHumidity();
+    float getTemperature() const;
+    float getRoomHumidity() const;
+    uint8_t getSensorToWater() const;
+
     char *getCurrentTime();
-
     HumidityData *getHumidityData();
-    uint8_t getSensorToWater();
 
-    void setCurrentTime(tm timeinfo);
     void setTemperature(float temperature);
     void setRoomHumidity(float roomHumidity);
-
-    void setHumidityData(uint8_t handlerId, HumidityData humidityData);
     void setSensorToWater(uint8_t sensorToWaterId);
 
+    void setCurrentTime(tm timeinfo);
+    void setHumidityData(uint8_t handlerId, HumidityData humidityData);
+
 private:
-    char m_currentTime[TIMESTAMP_LENGTH];
-    float m_temperature;
-    float m_roomHumidity;
+    char m_currentTime[TIMESTAMP_LENGTH] = DEFAULT_TIME;
+    float m_temperature = DEFAULT_TEMPERATURE;
+    float m_roomHumidity = DEFAULT_ROOM_HUMIDITY;
 
     HumidityData m_humidityData[MAX_SENSORS_NO];
-    uint8_t m_sensorToWater;
+    uint8_t m_sensorToWater = NO_SENSOR;
 };
 #endif // DATA_PROVIDER_HPP
