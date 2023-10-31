@@ -41,7 +41,7 @@
 #define DEFAULT_ACTIVE false
 
 /* ESP PINS */
-enum ESPPins
+enum EspPins : uint8_t
 {
   PIN_LED_BUILTIN = 2,
   PIN_5 = 5,

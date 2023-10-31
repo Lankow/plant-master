@@ -1,4 +1,6 @@
 #include <Arduino.h>
+#include <memory> // Include the memory header for std::shared_ptr
+
 #include "constants.hpp"
 #include "DataProvider.hpp"
 #include "Component.hpp"
@@ -12,44 +14,45 @@
 #include "manager/NetworkManager.hpp"
 #include "manager/DataManager.hpp"
 
-// Define component instances as global variables (stack-allocated).
-NetworkManager networkManager;
-TimeHandler timeHandler;
-SDCardHandler sdCardHandler(ESPPins::PIN_18, ESPPins::PIN_19, ESPPins::PIN_23, ESPPins::PIN_5);
-HumidityHandler humidityHandler1(ESPPins::PIN_34);
-HumidityHandler humidityHandler2(ESPPins::PIN_35);
-TemperatureHandler temperatureHandler(ESPPins::PIN_21);
-ValveHandler valveHandler;
-PumpHandler pumpHandler;
-DataManager dataManager;
+// Define shared pointers for component instances.
+std::shared_ptr<NetworkManager> networkManager = std::make_shared<NetworkManager>();
+std::shared_ptr<TimeHandler> timeHandler = std::make_shared<TimeHandler>();
+std::shared_ptr<SDCardHandler> sdCardHandler = std::make_shared<SDCardHandler>(EspPins::PIN_18, EspPins::PIN_19, EspPins::PIN_23, EspPins::PIN_5);
+std::shared_ptr<HumidityHandler> humidityHandler1 = std::make_shared<HumidityHandler>(EspPins::PIN_34);
+std::shared_ptr<HumidityHandler> humidityHandler2 = std::make_shared<HumidityHandler>(EspPins::PIN_35);
+std::shared_ptr<TemperatureHandler> temperatureHandler = std::make_shared<TemperatureHandler>(EspPins::PIN_21);
+std::shared_ptr<ValveHandler> valveHandler = std::make_shared<ValveHandler>();
+std::shared_ptr<PumpHandler> pumpHandler = std::make_shared<PumpHandler>();
+std::shared_ptr<DataManager> dataManager = std::make_shared<DataManager>();
 
 DataProvider dataProvider;
-Logger logger(&sdCardHandler);
+Logger logger(sdCardHandler);
 
-Component *components[] = {
-    &networkManager,
-    &timeHandler,
-    &sdCardHandler,
-    &humidityHandler1,
-    &humidityHandler2,
-    &temperatureHandler,
-    &valveHandler,
-    &pumpHandler,
-    &dataManager,
+// Create an array of shared pointers to components.
+std::shared_ptr<Component> components[] = {
+    networkManager,
+    timeHandler,
+    sdCardHandler,
+    humidityHandler1,
+    humidityHandler2,
+    temperatureHandler,
+    valveHandler,
+    pumpHandler,
+    dataManager,
 };
 
 void setup()
 {
   Serial.begin(921600);
   // Set data provider and logger for each component.
-  for (Component *component : components)
+  for (auto &component : components)
   {
     component->setDataProvider(&dataProvider);
     component->setLogger(&logger);
   }
 
   // Initialize components.
-  for (Component *component : components)
+  for (auto &component : components)
   {
     component->init();
   }
@@ -59,7 +62,7 @@ void loop()
 {
   delay(1000);
   // Trigger cyclic tasks for components.
-  for (Component *component : components)
+  for (auto &component : components)
   {
     component->cyclic();
   }

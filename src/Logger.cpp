@@ -7,7 +7,7 @@
 #include <Arduino.h>
 #include "Logger.hpp"
 
-Logger::Logger(SDCardHandler *sdCardHandler) : m_sdCardHandler(sdCardHandler) {}
+Logger::Logger(std::shared_ptr<SDCardHandler> sdCardHandler) : m_sdCardHandler(sdCardHandler) {}
 
 String Logger::formatSysTime()
 {

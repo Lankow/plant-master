@@ -6,13 +6,15 @@
  */
 #ifndef LOGGER_HPP
 #define LOGGER_HPP
+#include <memory.h>
+
 #include "constants.hpp"
 #include "handler/SDCardHandler.hpp"
 
 class Logger
 {
 public:
-  Logger(SDCardHandler *sdCardHandler);
+  Logger(std::shared_ptr<SDCardHandler> sdCardHandler);
 
   enum LogType
   {
@@ -25,7 +27,7 @@ public:
   void log(LogType logType, const char *message);
 
 private:
-  SDCardHandler *m_sdCardHandler;
+  std::shared_ptr<SDCardHandler> m_sdCardHandler;
   String m_formattedSysTime[SYSTIME_LENGTH];
 
   String formatSysTime();
