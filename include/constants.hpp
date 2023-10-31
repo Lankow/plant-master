@@ -12,22 +12,6 @@
 
 #define MAX_SENSORS_NO 10
 
-/* ESP PINS */
-#define PIN_LED_BUILTIN 2
-
-#define PIN_5 5
-
-#define PIN_17 17
-#define PIN_18 18
-#define PIN_19 19
-#define PIN_20 20
-#define PIN_21 21
-
-#define PIN_23 23
-
-#define PIN_34 34
-#define PIN_35 35
-
 #define MAX_RETRIES 10
 
 #define NTP_SERVER_PL_0 "0.pl.pool.ntp.org"
@@ -55,5 +39,20 @@
 #define DEFAULT_HUMIDITY_LVL ANALOG_PIN_MAX
 #define DEFAULT_THRESHOLD ANALOG_PIN_MAX
 #define DEFAULT_ACTIVE false
+
+/* ESP PINS */
+enum ESPPins
+{
+  PIN_LED_BUILTIN = 2,
+  PIN_5 = 5,
+  PIN_17 = 17,
+  PIN_18 = 18,
+  PIN_19 = 19,
+  PIN_20 = 20,
+  PIN_21 = 21,
+  PIN_23 = 23,
+  PIN_34 = 34,
+  PIN_35 = 35
+};
 
 #endif // CONSTANTS_HPP

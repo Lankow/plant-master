@@ -15,10 +15,10 @@
 // Define component instances as global variables (stack-allocated).
 NetworkManager networkManager;
 TimeHandler timeHandler;
-SDCardHandler sdCardHandler(PIN_18, PIN_19, PIN_23, PIN_5);
-HumidityHandler humidityHandler1(PIN_34);
-HumidityHandler humidityHandler2(PIN_35);
-TemperatureHandler temperatureHandler(PIN_21);
+SDCardHandler sdCardHandler(ESPPins::PIN_18, ESPPins::PIN_19, ESPPins::PIN_23, ESPPins::PIN_5);
+HumidityHandler humidityHandler1(ESPPins::PIN_34);
+HumidityHandler humidityHandler2(ESPPins::PIN_35);
+TemperatureHandler temperatureHandler(ESPPins::PIN_21);
 ValveHandler valveHandler;
 PumpHandler pumpHandler;
 DataManager dataManager;
