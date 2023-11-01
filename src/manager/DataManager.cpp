@@ -4,12 +4,13 @@
  *   Created on: 2023/10/09
  *   Author: Lankow
  */
+#include <vector>
 #include "manager/DataManager.hpp"
 #include "Logger.hpp"
 
 void DataManager::checkHumidity()
 {
-    const HumidityData *humidityData = m_dataProvider->getHumidityData();
+    const std::vector<HumidityData> humidityData = m_dataProvider->getHumidityData();
 
     for (int i = 0; i < MAX_SENSORS_NO; i++)
     {

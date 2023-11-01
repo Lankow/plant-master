@@ -4,15 +4,16 @@
  *   Created on: 2023/10/20
  *   Author: Lankow
  */
-#include "JSONFormatter.hpp"
 #include <sstream>
+#include <vector>
+#include "JSONFormatter.hpp"
 
 JSONFormatter::JSONFormatter(DataProvider *dataProvider) : m_dataProvider(dataProvider){};
 
 std::string JSONFormatter::createSensorJson(int sensorIndex)
 {
     std::ostringstream jsonOss;
-    const HumidityData *humidityData = m_dataProvider->getHumidityData();
+    const std::vector<HumidityData> humidityData = m_dataProvider->getHumidityData();
 
     jsonOss << "{\"lvl\":" << std::to_string(humidityData[sensorIndex].getCurrentHumidityLvl()) << ",";
     jsonOss << "\"threshold\":" << std::to_string(humidityData[sensorIndex].getHumidityThreshold()) << ",";

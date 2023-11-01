@@ -10,7 +10,7 @@ DataProvider::DataProvider()
 {
     for (int i = 0; i < MAX_SENSORS_NO; i++)
     {
-        m_humidityData[i] = HumidityData();
+        m_humidityData.push_back(HumidityData());
     }
 }
 
@@ -36,7 +36,7 @@ const std::string &DataProvider::getCurrentTime() const
     return m_currentTime;
 }
 
-const HumidityData *DataProvider::getHumidityData() const
+const std::vector<HumidityData> &DataProvider::getHumidityData() const
 {
     return m_humidityData;
 }

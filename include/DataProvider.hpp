@@ -7,6 +7,7 @@
 #ifndef DATA_PROVIDER_HPP
 #define DATA_PROVIDER_HPP
 #include <Arduino.h>
+#include <vector>
 
 #include "constants.hpp"
 #include "HumidityData.hpp"
@@ -21,7 +22,7 @@ public:
     uint8_t getSensorToWater() const;
 
     const std::string &getCurrentTime() const;
-    const HumidityData *getHumidityData() const;
+    const std::vector<HumidityData> &getHumidityData() const;
 
     void setTemperature(float temperature);
     void setRoomHumidity(float roomHumidity);
@@ -37,7 +38,7 @@ private:
     float m_temperature = DEFAULT_TEMPERATURE;
     float m_roomHumidity = DEFAULT_ROOM_HUMIDITY;
 
-    HumidityData m_humidityData[MAX_SENSORS_NO];
+    std::vector<HumidityData> m_humidityData;
     uint8_t m_sensorToWater = NO_SENSOR;
 };
 #endif // DATA_PROVIDER_HPP
