@@ -28,11 +28,11 @@ public:
 
 private:
   std::shared_ptr<SDCardHandler> m_sdCardHandler;
-  String m_formattedSysTime[SYSTIME_LENGTH];
+  std::string m_formattedSysTime[SYSTIME_LENGTH];
 
-  String formatSysTime();
-  String formatLogType(LogType logType);
-  void outputLogMessage(const String &logMessage);
+  std::string formatSysTime();
+  std::string formatLogType(LogType logType);
+  void outputLogMessage(const std::string &logMessage);
 };
 
 #endif // LOGGER_HPP

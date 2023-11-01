@@ -4,13 +4,13 @@
  *   Created on: 2023/10/06
  *   Author: Lankow
  */
+
+#ifndef SD_CARD_HANDLER_HPP
+#define SD_CARD_HANDLER_HPP
 #include "FS.h"
 #include "SD.h"
 #include "SPI.h"
 #include "Component.hpp"
-
-#ifndef SD_CARD_HANDLER_HPP
-#define SD_CARD_HANDLER_HPP
 
 class SDCardHandler : public Component
 {
@@ -24,12 +24,12 @@ public:
 
 private:
   SPIClass m_spi;
-  String m_logName;
+  std::string m_logName;
 
   void initSDCard();
 
-  void startLogs(const char *path, const char *message);
-  void appendLogs(const char *message);
+  void startLogs(const std::string &path, const std::string &message);
+  void appendLogs(const std::string &message);
 };
 
 #endif // SD_CARD_HANDLER_HPP

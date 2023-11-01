@@ -9,7 +9,7 @@
 
 Logger::Logger(std::shared_ptr<SDCardHandler> sdCardHandler) : m_sdCardHandler(sdCardHandler) {}
 
-String Logger::formatSysTime()
+std::string Logger::formatSysTime()
 {
     long milliseconds = millis();
 
@@ -22,10 +22,10 @@ String Logger::formatSysTime()
     int hours = minutes / 60;
     minutes %= 60;
 
-    return String(hours) + ":" + String(minutes) + ":" + String(seconds) + ":" + String(milliseconds);
+    return std::to_string(hours) + ":" + std::to_string(minutes) + ":" + std::to_string(seconds) + ":" + std::to_string(milliseconds);
 }
 
-String Logger::formatLogType(LogType logType)
+std::string Logger::formatLogType(LogType logType)
 {
     switch (logType)
     {
@@ -44,12 +44,12 @@ String Logger::formatLogType(LogType logType)
 
 void Logger::log(LogType logType, const char *message)
 {
-    String logMessage = formatSysTime() + " - " + formatLogType(logType) + " - " + message;
+    std::string logMessage = formatSysTime() + " - " + formatLogType(logType) + " - " + message;
     outputLogMessage(logMessage);
     m_sdCardHandler->appendLogs(logMessage.c_str());
 }
 
-void Logger::outputLogMessage(const String &logMessage)
+void Logger::outputLogMessage(const std::string &logMessage)
 {
-    Serial.println(logMessage);
+    Serial.println(logMessage.c_str());
 }

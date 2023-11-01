@@ -31,7 +31,7 @@ uint8_t DataProvider::getSensorToWater() const
     return m_sensorToWater;
 }
 
-const char *DataProvider::getCurrentTime() const
+const std::string &DataProvider::getCurrentTime() const
 {
     return m_currentTime;
 }
@@ -45,7 +45,7 @@ const HumidityData *DataProvider::getHumidityData() const
 
 void DataProvider::setCurrentTime(tm timeinfo)
 {
-    strftime(m_currentTime, 80, "%y%m%d-%H-%M-%S", &timeinfo);
+    // Time Lib function to be added here;
 }
 
 void DataProvider::setTemperature(float temperature)

@@ -5,49 +5,52 @@
  *   Author: Lankow
  */
 #include "JSONFormatter.hpp"
+#include <sstream>
 
 JSONFormatter::JSONFormatter(DataProvider *dataProvider) : m_dataProvider(dataProvider){};
 
-String JSONFormatter::createSensorJson(int sensorIndex)
+std::string JSONFormatter::createSensorJson(int sensorIndex)
 {
+    std::ostringstream jsonOss;
     const HumidityData *humidityData = m_dataProvider->getHumidityData();
 
-    String sensorJson = "{\"lvl\":" + String(humidityData[sensorIndex].getCurrentHumidityLvl()) + ",";
-    sensorJson += "\"threshold\":" + String(humidityData[sensorIndex].getHumidityThreshold()) + ",";
-    sensorJson += "\"active\":" + String(humidityData[sensorIndex].getHumidityActive()) + "}";
+    jsonOss << "{\"lvl\":" << std::to_string(humidityData[sensorIndex].getCurrentHumidityLvl()) << ",";
+    jsonOss << "\"threshold\":" << std::to_string(humidityData[sensorIndex].getHumidityThreshold()) << ",";
+    jsonOss << "\"active\":" << std::to_string(humidityData[sensorIndex].getHumidityActive()) << "}";
 
-    return sensorJson;
+    return jsonOss.str();
 }
 
-String JSONFormatter::buildHumidityJson()
+std::string JSONFormatter::buildHumidityJson()
 {
-    String jsonStr = "{\"humidity\": [";
+    std::ostringstream jsonOss;
+    jsonOss << "{\"humidity\": [";
     const int numSensors = MAX_SENSORS_NO;
 
     for (int i = 0; i < numSensors; i++)
     {
-        jsonStr += createSensorJson(i);
+        jsonOss << createSensorJson(i);
         if (i < numSensors - 1)
         {
-            jsonStr += ",";
+            jsonOss << ",";
         }
     }
 
-    jsonStr += "]}";
+    jsonOss << "]}";
 
-    return jsonStr;
+    return jsonOss.str();
 }
 
-String JSONFormatter::serialize(JSONType jsonType)
+std::string JSONFormatter::serialize(JSONType jsonType)
 {
     switch (jsonType)
     {
     case ROOM_HUMIDITY:
-        return createJsonProperty("room-humidity", String(m_dataProvider->getRoomHumidity()));
+        return createJsonProperty("room-humidity", std::to_string(m_dataProvider->getRoomHumidity()));
     case TEMPERATURE:
-        return createJsonProperty("temperature", String(m_dataProvider->getTemperature()));
+        return createJsonProperty("temperature", std::to_string(m_dataProvider->getTemperature()));
     case SENSOR:
-        return createJsonProperty("sensor", String(m_dataProvider->getSensorToWater()));
+        return createJsonProperty("sensor", std::to_string(m_dataProvider->getSensorToWater()));
     case TIME:
         return createJsonProperty("time", m_dataProvider->getCurrentTime());
     case HUMIDITY:
@@ -57,7 +60,7 @@ String JSONFormatter::serialize(JSONType jsonType)
     }
 }
 
-String JSONFormatter::createJsonProperty(const String &name, const String &value)
+std::string JSONFormatter::createJsonProperty(const std::string &name, const std::string &value)
 {
     return "{\"" + name + "\":" + value + "}";
 }

@@ -62,19 +62,19 @@ void NetworkManager::updateTimeViaNTP()
 void NetworkManager::startServer()
 {
   m_server.on("/humidity", HTTP_GET, [this](AsyncWebServerRequest *request)
-              { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::HUMIDITY)); });
+              { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::HUMIDITY).c_str()); });
 
   m_server.on("/temperature", HTTP_GET, [this](AsyncWebServerRequest *request)
-              { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::TEMPERATURE)); });
+              { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::TEMPERATURE).c_str()); });
 
   m_server.on("/room-humidity", HTTP_GET, [this](AsyncWebServerRequest *request)
-              { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::ROOM_HUMIDITY)); });
+              { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::ROOM_HUMIDITY).c_str()); });
 
   m_server.on("/sensor", HTTP_GET, [this](AsyncWebServerRequest *request)
-              { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::SENSOR)); });
+              { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::SENSOR).c_str()); });
 
   m_server.on("/time", HTTP_GET, [this](AsyncWebServerRequest *request)
-              { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::TIME)); });
+              { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::TIME).c_str()); });
 
   m_server.on("/humidity", HTTP_POST, [this](AsyncWebServerRequest *request)
               {

@@ -6,8 +6,8 @@
  */
 #ifndef DATA_PROVIDER_HPP
 #define DATA_PROVIDER_HPP
-
 #include <Arduino.h>
+
 #include "constants.hpp"
 #include "HumidityData.hpp"
 
@@ -20,7 +20,7 @@ public:
     float getRoomHumidity() const;
     uint8_t getSensorToWater() const;
 
-    const char *getCurrentTime() const;
+    const std::string &getCurrentTime() const;
     const HumidityData *getHumidityData() const;
 
     void setTemperature(float temperature);
@@ -33,7 +33,7 @@ public:
     void setHandlerActive(uint8_t handlerId, bool isActive);
 
 private:
-    char m_currentTime[TIMESTAMP_LENGTH] = DEFAULT_TIME;
+    std::string m_currentTime = DEFAULT_TIME;
     float m_temperature = DEFAULT_TEMPERATURE;
     float m_roomHumidity = DEFAULT_ROOM_HUMIDITY;
 

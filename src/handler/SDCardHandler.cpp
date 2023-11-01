@@ -31,17 +31,17 @@ void SDCardHandler::initSDCard()
   Serial.printf("SD Card Size: %lluMB\n", cardSize);
 }
 
-void SDCardHandler::startLogs(const char *path, const char *message)
+void SDCardHandler::startLogs(const std::string &path, const std::string &message)
 {
   Serial.printf("Writing file: %s\n", path);
 
-  File file = SD.open(path, FILE_WRITE);
+  File file = SD.open(path.c_str(), FILE_WRITE);
   if (!file)
   {
     Serial.println("Failed to open file for writing");
     return;
   }
-  if (file.print(message))
+  if (file.print(message.c_str()))
   {
     Serial.println("File written");
   }
@@ -52,15 +52,15 @@ void SDCardHandler::startLogs(const char *path, const char *message)
   file.close();
 }
 
-void SDCardHandler::appendLogs(const char *message)
+void SDCardHandler::appendLogs(const std::string &message)
 {
-  File file = SD.open(m_logName, FILE_APPEND);
+  File file = SD.open(m_logName.c_str(), FILE_APPEND);
   if (!file)
   {
     Serial.println("Failed to open file for appending");
     return;
   }
-  if (file.print(message))
+  if (file.print(message.c_str()))
   {
     Serial.println("Message appended");
   }
@@ -75,8 +75,8 @@ void SDCardHandler::init()
 {
   m_logger->log(Logger::INFO, "SDCardHandler - Init");
   initSDCard();
-  m_logName = "/log-" + String(m_dataProvider->getCurrentTime()) + ".txt";
-  startLogs(m_logName.c_str(), "Plant-Master-Logs-Init");
+  m_logName = "/log-" + std::string(m_dataProvider->getCurrentTime()) + ".txt";
+  startLogs(m_logName, "Plant-Master-Logs-Init");
 }
 
 void SDCardHandler::cyclic()
