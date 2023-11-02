@@ -5,6 +5,8 @@
  *   Author: Lankow
  */
 #include "DataProvider.hpp"
+#include <iomanip>
+#include <sstream>
 
 DataProvider::DataProvider()
 {
@@ -31,9 +33,16 @@ uint8_t DataProvider::getSensorToWater() const
     return m_sensorToWater;
 }
 
-const std::string &DataProvider::getCurrentTime() const
+std::time_t DataProvider::getCurrentTime() const
 {
     return m_currentTime;
+}
+
+const std::string DataProvider::getCurrentTimeString() const
+{
+    std::stringstream ss;
+    ss << std::put_time(std::localtime(&m_currentTime), "%y%m%d-%H-%M-%S");
+    return ss.str();
 }
 
 const std::vector<HumidityData> &DataProvider::getHumidityData() const
@@ -43,37 +52,37 @@ const std::vector<HumidityData> &DataProvider::getHumidityData() const
 
 /* SETTERS */
 
-void DataProvider::setCurrentTime(tm timeinfo)
+void DataProvider::setCurrentTime(const std::time_t time)
 {
-    // Time Lib function to be added here;
+    m_currentTime = time;
 }
 
-void DataProvider::setTemperature(float temperature)
+void DataProvider::setTemperature(const float temperature)
 {
     m_temperature = temperature;
 }
 
-void DataProvider::setRoomHumidity(float roomHumidity)
+void DataProvider::setRoomHumidity(const float roomHumidity)
 {
     m_roomHumidity = roomHumidity;
 }
 
-void DataProvider::setSensorToWater(uint8_t sensorToWaterId)
+void DataProvider::setSensorToWater(const uint8_t sensorToWaterId)
 {
     m_sensorToWater = sensorToWaterId;
 }
 
-void DataProvider::setHandlerHumidityLvl(uint8_t handlerId, uint16_t humidityLvl)
+void DataProvider::setHandlerHumidityLvl(const uint8_t handlerId, const uint16_t humidityLvl)
 {
     m_humidityData[handlerId].setCurrentHumidityLvl(humidityLvl);
 };
 
-void DataProvider::setHandlerThreshold(uint8_t handlerId, uint16_t threshold)
+void DataProvider::setHandlerThreshold(const uint8_t handlerId, const uint16_t threshold)
 {
     m_humidityData[handlerId].setHumidityThreshold(threshold);
 };
 
-void DataProvider::setHandlerActive(uint8_t handlerId, bool isActive)
+void DataProvider::setHandlerActive(const uint8_t handlerId, const bool isActive)
 {
     m_humidityData[handlerId].setHumidityActive(isActive);
 };

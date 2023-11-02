@@ -75,7 +75,7 @@ void SDCardHandler::init()
 {
   m_logger->log(Logger::INFO, "SDCardHandler - Init");
   initSDCard();
-  m_logName = "/log-" + std::string(m_dataProvider->getCurrentTime()) + ".txt";
+  m_logName = "/log-" + std::string(m_dataProvider->getCurrentTimeString()) + ".txt";
   startLogs(m_logName, "Plant-Master-Logs-Init");
 }
 

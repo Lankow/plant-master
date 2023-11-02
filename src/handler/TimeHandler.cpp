@@ -5,19 +5,16 @@
  *   Author: Lankow
  */
 #include <Arduino.h>
+#include <chrono>
 #include "handler/TimeHandler.hpp"
 #include "constants.hpp"
 #include "Logger.hpp"
 
 void TimeHandler::handleTime()
 {
-    struct tm timeinfo;
-    if (!getLocalTime(&timeinfo))
-    {
-        m_logger->log(Logger::ERROR, "Encountered Error when retrieving system time...");
-        return;
-    }
-    m_dataProvider->setCurrentTime(timeinfo);
+    auto now = std::chrono::system_clock::now();
+    std::time_t in_time_t = std::chrono::system_clock::to_time_t(now);
+    m_dataProvider->setCurrentTime(in_time_t);
 }
 
 bool TimeHandler::retrieveTimeWithRetries(int maxRetries, int retryDelayMs)
@@ -25,7 +22,7 @@ bool TimeHandler::retrieveTimeWithRetries(int maxRetries, int retryDelayMs)
     for (int i = 0; i < maxRetries; i++)
     {
         handleTime();
-        if (m_dataProvider->getCurrentTime() != DEFAULT_TIME)
+        if (m_dataProvider->getCurrentTime() > MIN_TIME_VAL)
         {
             return true;
         }

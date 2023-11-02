@@ -53,7 +53,7 @@ std::string JSONFormatter::serialize(JSONType jsonType)
     case SENSOR:
         return createJsonProperty("sensor", std::to_string(m_dataProvider->getSensorToWater()));
     case TIME:
-        return createJsonProperty("time", m_dataProvider->getCurrentTime());
+        return createJsonProperty("time", m_dataProvider->getCurrentTimeString());
     case HUMIDITY:
         return buildHumidityJson();
     default:

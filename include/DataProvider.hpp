@@ -8,6 +8,7 @@
 #define DATA_PROVIDER_HPP
 #include <Arduino.h>
 #include <vector>
+#include <chrono>
 
 #include "constants.hpp"
 #include "HumidityData.hpp"
@@ -20,21 +21,22 @@ public:
     float getTemperature() const;
     float getRoomHumidity() const;
     uint8_t getSensorToWater() const;
+    std::time_t getCurrentTime() const;
 
-    const std::string &getCurrentTime() const;
     const std::vector<HumidityData> &getHumidityData() const;
+    const std::string getCurrentTimeString() const;
 
-    void setTemperature(float temperature);
-    void setRoomHumidity(float roomHumidity);
-    void setSensorToWater(uint8_t sensorToWaterId);
-    void setCurrentTime(tm timeinfo);
+    void setTemperature(const float temperature);
+    void setRoomHumidity(const float roomHumidity);
+    void setSensorToWater(const uint8_t sensorToWaterId);
+    void setCurrentTime(const std::time_t currentTime);
 
-    void setHandlerHumidityLvl(uint8_t handlerId, uint16_t humidityLvl);
-    void setHandlerThreshold(uint8_t handlerId, uint16_t threshold);
-    void setHandlerActive(uint8_t handlerId, bool isActive);
+    void setHandlerHumidityLvl(const uint8_t handlerId, const uint16_t humidityLvl);
+    void setHandlerThreshold(const uint8_t handlerId, const uint16_t threshold);
+    void setHandlerActive(const uint8_t handlerId, const bool isActive);
 
 private:
-    std::string m_currentTime = DEFAULT_TIME;
+    std::time_t m_currentTime = DEFAULT_TIME;
     float m_temperature = DEFAULT_TEMPERATURE;
     float m_roomHumidity = DEFAULT_ROOM_HUMIDITY;
 
