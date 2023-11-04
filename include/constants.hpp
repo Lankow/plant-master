@@ -8,45 +8,39 @@
 #define CONSTANTS_HPP
 
 // MIN MAX VALUES
-#define MAX_SENSORS_NO 10
-#define MAX_RETRIES 10
+static const uint8_t MAX_SENSORS_NO = 10;
+static const uint8_t MAX_RETRIES = 10;
 
-#define ANALOG_PIN_MAX 4095
-#define ANALOG_PIN_MIN 0
+static const uint16_t ANALOG_PIN_MAX = 4095;
+static const uint16_t ANALOG_PIN_MIN = 0;
 
-#define MIN_TIME_VAL 1000
+static const uint16_t MIN_TIME_VAL = 1000;
 
 // NTP AND GMT CONSTANTS
-#define NTP_SERVER_PL_0 "0.pl.pool.ntp.org"
-#define NTP_SERVER_PL_1 "0.pl.pool.ntp.org"
-#define NTP_SERVER_PL_2 "2.pl.pool.ntp.org"
+static const std::string NTP_SERVER_PL_0 = "0.pl.pool.ntp.org";
+static const std::string NTP_SERVER_PL_1 = "0.pl.pool.ntp.org";
+static const std::string NTP_SERVER_PL_2 = "2.pl.pool.ntp.org";
 
-#define GMT_OFFSET 0
-#define DAY_OFFSET 3600
+static const long GMT_OFFSET = 0;
+static const int DAY_OFFSET = 3600;
 
-#define DHT_TYPE DHT11
-
-#define NO_SENSOR 0xFF
-#define FIRST_SENSOR 0
-#define LAST_SENSOR 10
-
-#define TIMESTAMP_LENGTH 16
-#define LOGNAME_LENGTH 24
-#define SYSTIME_LENGTH 16
+static const uint8_t NO_SENSOR = 0xFF;
+static const uint8_t FIRST_SENSOR = 0;
+static const uint8_t LAST_SENSOR = MAX_SENSORS_NO;
 
 // DEFAULT VALUES
-#define DEFAULT_TIME 0
-#define DEFAULT_TEMPERATURE 0
-#define DEFAULT_ROOM_HUMIDITY 0
+static const long DEFAULT_TIME = 0;
+static const float DEFAULT_TEMPERATURE = 0;
+static const float DEFAULT_ROOM_HUMIDITY = 0;
 
-#define DEFAULT_HUMIDITY_LVL ANALOG_PIN_MAX
-#define DEFAULT_THRESHOLD ANALOG_PIN_MAX
-#define DEFAULT_ACTIVE false
+static const uint16_t DEFAULT_HUMIDITY_LVL = ANALOG_PIN_MAX;
+static const uint16_t DEFAULT_THRESHOLD = ANALOG_PIN_MAX;
+static const bool DEFAULT_ACTIVE = false;
 
 // ERROR VALUES
-#define CONVERSION_ERROR "YY-MM-DD HH-MM-SS"
+static const std::string CONVERSION_ERROR = "YY-MM-DD HH-MM-SS";
 
-/* ESP PINS */
+// ESP PINS
 enum EspPins : uint8_t
 {
   PIN_LED_BUILTIN = 2,
@@ -60,5 +54,9 @@ enum EspPins : uint8_t
   PIN_34 = 34,
   PIN_35 = 35
 };
+
+// OTHER CONSTANTS
+#define DHT_TYPE DHT11
+#define SYSTIME_LENGTH 16
 
 #endif // CONSTANTS_HPP

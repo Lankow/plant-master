@@ -51,7 +51,7 @@ void NetworkManager::updateTimeViaNTP()
 {
   if (WiFi.status() == WL_CONNECTED)
   {
-    configTime(GMT_OFFSET, DAY_OFFSET, NTP_SERVER_PL_0, NTP_SERVER_PL_1, NTP_SERVER_PL_2);
+    configTime(GMT_OFFSET, DAY_OFFSET, NTP_SERVER_PL_0.c_str(), NTP_SERVER_PL_1.c_str(), NTP_SERVER_PL_2.c_str());
   }
   else
   {
