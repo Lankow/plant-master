@@ -5,8 +5,6 @@
  *   Author: Lankow
  */
 #include "DataProvider.hpp"
-#include <iomanip>
-#include <sstream>
 
 DataProvider::DataProvider()
 {
@@ -36,13 +34,6 @@ uint8_t DataProvider::getSensorToWater() const
 std::time_t DataProvider::getCurrentTime() const
 {
     return m_currentTime;
-}
-
-const std::string DataProvider::getCurrentTimeString() const
-{
-    std::stringstream ss;
-    ss << std::put_time(std::localtime(&m_currentTime), "%y%m%d-%H-%M-%S");
-    return ss.str();
 }
 
 const std::vector<HumidityData> &DataProvider::getHumidityData() const

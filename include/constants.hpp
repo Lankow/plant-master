@@ -43,6 +43,9 @@
 #define DEFAULT_THRESHOLD ANALOG_PIN_MAX
 #define DEFAULT_ACTIVE false
 
+// ERROR VALUES
+#define CONVERSION_ERROR "YY-MM-DD HH-MM-SS"
+
 /* ESP PINS */
 enum EspPins : uint8_t
 {

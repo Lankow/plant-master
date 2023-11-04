@@ -6,23 +6,14 @@
  */
 #include <Arduino.h>
 #include "Logger.hpp"
+#include "TimeConverter.hpp"
 
 Logger::Logger(std::shared_ptr<SDCardHandler> sdCardHandler) : m_sdCardHandler(sdCardHandler) {}
 
 std::string Logger::formatSysTime()
 {
-    long milliseconds = millis();
-
-    int seconds = milliseconds / 1000;
-    milliseconds %= 1000;
-
-    int minutes = seconds / 60;
-    seconds %= 60;
-
-    int hours = minutes / 60;
-    minutes %= 60;
-
-    return std::to_string(hours) + ":" + std::to_string(minutes) + ":" + std::to_string(seconds) + ":" + std::to_string(milliseconds);
+    long systemSeconds = millis() / 1000;
+    return TimeConverter::convertTime(TimeConverter::ConverstionType::LOG, systemSeconds);
 }
 
 std::string Logger::formatLogType(LogType logType)

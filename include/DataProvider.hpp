@@ -24,7 +24,6 @@ public:
     std::time_t getCurrentTime() const;
 
     const std::vector<HumidityData> &getHumidityData() const;
-    const std::string getCurrentTimeString() const;
 
     void setTemperature(const float temperature);
     void setRoomHumidity(const float roomHumidity);

@@ -6,6 +6,7 @@
  */
 #include "handler/SDCardHandler.hpp"
 #include "Logger.hpp"
+#include "TimeConverter.hpp"
 
 SDCardHandler::SDCardHandler(uint8_t pinSck, uint8_t pinMiso, uint8_t pinMosi, uint8_t pinCs) : m_spi(VSPI)
 {
@@ -75,7 +76,8 @@ void SDCardHandler::init()
 {
   m_logger->log(Logger::INFO, "SDCardHandler - Init");
   initSDCard();
-  m_logName = "/log-" + std::string(m_dataProvider->getCurrentTimeString()) + ".txt";
+  std::string dateString = TimeConverter::convertTime(TimeConverter::ConverstionType::FILE, m_dataProvider->getCurrentTime());
+  m_logName = "/log-" + dateString + ".txt";
   startLogs(m_logName, "Plant-Master-Logs-Init");
 }
 

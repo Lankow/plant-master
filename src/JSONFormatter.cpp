@@ -7,6 +7,7 @@
 #include <sstream>
 #include <vector>
 #include "JSONFormatter.hpp"
+#include "TimeConverter.hpp"
 
 JSONFormatter::JSONFormatter(DataProvider *dataProvider) : m_dataProvider(dataProvider){};
 
@@ -53,7 +54,7 @@ std::string JSONFormatter::serialize(JSONType jsonType)
     case SENSOR:
         return createJsonProperty("sensor", std::to_string(m_dataProvider->getSensorToWater()));
     case TIME:
-        return createJsonProperty("time", m_dataProvider->getCurrentTimeString());
+        return createJsonProperty("time", TimeConverter::convertTime(TimeConverter::ConverstionType::JSON, m_dataProvider->getCurrentTime()));
     case HUMIDITY:
         return buildHumidityJson();
     default:
