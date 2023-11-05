@@ -9,7 +9,7 @@
 #include "TimeConverter.hpp"
 #include "constants.hpp"
 
-std::string TimeConverter::convertTime(ConverstionType type, time_t time)
+std::string TimeConverter::convertTime(const ConverstionType type, const time_t time)
 {
   std::stringstream ss;
 

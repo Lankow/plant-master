@@ -16,7 +16,7 @@
 class SDCardHandler : public Component
 {
 public:
-  SDCardHandler(uint8_t pinSck, uint8_t pinMiso, uint8_t pinMosi, uint8_t pinCs);
+  SDCardHandler(const uint8_t pinSck, const uint8_t pinMiso, const uint8_t pinMosi, const uint8_t pinCs);
 
   void init() override;
   void cyclic() override;
@@ -30,7 +30,7 @@ private:
   void initSDCard();
 
   void startLogs(const std::string &path, const std::string &message);
-  void appendLogs(const std::string &message);
+  void appendLogs(const std::string &message) const;
 };
 
 #endif // SD_CARD_HANDLER_HPP

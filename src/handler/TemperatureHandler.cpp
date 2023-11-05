@@ -7,7 +7,7 @@
 #include "handler/TemperatureHandler.hpp"
 #include "Logger.hpp"
 
-TemperatureHandler::TemperatureHandler(int pin) : m_dht(pin, DHT11)
+TemperatureHandler::TemperatureHandler(const uint8_t pin) : m_dht(pin, DHT11)
 {
   m_dht.begin();
 };

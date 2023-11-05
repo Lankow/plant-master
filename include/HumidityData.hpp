@@ -17,9 +17,9 @@ public:
   uint16_t getHumidityThreshold() const;
   bool getHumidityActive() const;
 
-  void setCurrentHumidityLvl(uint16_t readHumidity);
-  void setHumidityThreshold(uint16_t newThreshold);
-  void setHumidityActive(bool humidityState);
+  void setCurrentHumidityLvl(const uint16_t readHumidity);
+  void setHumidityThreshold(const uint16_t newThreshold);
+  void setHumidityActive(const bool humidityState);
 
 private:
   uint16_t m_currentHumidityLvl = DEFAULT_HUMIDITY_LVL;

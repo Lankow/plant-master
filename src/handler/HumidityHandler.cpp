@@ -10,8 +10,8 @@
 
 static uint8_t m_idCounter;
 
-HumidityHandler::HumidityHandler(uint8_t operatedPin)
-    : m_operatedPin(operatedPin), m_handlerId(m_idCounter++){};
+HumidityHandler::HumidityHandler(const uint8_t pin)
+    : m_operatedPin(pin), m_handlerId(m_idCounter++){};
 
 void HumidityHandler::handleHumidity()
 {

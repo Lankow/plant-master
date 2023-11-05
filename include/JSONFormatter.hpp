@@ -23,12 +23,12 @@ public:
   };
 
   JSONFormatter(std::shared_ptr<const DataProvider> dataProvider);
-  std::string serialize(JSONType jsonType);
+  const std::string serialize(const JSONType jsonType);
 
 private:
   std::shared_ptr<const DataProvider> m_dataProvider;
-  std::string buildHumidityJson();
-  std::string createSensorJson(int sensorIndex);
-  std::string createJsonProperty(const std::string &name, const std::string &value);
+  const std::string buildHumidityJson();
+  const std::string createSensorJson(const int sensorIndex);
+  const std::string createJsonProperty(const std::string &name, const std::string &value);
 };
 #endif // JSON_FORMATTER_HPP

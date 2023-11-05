@@ -17,6 +17,6 @@ public:
 
 private:
     void handleTime();
-    bool retrieveTimeWithRetries(int maxRetries, int retryDelayMs);
+    bool retrieveTimeWithRetries(const int maxRetries, const int retryDelayMs);
 };
 #endif // TIME_HANDLER_HPP

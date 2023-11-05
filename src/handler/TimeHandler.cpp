@@ -17,7 +17,7 @@ void TimeHandler::handleTime()
     m_dataProvider->setCurrentTime(in_time_t);
 }
 
-bool TimeHandler::retrieveTimeWithRetries(int maxRetries, int retryDelayMs)
+bool TimeHandler::retrieveTimeWithRetries(const int maxRetries, const int retryDelayMs)
 {
     for (int i = 0; i < maxRetries; i++)
     {

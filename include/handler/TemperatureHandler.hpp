@@ -13,7 +13,7 @@
 class TemperatureHandler : public Component
 {
 public:
-  TemperatureHandler(int pin);
+  TemperatureHandler(const uint8_t pin);
 
   void init() override;
   void cyclic() override;

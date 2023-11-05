@@ -19,6 +19,6 @@ public:
     LOG
   };
 
-  static std::string convertTime(ConverstionType type, time_t time);
+  static std::string convertTime(const ConverstionType type, const time_t time);
 };
 #endif // TIME_CONVERTER_HPP

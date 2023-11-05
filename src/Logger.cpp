@@ -8,7 +8,7 @@
 #include "Logger.hpp"
 #include "TimeConverter.hpp"
 
-Logger::Logger(std::shared_ptr<SDCardHandler> sdCardHandler) : m_sdCardHandler(sdCardHandler) {}
+Logger::Logger(std::shared_ptr<const SDCardHandler> sdCardHandler) : m_sdCardHandler(sdCardHandler) {}
 
 std::string Logger::formatSysTime()
 {
@@ -16,7 +16,7 @@ std::string Logger::formatSysTime()
     return TimeConverter::convertTime(TimeConverter::ConverstionType::LOG, systemSeconds);
 }
 
-std::string Logger::formatLogType(LogType logType)
+std::string Logger::formatLogType(const LogType logType)
 {
     switch (logType)
     {
@@ -33,11 +33,11 @@ std::string Logger::formatLogType(LogType logType)
     }
 }
 
-void Logger::log(LogType logType, std::string message)
+void Logger::log(const LogType logType, const std::string message)
 {
     std::string logMessage = formatSysTime() + " - " + formatLogType(logType) + " - " + message;
     outputLogMessage(logMessage);
-    m_sdCardHandler->appendLogs(logMessage.c_str());
+    m_sdCardHandler->appendLogs(message);
 }
 
 void Logger::outputLogMessage(const std::string &logMessage)

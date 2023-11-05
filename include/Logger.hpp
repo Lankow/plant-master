@@ -14,7 +14,7 @@
 class Logger
 {
 public:
-  Logger(std::shared_ptr<SDCardHandler> sdCardHandler);
+  Logger(std::shared_ptr<const SDCardHandler> sdCardHandler);
 
   enum LogType
   {
@@ -24,14 +24,14 @@ public:
     INFO
   };
 
-  void log(LogType logType, std::string message);
+  void log(LogType logType, const std::string message);
 
 private:
-  std::shared_ptr<SDCardHandler> m_sdCardHandler;
+  std::shared_ptr<const SDCardHandler> m_sdCardHandler;
   std::string m_formattedSysTime[SYSTIME_LENGTH];
 
   std::string formatSysTime();
-  std::string formatLogType(LogType logType);
+  std::string formatLogType(const LogType logType);
   void outputLogMessage(const std::string &logMessage);
 };
 

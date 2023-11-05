@@ -11,7 +11,7 @@
 
 JSONFormatter::JSONFormatter(std::shared_ptr<const DataProvider> dataProvider) : m_dataProvider(dataProvider){};
 
-std::string JSONFormatter::createSensorJson(int sensorIndex)
+const std::string JSONFormatter::createSensorJson(const int sensorIndex)
 {
     std::ostringstream jsonOss;
     const std::vector<HumidityData> humidityData = m_dataProvider->getHumidityData();
@@ -23,7 +23,7 @@ std::string JSONFormatter::createSensorJson(int sensorIndex)
     return jsonOss.str();
 }
 
-std::string JSONFormatter::buildHumidityJson()
+const std::string JSONFormatter::buildHumidityJson()
 {
     std::ostringstream jsonOss;
     jsonOss << "{\"humidity\": [";
@@ -43,7 +43,7 @@ std::string JSONFormatter::buildHumidityJson()
     return jsonOss.str();
 }
 
-std::string JSONFormatter::serialize(JSONType jsonType)
+const std::string JSONFormatter::serialize(const JSONType jsonType)
 {
     switch (jsonType)
     {
@@ -62,7 +62,7 @@ std::string JSONFormatter::serialize(JSONType jsonType)
     }
 }
 
-std::string JSONFormatter::createJsonProperty(const std::string &name, const std::string &value)
+const std::string JSONFormatter::createJsonProperty(const std::string &name, const std::string &value)
 {
     return "{\"" + name + "\":" + value + "}";
 }

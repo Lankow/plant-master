@@ -12,7 +12,7 @@
 class HumidityHandler : public Component
 {
 public:
-    HumidityHandler(uint8_t pin);
+    HumidityHandler(const uint8_t pin);
 
     void handleHumidity();
     void init() override;

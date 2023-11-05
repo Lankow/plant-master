@@ -8,7 +8,7 @@
 #include "Logger.hpp"
 #include "TimeConverter.hpp"
 
-SDCardHandler::SDCardHandler(uint8_t pinSck, uint8_t pinMiso, uint8_t pinMosi, uint8_t pinCs) : m_spi(VSPI)
+SDCardHandler::SDCardHandler(const uint8_t pinSck, const uint8_t pinMiso, const uint8_t pinMosi, const uint8_t pinCs) : m_spi(VSPI)
 {
   m_spi.begin(pinSck, pinMiso, pinMosi, pinCs);
 };
@@ -53,7 +53,7 @@ void SDCardHandler::startLogs(const std::string &path, const std::string &messag
   file.close();
 }
 
-void SDCardHandler::appendLogs(const std::string &message)
+void SDCardHandler::appendLogs(const std::string &message) const
 {
   File file = SD.open(m_logName.c_str(), FILE_APPEND);
   if (!file)
