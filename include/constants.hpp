@@ -28,6 +28,9 @@ static const uint8_t NO_SENSOR = 0xFF;
 static const uint8_t FIRST_SENSOR = 0;
 static const uint8_t LAST_SENSOR = MAX_SENSORS_NO;
 
+static const uint8_t PUMP_ON = 1;
+static const uint8_t PUMP_OFF = 0;
+
 // DEFAULT VALUES
 static const long DEFAULT_TIME = 0;
 static const float DEFAULT_TEMPERATURE = 0;
@@ -51,6 +54,7 @@ enum EspPins : uint8_t
   PIN_20 = 20,
   PIN_21 = 21,
   PIN_23 = 23,
+  PIN_32 = 32,
   PIN_34 = 34,
   PIN_35 = 35
 };

@@ -6,19 +6,21 @@
  */
 #include "handler/PumpHandler.hpp"
 #include "Logger.hpp"
+#include "constants.hpp"
+
+PumpHandler::PumpHandler(const uint8_t pin) : m_operatedPin(pin){};
 
 void PumpHandler::handlePump()
 {
     uint8_t sensorToWater = m_dataProvider->getSensorToWater();
 
-    switch (sensorToWater)
+    if (sensorToWater != NO_SENSOR)
     {
-    case NO_SENSOR:
-        // Turn off Pump
-        break;
-    default:
-        // Launch Pump
-        break;
+        analogWrite(m_operatedPin, PUMP_ON);
+    }
+    else
+    {
+        analogWrite(m_operatedPin, PUMP_OFF);
     }
 }
 
