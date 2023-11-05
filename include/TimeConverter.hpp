@@ -6,6 +6,7 @@
  */
 #ifndef TIME_CONVERTER_HPP
 #define TIME_CONVERTER_HPP
+
 #include <Arduino.h>
 
 class TimeConverter

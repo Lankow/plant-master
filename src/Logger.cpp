@@ -33,7 +33,7 @@ std::string Logger::formatLogType(LogType logType)
     }
 }
 
-void Logger::log(LogType logType, const char *message)
+void Logger::log(LogType logType, std::string message)
 {
     std::string logMessage = formatSysTime() + " - " + formatLogType(logType) + " - " + message;
     outputLogMessage(logMessage);

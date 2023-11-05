@@ -6,6 +6,7 @@
  */
 #ifndef DATA_PROVIDER_HPP
 #define DATA_PROVIDER_HPP
+
 #include <Arduino.h>
 #include <vector>
 #include <chrono>

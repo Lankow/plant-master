@@ -9,7 +9,7 @@
 #include "JSONFormatter.hpp"
 #include "TimeConverter.hpp"
 
-JSONFormatter::JSONFormatter(DataProvider *dataProvider) : m_dataProvider(dataProvider){};
+JSONFormatter::JSONFormatter(std::shared_ptr<const DataProvider> dataProvider) : m_dataProvider(dataProvider){};
 
 std::string JSONFormatter::createSensorJson(int sensorIndex)
 {

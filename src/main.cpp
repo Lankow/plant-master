@@ -25,8 +25,8 @@ std::shared_ptr<ValveHandler> valveHandler = std::make_shared<ValveHandler>();
 std::shared_ptr<PumpHandler> pumpHandler = std::make_shared<PumpHandler>();
 std::shared_ptr<DataManager> dataManager = std::make_shared<DataManager>();
 
-DataProvider dataProvider;
-Logger logger(sdCardHandler);
+std::shared_ptr<DataProvider> dataProvider = std::make_shared<DataProvider>();
+std::shared_ptr<Logger> logger = std::make_shared<Logger>(sdCardHandler);
 
 // Create an array of shared pointers to components.
 std::shared_ptr<Component> components[] = {
@@ -47,8 +47,8 @@ void setup()
   // Set data provider and logger for each component.
   for (auto &component : components)
   {
-    component->setDataProvider(&dataProvider);
-    component->setLogger(&logger);
+    component->setDataProvider(dataProvider);
+    component->setLogger(logger);
   }
 
   // Initialize components.

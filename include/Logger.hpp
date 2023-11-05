@@ -6,8 +6,8 @@
  */
 #ifndef LOGGER_HPP
 #define LOGGER_HPP
-#include <memory.h>
 
+#include <memory.h>
 #include "constants.hpp"
 #include "handler/SDCardHandler.hpp"
 
@@ -24,7 +24,7 @@ public:
     INFO
   };
 
-  void log(LogType logType, const char *message);
+  void log(LogType logType, std::string message);
 
 private:
   std::shared_ptr<SDCardHandler> m_sdCardHandler;
