@@ -35,6 +35,7 @@ static const uint8_t PUMP_OFF = 0;
 static const long DEFAULT_TIME = 0;
 static const float DEFAULT_TEMPERATURE = 0;
 static const float DEFAULT_ROOM_HUMIDITY = 0;
+static const uint8_t DEFAULT_CYCLES = 0;
 
 static const uint16_t DEFAULT_HUMIDITY_LVL = ANALOG_PIN_MAX;
 static const uint16_t DEFAULT_THRESHOLD = ANALOG_PIN_MAX;
@@ -47,6 +48,7 @@ static const std::string CONVERSION_ERROR = "YY-MM-DD HH-MM-SS";
 enum EspPins : uint8_t
 {
   PIN_LED_BUILTIN = 2,
+  PIN_4 = 4,
   PIN_5 = 5,
   PIN_17 = 17,
   PIN_18 = 18,

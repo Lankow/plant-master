@@ -22,7 +22,7 @@ std::shared_ptr<HumidityHandler> humidityHandler1 = std::make_shared<HumidityHan
 std::shared_ptr<HumidityHandler> humidityHandler2 = std::make_shared<HumidityHandler>(EspPins::PIN_35);
 std::shared_ptr<TemperatureHandler> temperatureHandler = std::make_shared<TemperatureHandler>(EspPins::PIN_21);
 std::shared_ptr<ValveHandler> valveHandler = std::make_shared<ValveHandler>();
-std::shared_ptr<PumpHandler> pumpHandler = std::make_shared<PumpHandler>(EspPins::PIN_32);
+std::shared_ptr<PumpHandler> pumpHandler = std::make_shared<PumpHandler>(EspPins::PIN_4);
 std::shared_ptr<DataManager> dataManager = std::make_shared<DataManager>();
 
 std::shared_ptr<DataProvider> dataProvider = std::make_shared<DataProvider>();

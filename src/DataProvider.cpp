@@ -31,6 +31,11 @@ uint8_t DataProvider::getSensorToWater() const
     return m_sensorToWater;
 }
 
+uint8_t DataProvider::getWateringCycles() const
+{
+    return m_wateringCycles;
+};
+
 std::time_t DataProvider::getCurrentTime() const
 {
     return m_currentTime;
@@ -77,3 +82,13 @@ void DataProvider::setHandlerActive(const uint8_t handlerId, const bool isActive
 {
     m_humidityData[handlerId].setHumidityActive(isActive);
 };
+
+void DataProvider::incrementWateringCycles()
+{
+    m_sensorToWater++;
+}
+
+void DataProvider::clearWateringCycles()
+{
+    m_sensorToWater = 0;
+}

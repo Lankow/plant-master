@@ -16,11 +16,13 @@ void PumpHandler::handlePump()
 
     if (sensorToWater != NO_SENSOR)
     {
-        analogWrite(m_operatedPin, PUMP_ON);
+        digitalWrite(m_operatedPin, PUMP_ON);
+        m_dataProvider->incrementWateringCycles();
     }
     else
     {
-        analogWrite(m_operatedPin, PUMP_OFF);
+        digitalWrite(m_operatedPin, PUMP_OFF);
+        m_dataProvider->clearWateringCycles();
     }
 }
 

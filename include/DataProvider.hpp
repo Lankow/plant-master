@@ -22,6 +22,7 @@ public:
     float getTemperature() const;
     float getRoomHumidity() const;
     uint8_t getSensorToWater() const;
+    uint8_t getWateringCycles() const;
     std::time_t getCurrentTime() const;
 
     const std::vector<HumidityData> &getHumidityData() const;
@@ -35,6 +36,9 @@ public:
     void setHandlerThreshold(const uint8_t handlerId, const uint16_t threshold);
     void setHandlerActive(const uint8_t handlerId, const bool isActive);
 
+    void incrementWateringCycles();
+    void clearWateringCycles();
+
 private:
     std::time_t m_currentTime = DEFAULT_TIME;
     float m_temperature = DEFAULT_TEMPERATURE;
@@ -42,5 +46,6 @@ private:
 
     std::vector<HumidityData> m_humidityData;
     uint8_t m_sensorToWater = NO_SENSOR;
+    uint8_t m_wateringCycles = DEFAULT_CYCLES;
 };
 #endif // DATA_PROVIDER_HPP
