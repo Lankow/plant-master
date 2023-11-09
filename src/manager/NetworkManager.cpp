@@ -61,6 +61,13 @@ void NetworkManager::updateTimeViaNTP()
 
 void NetworkManager::startServer()
 {
+  DefaultHeaders::Instance().addHeader("Access-Control-Allow-Origin", "*");
+  DefaultHeaders::Instance().addHeader("Access-Control-Allow-Methods", "GET, POST, PUT");
+  DefaultHeaders::Instance().addHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  m_server.on("/*", HTTP_OPTIONS, [this](AsyncWebServerRequest *request)
+              { request->send(200); });
+
   m_server.on("/humidity", HTTP_GET, [this](AsyncWebServerRequest *request)
               { request->send(200, "application/json", m_JSONFormatter.serialize(JSONFormatter::HUMIDITY).c_str()); });
 
