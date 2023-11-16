@@ -29,4 +29,3 @@ def createClientApp( source, target, env ):
         print(f"Error building Client App in ./{react_proj_dir}")
         return    
     os.chdir('..')
-env.AddPreAction( '$BUILD_DIR/littlefs.bin', createPlantMasterReact )
