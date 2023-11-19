@@ -1,37 +1,16 @@
-import React from "react"
-import { Footer } from "./Footer"
-import { HumiditySensor } from "./HumiditySensor"
-import { TopBar } from "./TopBar"
+import Button from "@mui/material/Button"
 
-type HumiditySensorState = {
-  id: number
-  currentHumidityLvl: number
-  humidityThreshold: number
-  humidityActive: boolean
-}
-
-class App extends React.Component<undefined, HumiditySensorState> {
-  state: HumiditySensorState = {
-    id: 0,
-    currentHumidityLvl: 0,
-    humidityThreshold: 0,
-    humidityActive: false
-  }
-
-  render() {
-    return (
+function App() {
+  return (
+    <div id="root">
       <div>
-        <TopBar />
-        <HumiditySensor
-          id={this.state.id} //
-          currentHumidityLvl={this.state.currentHumidityLvl}
-          humidityThreshold={this.state.humidityThreshold}
-          humidityActive={this.state.humidityActive}
-        />
-        <Footer />
+        <h1>
+          <span>Plant-Master</span>
+        </h1>
+        <Button variant="contained">Update Humidity LVL</Button>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default App
