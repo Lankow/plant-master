@@ -1,7 +1,5 @@
 import React from "react"
 
-export class Footer extends React.Component<null, null> {
-  render() {
-    return <p>Footer</p>
-  }
+export const Footer: React.FC = () => {
+  return <div>Plant-Master by Lankow © 2023 </div>
 }
