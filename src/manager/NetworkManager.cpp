@@ -18,6 +18,12 @@ void NetworkManager::init()
   m_JSONFormatter = JSONFormatter(m_dataProvider);
   uint8_t connectionCounter = 0;
 
+  if (!WiFi.config(LOCAL_IP, GATEWAY, SUBNET, PRIMARY_DNS, SECONDARY_DNS))
+  {
+    Serial.println("STA Failed to configure");
+    return;
+  }
+
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.printf("Connecting to SSID: %s \n", WIFI_SSID);
 

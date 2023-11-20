@@ -16,7 +16,7 @@ static const uint16_t ANALOG_PIN_MIN = 0;
 
 static const uint16_t MIN_TIME_VAL = 1000;
 
-// NTP AND GMT CONSTANTS
+// NETWORK CONSTANTS
 static const std::string NTP_SERVER_PL_0 = "0.pl.pool.ntp.org";
 static const std::string NTP_SERVER_PL_1 = "0.pl.pool.ntp.org";
 static const std::string NTP_SERVER_PL_2 = "2.pl.pool.ntp.org";
@@ -30,6 +30,13 @@ static const uint8_t LAST_SENSOR = MAX_SENSORS_NO;
 
 static const uint8_t PUMP_ON = 1;
 static const uint8_t PUMP_OFF = 0;
+
+static const IPAddress LOCAL_IP(192, 168, 1, 184);
+static const IPAddress GATEWAY(192, 168, 1, 1);
+
+static const IPAddress SUBNET(255, 255, 0, 0);
+static const IPAddress PRIMARY_DNS(8, 8, 8, 8);
+static const IPAddress SECONDARY_DNS(8, 8, 4, 4);
 
 // DEFAULT VALUES
 static const long DEFAULT_TIME = 0;
