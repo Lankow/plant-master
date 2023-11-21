@@ -16,8 +16,11 @@
 class NetworkManager : public Component
 {
 private:
-    void updateTimeViaNTP();
-    void startServer();
+    void initWiFi();
+    void initTimeViaNTP();
+    void initSPIFFS();
+    void initServer();
+    void initWebSocket();
 
 public:
     void init() override;

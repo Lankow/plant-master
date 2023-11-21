@@ -35,9 +35,9 @@ std::string Logger::formatLogType(const LogType logType)
 
 void Logger::log(const LogType logType, const std::string message)
 {
-    std::string logMessage = formatSysTime() + " - " + formatLogType(logType) + " - " + message;
-    outputLogMessage(logMessage);
-    m_sdCardHandler->appendLogs(message);
+    // std::string logMessage = formatSysTime() + " - " + formatLogType(logType) + " - " + message;
+    // outputLogMessage(logMessage);
+    // m_sdCardHandler->appendLogs(message);
 }
 
 void Logger::outputLogMessage(const std::string &logMessage)
