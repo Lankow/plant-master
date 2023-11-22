@@ -28,6 +28,8 @@ void NetworkManager::init()
 void NetworkManager::cyclic()
 {
   m_logger->log(Logger::INFO, "NetworkManager - Cyclic Task");
+  std::string message = m_JSONFormatter.serialize(JSONFormatter::HUMIDITY);
+  m_websocket.textAll(message.c_str());
 };
 
 void redirectToIndex(AsyncWebServerRequest *request)
