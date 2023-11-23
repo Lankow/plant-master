@@ -1,5 +1,5 @@
 import { IMessageEvent, w3cwebsocket } from "websocket"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import Button from "@mui/material/Button"
 
 function App() {
@@ -9,10 +9,17 @@ function App() {
     websocket.current = new w3cwebsocket("ws://192.168.1.184/ws")
     websocket.current.onmessage = (message: IMessageEvent) => {
       const dataFromServer = JSON.parse(message.data.toString())
-      console.log(dataFromServer.humidity)
+      setSensors(dataFromServer.humidity)
     }
     return () => websocket.current?.close()
   }, [])
+
+  const initialSensors = Array.from({ length: 10 }, () => ({
+    lvl: 0,
+    threshold: 50,
+    active: false
+  }))
+  const [sensors, setSensors] = useState(initialSensors)
 
   return (
     <div id="root">
@@ -20,6 +27,14 @@ function App() {
         <h1>
           <span>Plant-Master</span>
         </h1>
+        {sensors.map((sensor, index) => (
+          <div key={index}>
+            <p>Current Level: {sensor.lvl}</p>
+            <p>Threshold: {sensor.threshold}</p>
+            <p>Active: {sensor.active ? "Yes" : "No"}</p>
+            <hr />
+          </div>
+        ))}
         <Button variant="contained">Update Humidity LVL</Button>
       </div>
     </div>
