@@ -8,7 +8,7 @@
 #define CONSTANTS_HPP
 
 // MIN MAX VALUES
-static const uint8_t MAX_SENSORS_NO = 10;
+static const uint8_t MAX_SENSORS_NO = 8;
 static const uint8_t MAX_RETRIES = 10;
 
 static const uint16_t ANALOG_PIN_MAX = 4095;

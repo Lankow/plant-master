@@ -17,7 +17,7 @@ function App() {
     return () => websocket.current?.close()
   }, [])
 
-  const initialSensors = Array.from({ length: 10 }, () => ({
+  const initialSensors = Array.from({ length: 8 }, () => ({
     lvl: 0,
     threshold: 0,
     active: false
@@ -25,12 +25,12 @@ function App() {
   const [sensors, setSensors] = useState(initialSensors)
 
   return (
-    <Box id="root">
+    <Box id="root" sx={{ background: "#8ebeed", height: "100%" }}>
       <CssBaseline />
       <TopBar />
       <Container sx={{ p: 2 }}>
-        <Grid container spacing={2}>
-          {sensors.map((sensor, index) => (sensor.active ? <HumiditySensor key={index} {...sensor} /> : null))}
+        <Grid container spacing={3}>
+          {sensors.map((sensor, index) => (!sensor.active ? <HumiditySensor key={index} {...sensor} /> : null))}
         </Grid>
       </Container>
       <Footer />
