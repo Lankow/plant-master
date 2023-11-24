@@ -38,7 +38,7 @@ const EditSensorModal: React.FC<EditSensorModalProps> = ({
         </Typography>
         <Slider
           value={editedThreshold} //
-          onChange={(event, value) => setEditedThreshold(value as number)}
+          onChange={(_event, value) => setEditedThreshold(value as number)}
           valueLabelDisplay="auto"
           valueLabelFormat={value => value.toString()}
           step={100}
