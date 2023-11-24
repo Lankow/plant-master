@@ -120,7 +120,6 @@ void NetworkManager::initServer()
   DefaultHeaders::Instance().addHeader("Access-Control-Allow-Headers", "Content-Type");
 
   m_server.serveStatic("/", SPIFFS, "/").setDefaultFile("index.html");
-  m_server.serveStatic("/index-5d8cdb92.js", SPIFFS, "/index-5d8cdb92.js");
   m_server.onNotFound(redirectToIndex);
   m_server.begin();
 };

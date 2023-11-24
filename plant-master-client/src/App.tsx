@@ -1,6 +1,9 @@
 import { IMessageEvent, w3cwebsocket } from "websocket"
 import { useEffect, useRef, useState } from "react"
-import Button from "@mui/material/Button"
+import { TopBar } from "./TopBar"
+import { Box, Container, CssBaseline, Grid } from "@mui/material"
+import HumiditySensor from "./HumiditySensor"
+import { Footer } from "./Footer"
 
 function App() {
   const websocket = useRef<w3cwebsocket | null>(null)
@@ -16,28 +19,22 @@ function App() {
 
   const initialSensors = Array.from({ length: 10 }, () => ({
     lvl: 0,
-    threshold: 50,
+    threshold: 0,
     active: false
   }))
   const [sensors, setSensors] = useState(initialSensors)
 
   return (
-    <div id="root">
-      <div>
-        <h1>
-          <span>Plant-Master</span>
-        </h1>
-        {sensors.map((sensor, index) => (
-          <div key={index}>
-            <p>Current Level: {sensor.lvl}</p>
-            <p>Threshold: {sensor.threshold}</p>
-            <p>Active: {sensor.active ? "Yes" : "No"}</p>
-            <hr />
-          </div>
-        ))}
-        <Button variant="contained">Update Humidity LVL</Button>
-      </div>
-    </div>
+    <Box id="root">
+      <CssBaseline />
+      <TopBar />
+      <Container sx={{ p: 2 }}>
+        <Grid container spacing={2}>
+          {sensors.map((sensor, index) => (sensor.active ? <HumiditySensor key={index} {...sensor} /> : null))}
+        </Grid>
+      </Container>
+      <Footer />
+    </Box>
   )
 }
 
