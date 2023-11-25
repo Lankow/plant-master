@@ -8,16 +8,16 @@
 #include "config.hpp"
 #include "constants.hpp"
 #include "Logger.hpp"
-#include "JSONFormatter.hpp"
+#include "handler/JSONHandler.hpp"
 #include "SPIFFS.h"
 
 AsyncWebServer m_server(80);
 AsyncWebSocket m_websocket("/ws");
-JSONFormatter m_JSONFormatter(nullptr);
+JSONHandler m_JSONHandler(nullptr);
 
 void NetworkManager::init()
 {
-  m_JSONFormatter = JSONFormatter(m_dataProvider);
+  m_JSONHandler = JSONHandler(m_dataProvider);
   initWiFi();
   initTimeViaNTP();
   initSPIFFS();
@@ -28,7 +28,7 @@ void NetworkManager::init()
 void NetworkManager::cyclic()
 {
   m_logger->log(Logger::INFO, "NetworkManager - Cyclic Task");
-  std::string message = m_JSONFormatter.serialize(JSONFormatter::HUMIDITY);
+  std::string message = m_JSONHandler.serialize(JSONHandler::HUMIDITY);
   m_websocket.textAll(message.c_str());
 };
 
@@ -48,6 +48,8 @@ void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType 
     Serial.printf("WebSocket client #%u disconnected\n", client->id());
     break;
   case WS_EVT_DATA:
+    m_JSONHandler.handleData(data, len);
+    break;
   case WS_EVT_PONG:
   case WS_EVT_ERROR:
     break;

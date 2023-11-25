@@ -1,5 +1,5 @@
 /*
- *   JSONFormatter.hpp
+ *   JSONHandler.hpp
  *   ----------------------
  *   Created on: 2023/10/20
  *   Author: Lankow
@@ -8,9 +8,10 @@
 #define JSON_FORMATTER_HPP
 
 #include <memory> // Include the memory header for std::shared_ptr
+#include <ArduinoJson.h>
 #include "DataProvider.hpp"
 
-class JSONFormatter
+class JSONHandler
 {
 public:
   enum JSONType
@@ -22,11 +23,14 @@ public:
     SENSOR
   };
 
-  JSONFormatter(std::shared_ptr<const DataProvider> dataProvider);
+  JSONHandler(std::shared_ptr<DataProvider> dataProvider);
+  void handleData(uint8_t *data, size_t len);
   const std::string serialize(const JSONType jsonType);
 
 private:
-  std::shared_ptr<const DataProvider> m_dataProvider;
+  std::shared_ptr<DataProvider> m_dataProvider;
+  StaticJsonDocument<BUFFER_SIZE> m_receivedJson;
+
   const std::string buildHumidityJson();
   const std::string createSensorJson(const int sensorIndex);
   const std::string createJsonProperty(const std::string &name, const std::string &value);

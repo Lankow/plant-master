@@ -1,17 +1,18 @@
 /*
- *   JSONFormatter.cpp
+ *   JSONHandler.cpp
  *   ----------------------
  *   Created on: 2023/10/20
  *   Author: Lankow
  */
 #include <sstream>
 #include <vector>
-#include "JSONFormatter.hpp"
+#include "handler/JSONHandler.hpp"
 #include "TimeConverter.hpp"
+#include <ArduinoJson.h>
 
-JSONFormatter::JSONHandler(std::shared_ptr<const DataProvider> dataProvider) : m_dataProvider(dataProvider){};
+JSONHandler::JSONHandler(std::shared_ptr<DataProvider> dataProvider) : m_dataProvider(dataProvider){};
 
-const std::string JSONFormatter::createSensorJson(const int sensorIndex)
+const std::string JSONHandler::createSensorJson(const int sensorIndex)
 {
     std::ostringstream jsonOss;
     const std::vector<HumidityData> humidityData = m_dataProvider->getHumidityData();
@@ -24,7 +25,7 @@ const std::string JSONFormatter::createSensorJson(const int sensorIndex)
     return jsonOss.str();
 }
 
-const std::string JSONFormatter::buildHumidityJson()
+const std::string JSONHandler::buildHumidityJson()
 {
     std::ostringstream jsonOss;
     jsonOss << "{\"humidity\": [";
@@ -44,7 +45,7 @@ const std::string JSONFormatter::buildHumidityJson()
     return jsonOss.str();
 }
 
-const std::string JSONFormatter::serialize(const JSONType jsonType)
+const std::string JSONHandler::serialize(const JSONType jsonType)
 {
     switch (jsonType)
     {
@@ -63,7 +64,41 @@ const std::string JSONFormatter::serialize(const JSONType jsonType)
     }
 }
 
-const std::string JSONFormatter::createJsonProperty(const std::string &name, const std::string &value)
+const std::string JSONHandler::createJsonProperty(const std::string &name, const std::string &value)
 {
     return "{\"" + name + "\":" + value + "}";
+}
+
+void JSONHandler::handleData(uint8_t *data, size_t len)
+{
+    DeserializationError error = deserializeJson(m_receivedJson, (char *)data, len);
+    if (error)
+    {
+        Serial.print(F("deserializeJson() failed: "));
+        Serial.println(error.f_str());
+        return;
+    }
+
+    if (!m_receivedJson.containsKey("id") || !m_receivedJson.containsKey("type"))
+    {
+        Serial.println(F("Missing required fields in JSON."));
+        return;
+    }
+
+    uint8_t id = m_receivedJson["id"];
+
+    if (strcmp(m_receivedJson["type"], "edit") == 0)
+    {
+        if (m_receivedJson.containsKey("threshold"))
+        {
+            uint16_t threshold = m_receivedJson["threshold"];
+            m_dataProvider->setHandlerThreshold(id, threshold);
+        }
+
+        if (m_receivedJson.containsKey("pin"))
+        {
+            uint8_t pin = m_receivedJson["pin"];
+            // PIN handling To be Added
+        }
+    }
 }

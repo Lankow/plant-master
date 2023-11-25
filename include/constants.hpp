@@ -7,7 +7,7 @@
 #ifndef CONSTANTS_HPP
 #define CONSTANTS_HPP
 
-// MIN MAX VALUES
+// MIN MAX VALUES AND SIZES
 static const uint8_t MAX_SENSORS_NO = 8;
 static const uint8_t MAX_RETRIES = 10;
 
@@ -15,6 +15,7 @@ static const uint16_t ANALOG_PIN_MAX = 4095;
 static const uint16_t ANALOG_PIN_MIN = 0;
 
 static const uint16_t MIN_TIME_VAL = 1000;
+static const uint16_t BUFFER_SIZE = 512;
 
 // NETWORK CONSTANTS
 static const std::string NTP_SERVER_PL_0 = "0.pl.pool.ntp.org";
