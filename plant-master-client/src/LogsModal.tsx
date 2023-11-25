@@ -2,21 +2,20 @@ import React from "react"
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from "@mui/material"
 
 interface LogsModalProps {
-  open: boolean
-  handleClose: () => void
+  open: string
+  handleCloseModal: () => void
 }
 
-const LogsModal: React.FC<LogsModalProps> = ({ open, handleClose }) => {
+const LogsModal: React.FC<LogsModalProps> = ({ open, handleCloseModal }) => {
   return (
     <>
-      {/* Modal for displaying logs */}
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open == "Logs"} onClose={handleCloseModal}>
         <DialogTitle>Logs</DialogTitle>
         <DialogContent>
           <DialogContentText>Logs TBD</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} variant="contained">
+          <Button onClick={handleCloseModal} variant="contained">
             Close
           </Button>
         </DialogActions>

@@ -9,14 +9,15 @@
 #include "JSONFormatter.hpp"
 #include "TimeConverter.hpp"
 
-JSONFormatter::JSONFormatter(std::shared_ptr<const DataProvider> dataProvider) : m_dataProvider(dataProvider){};
+JSONFormatter::JSONHandler(std::shared_ptr<const DataProvider> dataProvider) : m_dataProvider(dataProvider){};
 
 const std::string JSONFormatter::createSensorJson(const int sensorIndex)
 {
     std::ostringstream jsonOss;
     const std::vector<HumidityData> humidityData = m_dataProvider->getHumidityData();
 
-    jsonOss << "{\"lvl\":" << std::to_string(humidityData[sensorIndex].getCurrentHumidityLvl()) << ",";
+    jsonOss << "{\"id\":" << std::to_string(sensorIndex) << ",";
+    jsonOss << "\"lvl\":" << std::to_string(humidityData[sensorIndex].getCurrentHumidityLvl()) << ",";
     jsonOss << "\"threshold\":" << std::to_string(humidityData[sensorIndex].getHumidityThreshold()) << ",";
     jsonOss << "\"active\":" << std::to_string(humidityData[sensorIndex].getHumidityActive()) << "}";
 

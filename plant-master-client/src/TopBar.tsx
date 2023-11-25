@@ -1,22 +1,11 @@
 import { AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material"
-import React, { useState } from "react"
-import LogsModal from "./LogsModal"
+import React from "react"
 
-export const TopBar: React.FC = () => {
-  const [open, setOpen] = useState(false)
+interface TopBarProps {
+  handleOpenModal: (modal: string) => void
+}
 
-  const fetchLogs = () => {
-    console.log("Fetching logs...")
-  }
-
-  const handleClickOpen = () => {
-    fetchLogs()
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
+const TopBar: React.FC<TopBarProps> = ({ handleOpenModal }) => {
   return (
     <AppBar component="nav" position="static">
       <Container maxWidth="xl">
@@ -25,14 +14,15 @@ export const TopBar: React.FC = () => {
             Plant-Master
           </Typography>
           <Box sx={{ display: { sm: "block" } }}>
-            <Button sx={{ color: "#fff" }} onClick={handleClickOpen}>
+            <Button sx={{ color: "#fff" }}>About</Button>
+            <Button sx={{ color: "#fff" }} onClick={() => handleOpenModal("Logs")}>
               Get Logs
             </Button>
           </Box>
         </Toolbar>
-
-        <LogsModal open={open} handleClose={handleClose} />
       </Container>
     </AppBar>
   )
 }
+
+export default TopBar
