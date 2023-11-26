@@ -14,7 +14,9 @@ const TopBar: React.FC<TopBarProps> = ({ handleOpenModal }) => {
             Plant-Master
           </Typography>
           <Box sx={{ display: { sm: "block" } }}>
-            <Button sx={{ color: "#fff" }}>About</Button>
+            <Button sx={{ color: "#fff" }} onClick={() => handleOpenModal("About")}>
+              About
+            </Button>
             <Button sx={{ color: "#fff" }} onClick={() => handleOpenModal("Logs")}>
               Get Logs
             </Button>

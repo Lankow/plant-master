@@ -3,9 +3,8 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { Box, Container, CssBaseline, Grid } from "@mui/material"
 import HumiditySensor from "./HumiditySensor"
 import { Footer } from "./Footer"
-import EditSensorModal from "./EditSensorModal"
-import LogsModal from "./LogsModal"
 import TopBar from "./TopBar"
+import Modal from "./Modal"
 
 function App() {
   const initialPin: number = 0
@@ -86,7 +85,7 @@ function App() {
             !sensor.active ? (
               <HumiditySensor
                 key={index} //
-                id={sensor.id} //
+                id={sensor.id}
                 lvl={sensor.lvl}
                 threshold={sensor.threshold}
                 active={sensor.active}
@@ -98,16 +97,16 @@ function App() {
         </Grid>
       </Container>
       <Footer />
-      <EditSensorModal
-        open={openedModal} //
-        editedThreshold={editedThreshold}
+      <Modal
+        open={openedModal !== ""} //
+        openedModal={openedModal}
         editedPin={editedPin}
-        setEditedThreshold={setEditedThreshold}
+        editedThreshold={editedThreshold}
         setEditedPin={setEditedPin}
+        setEditedThreshold={setEditedThreshold}
         handleCloseModal={handleCloseModal}
         handleSaveChanges={handleSaveChanges}
       />
-      <LogsModal open={openedModal} handleCloseModal={handleCloseModal} />
     </Box>
   )
 }
