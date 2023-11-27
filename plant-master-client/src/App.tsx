@@ -21,10 +21,13 @@ function App() {
     setEditedThreshold(initialThreshold)
   }, [setEditedPin, setEditedThreshold])
 
-  const handleOpenModal = (modalName: string) => {
-    resetInputs()
-    setOpenedModal(modalName)
-  }
+  const handleOpenModal = useCallback(
+    (modalName: string) => {
+      resetInputs()
+      setOpenedModal(modalName)
+    },
+    [resetInputs]
+  )
 
   const handleCloseModal = useCallback(() => {
     setOpenedModal("")
@@ -48,6 +51,14 @@ function App() {
 
     websocket.current?.send(JSON.stringify(updatedData))
   }, [])
+
+  const handleGetLogs = useCallback(() => {
+    handleOpenModal("Logs")
+    const logsRequest: { type: string } = {
+      type: "logs"
+    }
+    websocket.current?.send(JSON.stringify(logsRequest))
+  }, [handleOpenModal])
 
   const handleSaveChanges = useCallback(() => {
     sendUpdate({
@@ -78,11 +89,11 @@ function App() {
   return (
     <Box id="root" sx={{ background: "#8ebeed", height: "100%" }}>
       <CssBaseline />
-      <TopBar handleOpenModal={handleOpenModal} />
+      <TopBar handleOpenModal={handleOpenModal} handleGetLogs={handleGetLogs} />
       <Container sx={{ p: 2 }}>
         <Grid container spacing={3}>
           {sensors.map((sensor, index) =>
-            !sensor.active ? (
+            sensor.active ? (
               <HumiditySensor
                 key={index} //
                 id={sensor.id}

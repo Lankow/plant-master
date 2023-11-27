@@ -3,9 +3,10 @@ import React from "react"
 
 interface TopBarProps {
   handleOpenModal: (modal: string) => void
+  handleGetLogs: () => void
 }
 
-const TopBar: React.FC<TopBarProps> = ({ handleOpenModal }) => {
+const TopBar: React.FC<TopBarProps> = ({ handleOpenModal, handleGetLogs }) => {
   return (
     <AppBar component="nav" position="static">
       <Container maxWidth="xl">
@@ -17,7 +18,7 @@ const TopBar: React.FC<TopBarProps> = ({ handleOpenModal }) => {
             <Button sx={{ color: "#fff" }} onClick={() => handleOpenModal("About")}>
               About
             </Button>
-            <Button sx={{ color: "#fff" }} onClick={() => handleOpenModal("Logs")}>
+            <Button sx={{ color: "#fff" }} onClick={() => handleGetLogs()}>
               Get Logs
             </Button>
           </Box>

@@ -79,16 +79,10 @@ void JSONHandler::handleData(uint8_t *data, size_t len)
         return;
     }
 
-    if (!m_receivedJson.containsKey("id") || !m_receivedJson.containsKey("type"))
-    {
-        Serial.println(F("Missing required fields in JSON."));
-        return;
-    }
-
-    uint8_t id = m_receivedJson["id"];
-
     if (strcmp(m_receivedJson["type"], "edit") == 0)
     {
+        uint8_t id = m_receivedJson["id"];
+
         if (m_receivedJson.containsKey("threshold"))
         {
             uint16_t threshold = m_receivedJson["threshold"];
@@ -100,5 +94,10 @@ void JSONHandler::handleData(uint8_t *data, size_t len)
             uint8_t pin = m_receivedJson["pin"];
             // PIN handling To be Added
         }
+    }
+    else if (strcmp(m_receivedJson["type"], "logs") == 0)
+    {
+        // Handle logs
+        Serial.println("Handle Logs");
     }
 }
