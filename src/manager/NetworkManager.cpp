@@ -28,7 +28,7 @@ void NetworkManager::init()
 void NetworkManager::cyclic()
 {
   m_logger->log(Logger::INFO, "NetworkManager - Cyclic Task");
-  std::string message = m_JSONHandler.serialize(JSONHandler::HUMIDITY);
+  std::string message = m_JSONHandler.serialize();
   m_websocket.textAll(message.c_str());
 };
 

@@ -7,6 +7,7 @@ import TopBar from "./TopBar"
 import Modal from "./Modal"
 
 function App() {
+  const debugMode: boolean = true
   const initialPin: number = 0
   const initialThreshold: number = 4000
 
@@ -93,7 +94,7 @@ function App() {
       <Container sx={{ p: 2 }}>
         <Grid container spacing={3}>
           {sensors.map((sensor, index) =>
-            sensor.active ? (
+            sensor.active || debugMode ? (
               <HumiditySensor
                 key={index} //
                 id={sensor.id}

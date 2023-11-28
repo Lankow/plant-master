@@ -8,65 +8,50 @@
 #include <vector>
 #include "handler/JSONHandler.hpp"
 #include "TimeConverter.hpp"
-#include <ArduinoJson.h>
 
 JSONHandler::JSONHandler(std::shared_ptr<DataProvider> dataProvider) : m_dataProvider(dataProvider){};
 
-const std::string JSONHandler::createSensorJson(const int sensorIndex)
+void JSONHandler::createSensorJson(JsonArray &humidityArray, const int sensorIndex)
 {
-    std::ostringstream jsonOss;
     const std::vector<HumidityData> humidityData = m_dataProvider->getHumidityData();
 
-    jsonOss << "{\"id\":" << std::to_string(sensorIndex) << ",";
-    jsonOss << "\"lvl\":" << std::to_string(humidityData[sensorIndex].getCurrentHumidityLvl()) << ",";
-    jsonOss << "\"threshold\":" << std::to_string(humidityData[sensorIndex].getHumidityThreshold()) << ",";
-    jsonOss << "\"active\":" << std::to_string(humidityData[sensorIndex].getHumidityActive()) << "}";
-
-    return jsonOss.str();
+    JsonObject sensorObject = humidityArray.createNestedObject();
+    sensorObject["id"] = sensorIndex;
+    sensorObject["lvl"] = humidityData[sensorIndex].getCurrentHumidityLvl();
+    sensorObject["threshold"] = humidityData[sensorIndex].getHumidityThreshold();
+    sensorObject["active"] = humidityData[sensorIndex].getHumidityActive();
 }
 
-const std::string JSONHandler::buildHumidityJson()
+const JsonArray JSONHandler::buildHumidityJson()
 {
-    std::ostringstream jsonOss;
-    jsonOss << "{\"humidity\": [";
     const int numSensors = MAX_SENSORS_NO;
+
+    DynamicJsonDocument doc(1024);
+    JsonArray humidityArray = doc.createNestedArray();
 
     for (int i = 0; i < numSensors; i++)
     {
-        jsonOss << createSensorJson(i);
-        if (i < numSensors - 1)
-        {
-            jsonOss << ",";
-        }
+        createSensorJson(humidityArray, i);
     }
 
-    jsonOss << "]}";
+    return humidityArray;
+}
+
+const std::string JSONHandler::serialize()
+{
+    DynamicJsonDocument doc(1024);
+
+    doc["room-humidity"] = m_dataProvider->getRoomHumidity();
+    doc["temperature"] = m_dataProvider->getTemperature();
+    doc["sensor"] = m_dataProvider->getSensorToWater();
+    doc["time"] = TimeConverter::convertTime(TimeConverter::ConverstionType::JSON, m_dataProvider->getCurrentTime());
+    doc["humidity"] = buildHumidityJson();
+
+    std::ostringstream jsonOss;
+
+    serializeJson(doc, jsonOss);
 
     return jsonOss.str();
-}
-
-const std::string JSONHandler::serialize(const JSONType jsonType)
-{
-    switch (jsonType)
-    {
-    case ROOM_HUMIDITY:
-        return createJsonProperty("room-humidity", std::to_string(m_dataProvider->getRoomHumidity()));
-    case TEMPERATURE:
-        return createJsonProperty("temperature", std::to_string(m_dataProvider->getTemperature()));
-    case SENSOR:
-        return createJsonProperty("sensor", std::to_string(m_dataProvider->getSensorToWater()));
-    case TIME:
-        return createJsonProperty("time", TimeConverter::convertTime(TimeConverter::ConverstionType::JSON, m_dataProvider->getCurrentTime()));
-    case HUMIDITY:
-        return buildHumidityJson();
-    default:
-        return "{}";
-    }
-}
-
-const std::string JSONHandler::createJsonProperty(const std::string &name, const std::string &value)
-{
-    return "{\"" + name + "\":" + value + "}";
 }
 
 void JSONHandler::handleData(uint8_t *data, size_t len)
