@@ -13,7 +13,7 @@
 class DataManager : public Component
 {
 private:
-    void checkHumidity();
+    Status checkHumidity();
 
 public:
     void init() override;

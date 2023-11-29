@@ -69,6 +69,14 @@ enum EspPins : uint8_t
   PIN_35 = 35
 };
 
+enum class Status
+{
+  OK,
+  NOT_OK,
+  ERROR,
+  ADDITIONAL_ACTION
+};
+
 // OTHER CONSTANTS
 #define DHT_TYPE DHT11
 #define SYSTIME_LENGTH 16

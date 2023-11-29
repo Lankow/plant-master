@@ -8,8 +8,10 @@
 #include "manager/DataManager.hpp"
 #include "Logger.hpp"
 
-void DataManager::checkHumidity()
+Status DataManager::checkHumidity()
 {
+    Status result = Status::OK;
+
     const std::vector<HumidityData> humidityData = m_dataProvider->getHumidityData();
 
     for (int i = 0; i < MAX_SENSORS_NO; i++)
@@ -18,11 +20,12 @@ void DataManager::checkHumidity()
         {
             m_logger->log(Logger::INFO, "Needs Watering");
             m_dataProvider->setSensorToWater(i);
-            return; // Early return when a sensor needs watering
+            return result;
         }
     }
 
     m_dataProvider->setSensorToWater(NO_SENSOR);
+    return result;
 }
 
 void DataManager::init()
