@@ -83,7 +83,7 @@ function App() {
     <Box id="root" sx={{ background: "#8ebeed", height: "100%" }}>
       <CssBaseline />
       <TopBar handleOpenModal={handleOpenModal} handleGetLogs={handleGetLogs} />
-      <Container sx={{ p: 2, display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
+      <Container sx={{ p: 2, display: "flex", justifyContent: "center", alignItems: "center", minHeight: "85vh" }}>
         {dataReceived ? (
           <Grid container spacing={3}>
             {sensors.map((sensor, index) =>
