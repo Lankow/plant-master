@@ -1,24 +1,22 @@
-Import( 'env', 'projenv' )
+# build_script.py
 import os
 import shutil
-import glob
-import json
-from re import sub
 
-# Simply run react build script
-def createClientApp( source, target, env ):
+def createClientApp():
     # delete existing folder
-    data_dir_path = os.path.join(env.get('PROJECT_DIR'), 'data')
-    if(os.path.exists(data_dir_path)):
+    script_dir = os.getcwd()
+    data_dir_path = os.path.join(script_dir, 'data')
+    
+    if os.path.exists(data_dir_path):
         print('Rename: Deleting the old data directory ' + data_dir_path)
         shutil.rmtree(data_dir_path)
     print('Rename: Creating an empty data directory ' + data_dir_path)
     os.mkdir(data_dir_path)
     
-    # Build the react web application
+    # Build the React web application
     react_proj_dir = "plant-master-client"
     os.chdir(react_proj_dir)
-    print( '\nReact build: Starting the build process for the Client App...\n' )
+    print('\nReact build: Starting the build process for the Client App...\n')
     
     print('\nRunning `npm install`')
     if os.system("npm install") != 0:
@@ -29,3 +27,5 @@ def createClientApp( source, target, env ):
         print(f"Error building Client App in ./{react_proj_dir}")
         return    
     os.chdir('..')
+
+createClientApp()
