@@ -1,5 +1,5 @@
 /*
- *   DataManager.hpp
+ *   WateringManager.hpp
  *   ----------------------
  *   Created on: 2023/10/09
  *   Author: Lankow
@@ -10,7 +10,7 @@
 #include "DataProvider.hpp"
 #include "Component.hpp"
 
-class DataManager : public Component
+class WateringManager : public Component
 {
 private:
     Status checkHumidity();

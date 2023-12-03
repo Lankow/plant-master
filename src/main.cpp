@@ -12,7 +12,7 @@
 #include "handler/PumpHandler.hpp"
 #include "handler/ValveHandler.hpp"
 #include "manager/NetworkManager.hpp"
-#include "manager/DataManager.hpp"
+#include "manager/WateringManager.hpp"
 
 // Define shared pointers for component instances.
 std::shared_ptr<NetworkManager> networkManager = std::make_shared<NetworkManager>();
@@ -23,7 +23,7 @@ std::shared_ptr<HumidityHandler> humidityHandler2 = std::make_shared<HumidityHan
 std::shared_ptr<TemperatureHandler> temperatureHandler = std::make_shared<TemperatureHandler>(EspPins::PIN_21);
 std::shared_ptr<ValveHandler> valveHandler = std::make_shared<ValveHandler>();
 std::shared_ptr<PumpHandler> pumpHandler = std::make_shared<PumpHandler>(EspPins::PIN_4);
-std::shared_ptr<DataManager> dataManager = std::make_shared<DataManager>();
+std::shared_ptr<WateringManager> wateringManager = std::make_shared<WateringManager>();
 
 std::shared_ptr<DataProvider> dataProvider = std::make_shared<DataProvider>();
 std::shared_ptr<Logger> logger = std::make_shared<Logger>(sdCardHandler);
@@ -38,7 +38,7 @@ std::shared_ptr<Component> components[] = {
     temperatureHandler,
     valveHandler,
     pumpHandler,
-    dataManager,
+    wateringManager,
 };
 
 void setup()

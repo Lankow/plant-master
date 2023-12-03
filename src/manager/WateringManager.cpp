@@ -1,14 +1,14 @@
 /*
- *   DataManager.cpp
+ *   WateringManager.cpp
  *   ----------------------
  *   Created on: 2023/10/09
  *   Author: Lankow
  */
 #include <vector>
-#include "manager/DataManager.hpp"
+#include "manager/WateringManager.hpp"
 #include "Logger.hpp"
 
-Status DataManager::checkHumidity()
+Status WateringManager::checkHumidity()
 {
     Status result = Status::OK;
 
@@ -28,13 +28,13 @@ Status DataManager::checkHumidity()
     return result;
 }
 
-void DataManager::init()
+void WateringManager::init()
 {
-    m_logger->log(Logger::INFO, "DataManager - Init");
+    m_logger->log(Logger::INFO, "WateringManager - Init");
 }
 
-void DataManager::cyclic()
+void WateringManager::cyclic()
 {
-    m_logger->log(Logger::INFO, "DataManager - Cyclic Task");
+    m_logger->log(Logger::INFO, "WateringManager - Cyclic Task");
     checkHumidity();
 }
