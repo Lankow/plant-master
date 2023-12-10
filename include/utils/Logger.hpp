@@ -9,7 +9,6 @@
 
 #include <memory.h>
 #include "constants.hpp"
-#include "handler/SDCardHandler.hpp"
 
 class Logger
 {

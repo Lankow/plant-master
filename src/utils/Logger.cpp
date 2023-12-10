@@ -5,16 +5,9 @@
  *   Author: Lankow
  */
 #include <Arduino.h>
-#include "Logger.hpp"
-#include "TimeConverter.hpp"
-
-Logger::Logger(std::shared_ptr<const SDCardHandler> sdCardHandler) : m_sdCardHandler(sdCardHandler) {}
-
-std::string Logger::formatSysTime()
-{
-    long systemSeconds = millis() / 1000;
-    return TimeConverter::convertTime(TimeConverter::ConverstionType::LOG, systemSeconds);
-}
+#include "utils/Logger.hpp"
+#include "utils/TimeUtil.hpp"
+#include "utils/SDCardUtil.hpp"
 
 std::string Logger::formatLogType(const LogType logType)
 {
@@ -35,9 +28,9 @@ std::string Logger::formatLogType(const LogType logType)
 
 void Logger::log(const LogType logType, const std::string message)
 {
-    // std::string logMessage = formatSysTime() + " - " + formatLogType(logType) + " - " + message;
-    // outputLogMessage(logMessage);
-    // m_sdCardHandler->appendLogs(message);
+    std::string logMessage = TimeUtil::getStringTime(TimeUtil::TimeType::LOG) + " - " + formatLogType(logType) + " - " + message;
+    outputLogMessage(logMessage);
+    SDCardUtil::appendLogs(message);
 }
 
 void Logger::outputLogMessage(const std::string &logMessage)

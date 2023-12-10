@@ -1,11 +1,11 @@
 /*
- *   JSONHandler.hpp
+ *   JSONUtil.hpp
  *   ----------------------
  *   Created on: 2023/10/20
  *   Author: Lankow
  */
-#ifndef JSON_FORMATTER_HPP
-#define JSON_FORMATTER_HPP
+#ifndef JSON_UTIL_HPP
+#define JSON_UTIL_HPP
 
 #include <memory> // Include the memory header for std::shared_ptr
 #include <ArduinoJson.h>
@@ -25,4 +25,4 @@ private:
   const JsonArray buildHumidityJson();
   void createSensorJson(JsonArray &humidityArray, const int sensorIndex);
 };
-#endif // JSON_FORMATTER_HPP
+#endif // JSON_UTIL_HPP

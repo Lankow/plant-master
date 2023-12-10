@@ -36,22 +36,12 @@ uint8_t DataProvider::getWateringCycles() const
     return m_wateringCycles;
 };
 
-std::time_t DataProvider::getCurrentTime() const
-{
-    return m_currentTime;
-}
-
 const std::vector<HumidityData> &DataProvider::getHumidityData() const
 {
     return m_humidityData;
 }
 
 /* SETTERS */
-
-void DataProvider::setCurrentTime(const std::time_t time)
-{
-    m_currentTime = time;
-}
 
 void DataProvider::setTemperature(const float temperature)
 {

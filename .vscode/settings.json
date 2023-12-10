@@ -52,6 +52,18 @@
     "stdexcept": "cpp",
     "cinttypes": "cpp",
     "chrono": "cpp",
-    "ratio": "cpp"
+    "ratio": "cpp",
+    "list": "cpp",
+    "rope": "cpp",
+    "slist": "cpp",
+    "valarray": "cpp",
+    "*.ipp": "cpp",
+    "strstream": "cpp",
+    "complex": "cpp",
+    "csignal": "cpp",
+    "set": "cpp",
+    "iostream": "cpp",
+    "cfenv": "cpp",
+    "typeindex": "cpp"
   }
 }

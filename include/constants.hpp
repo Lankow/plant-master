@@ -40,7 +40,6 @@ static const IPAddress PRIMARY_DNS(8, 8, 8, 8);
 static const IPAddress SECONDARY_DNS(8, 8, 4, 4);
 
 // DEFAULT VALUES
-static const long DEFAULT_TIME = 0;
 static const float DEFAULT_TEMPERATURE = 0;
 static const float DEFAULT_ROOM_HUMIDITY = 0;
 static const uint8_t DEFAULT_CYCLES = 0;

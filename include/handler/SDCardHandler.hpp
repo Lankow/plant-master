@@ -25,12 +25,8 @@ public:
 
 private:
   SPIClass m_spi;
-  std::string m_logName;
 
   void initSDCard();
-
-  void startLogs(const std::string &path, const std::string &message);
-  void appendLogs(const std::string &message) const;
 };
 
 #endif // SD_CARD_HANDLER_HPP

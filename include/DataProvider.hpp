@@ -23,7 +23,6 @@ public:
     float getRoomHumidity() const;
     uint8_t getSensorToWater() const;
     uint8_t getWateringCycles() const;
-    std::time_t getCurrentTime() const;
 
     const std::vector<HumidityData> &getHumidityData() const;
 
@@ -40,7 +39,6 @@ public:
     void clearWateringCycles();
 
 private:
-    std::time_t m_currentTime = DEFAULT_TIME;
     float m_temperature = DEFAULT_TEMPERATURE;
     float m_roomHumidity = DEFAULT_ROOM_HUMIDITY;
 

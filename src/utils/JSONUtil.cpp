@@ -37,7 +37,7 @@ const JsonArray JSONHandler::buildHumidityJson()
     return humidityArray;
 }
 
-const std::string JSONHandler::serialize()
+static const std::string JSONHandler::serialize()
 {
     DynamicJsonDocument doc(1024);
 
