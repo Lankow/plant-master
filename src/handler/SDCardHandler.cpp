@@ -5,6 +5,7 @@
  *   Author: Lankow
  */
 #include "handler/SDCardHandler.hpp"
+#include "utils/SDCardUtil.hpp"
 
 SDCardHandler::SDCardHandler(const uint8_t pinSck, const uint8_t pinMiso, const uint8_t pinMosi, const uint8_t pinCs) : m_spi(VSPI)
 {
@@ -34,6 +35,7 @@ void SDCardHandler::init()
 {
   // Log - "SDCardHandler - Init"
   initSDCard();
+  SDCardUtil::createLogFile();
 }
 
 void SDCardHandler::cyclic()

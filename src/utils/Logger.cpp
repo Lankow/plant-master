@@ -30,7 +30,7 @@ void Logger::log(const LogType logType, const std::string message)
 {
     std::string logMessage = TimeUtil::getStringTime(TimeUtil::TimeType::LOG) + " - " + formatLogType(logType) + " - " + message;
     outputLogMessage(logMessage);
-    SDCardUtil::appendLogs(message);
+    SDCardUtil::appendLogFile(message);
 }
 
 void Logger::outputLogMessage(const std::string &logMessage)

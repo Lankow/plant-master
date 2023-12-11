@@ -7,7 +7,7 @@
 
 #ifndef SD_CARD_UTIL_HPP
 #define SD_CARD_UTIL_HPP
-
+#include <vector>
 #include "FS.h"
 #include "SD.h"
 #include "SPI.h"
@@ -15,8 +15,9 @@
 class SDCardUtil
 {
 public:
-  static void createLogs();
-  static void appendLogs(const std::string &message);
+  static void createLogFile();
+  static void appendLogFile(const std::string &message);
+  static std::vector<std::string> SDCardUtil::getListOfLogFiles();
 
 private:
   static std::string m_logName;

@@ -10,7 +10,7 @@
 
 std::string SDCardUtil::m_logName;
 
-void SDCardUtil::createLogs()
+void SDCardUtil::createLogFile()
 {
   std::string dateString = TimeUtil::getStringTime(TimeUtil::TimeType::FILE);
   m_logName = "/log-" + dateString + ".txt";
@@ -32,7 +32,7 @@ void SDCardUtil::createLogs()
   file.close();
 }
 
-void SDCardUtil::appendLogs(const std::string &message)
+void SDCardUtil::appendLogFile(const std::string &message)
 {
   File file = SD.open(m_logName.c_str(), FILE_APPEND);
   if (!file)
@@ -49,4 +49,37 @@ void SDCardUtil::appendLogs(const std::string &message)
     Serial.println("Append failed");
   }
   file.close();
+}
+
+std::vector<std::string> SDCardUtil::getListOfLogFiles()
+{
+  std::vector<std::string> fileList;
+
+  File root = SD.open("/");
+  if (!root)
+  {
+    Serial.println("Failed to open directory");
+    return fileList;
+  }
+
+  while (true)
+  {
+    File entry = root.openNextFile();
+    if (!entry)
+    {
+      break;
+    }
+    if (entry.isDirectory())
+    {
+
+      continue;
+    }
+
+    fileList.push_back(entry.name());
+
+    entry.close();
+  }
+
+  root.close();
+  return fileList;
 }
