@@ -35,5 +35,5 @@ void Logger::log(const LogType logType, const std::string message)
 
 void Logger::outputLogMessage(const std::string &logMessage)
 {
-    Serial.println(logMessage.c_str());
+    // Serial.println(logMessage.c_str());
 }

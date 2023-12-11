@@ -7,14 +7,11 @@
 #ifndef LOGGER_HPP
 #define LOGGER_HPP
 
-#include <memory.h>
 #include "constants.hpp"
 
 class Logger
 {
 public:
-  Logger(std::shared_ptr<const SDCardHandler> sdCardHandler);
-
   enum LogType
   {
     FATAL,
@@ -23,15 +20,11 @@ public:
     INFO
   };
 
-  void log(LogType logType, const std::string message);
+  static void log(LogType logType, const std::string message);
 
 private:
-  std::shared_ptr<const SDCardHandler> m_sdCardHandler;
-  std::string m_formattedSysTime[SYSTIME_LENGTH];
-
-  std::string formatSysTime();
-  std::string formatLogType(const LogType logType);
-  void outputLogMessage(const std::string &logMessage);
+  static std::string formatLogType(const LogType logType);
+  static void outputLogMessage(const std::string &logMessage);
 };
 
 #endif // LOGGER_HPP

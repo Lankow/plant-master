@@ -5,7 +5,7 @@
  *   Author: Lankow
  */
 #include "handler/ValveHandler.hpp"
-#include "Logger.hpp"
+#include "utils/Logger.hpp"
 
 void ValveHandler::handleValves()
 {
@@ -24,11 +24,11 @@ void ValveHandler::handleValves()
 
 void ValveHandler::init()
 {
-    m_logger->log(Logger::INFO, "ValveHandler - Init");
+    Logger::log(Logger::INFO, "ValveHandler - Init");
 }
 
 void ValveHandler::cyclic()
 {
-    m_logger->log(Logger::INFO, "ValveHandler - Cyclic Task");
+    Logger::log(Logger::INFO, "ValveHandler - Cyclic Task");
     handleValves();
 }

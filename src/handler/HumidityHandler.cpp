@@ -6,7 +6,7 @@
  */
 #include "handler/HumidityHandler.hpp"
 #include "constants.hpp"
-#include "Logger.hpp"
+#include "utils/Logger.hpp"
 
 static uint8_t m_idCounter;
 
@@ -30,11 +30,11 @@ void HumidityHandler::handleHumidity()
 
 void HumidityHandler::init()
 {
-    m_logger->log(Logger::INFO, "HumidityHandler - Init");
+    Logger::log(Logger::INFO, "HumidityHandler - Init");
 }
 
 void HumidityHandler::cyclic()
 {
-    m_logger->log(Logger::INFO, "HumidityHandler - Cyclic Task");
+    Logger::log(Logger::INFO, "HumidityHandler - Cyclic Task");
     handleHumidity();
 }

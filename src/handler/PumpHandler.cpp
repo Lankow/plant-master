@@ -5,7 +5,7 @@
  *   Author: Lankow
  */
 #include "handler/PumpHandler.hpp"
-#include "Logger.hpp"
+#include "utils/Logger.hpp"
 #include "constants.hpp"
 
 PumpHandler::PumpHandler(const uint8_t pin) : m_operatedPin(pin){};
@@ -28,11 +28,11 @@ void PumpHandler::handlePump()
 
 void PumpHandler::init()
 {
-    m_logger->log(Logger::INFO, "PumpHandler - Init");
+    Logger::log(Logger::INFO, "PumpHandler - Init");
 }
 
 void PumpHandler::cyclic()
 {
-    m_logger->log(Logger::INFO, "PumpHandler - Cyclic Task");
+    Logger::log(Logger::INFO, "PumpHandler - Cyclic Task");
     handlePump();
 }

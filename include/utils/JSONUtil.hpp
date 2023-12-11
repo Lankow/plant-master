@@ -11,18 +11,14 @@
 #include <ArduinoJson.h>
 #include "DataProvider.hpp"
 
-class JSONHandler
+class JSONUtil
 {
 public:
-  JSONHandler(std::shared_ptr<DataProvider> dataProvider);
-  void handleData(uint8_t *data, size_t len);
-  const std::string serialize();
+  static void handleData(std::shared_ptr<DataProvider> dataProvider, uint8_t *data, size_t len);
+  static std::string serialize(const std::shared_ptr<DataProvider> &dataProvider);
 
 private:
-  std::shared_ptr<DataProvider> m_dataProvider;
-  StaticJsonDocument<BUFFER_SIZE> m_receivedJson;
-
-  const JsonArray buildHumidityJson();
-  void createSensorJson(JsonArray &humidityArray, const int sensorIndex);
+  static JsonArray buildHumidityJson(const std::vector<HumidityData> &humidityData);
+  static void createSensorJson(const HumidityData &humidityData, JsonArray &humidityArray, const int sensorIndex);
 };
 #endif // JSON_UTIL_HPP

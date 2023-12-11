@@ -8,6 +8,8 @@
 #include "utils/TimeUtil.hpp"
 #include "constants.hpp"
 
+std::string SDCardUtil::m_logName;
+
 void SDCardUtil::createLogs()
 {
   std::string dateString = TimeUtil::getStringTime(TimeUtil::TimeType::FILE);

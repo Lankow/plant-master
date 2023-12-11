@@ -1,62 +1,52 @@
 /*
- *   JSONHandler.cpp
+ *   JSONUtil.cpp
  *   ----------------------
  *   Created on: 2023/10/20
  *   Author: Lankow
  */
 #include <sstream>
 #include <vector>
-#include "handler/JSONHandler.hpp"
-#include "TimeConverter.hpp"
+#include "utils/JSONUtil.hpp"
 
-JSONHandler::JSONHandler(std::shared_ptr<DataProvider> dataProvider) : m_dataProvider(dataProvider){};
-
-void JSONHandler::createSensorJson(JsonArray &humidityArray, const int sensorIndex)
+void JSONUtil::createSensorJson(const HumidityData &humidityData, JsonArray &humidityArray, const int sensorIndex)
 {
-    const std::vector<HumidityData> humidityData = m_dataProvider->getHumidityData();
-
     JsonObject sensorObject = humidityArray.createNestedObject();
     sensorObject["id"] = sensorIndex;
-    sensorObject["lvl"] = humidityData[sensorIndex].getCurrentHumidityLvl();
-    sensorObject["threshold"] = humidityData[sensorIndex].getHumidityThreshold();
-    sensorObject["active"] = humidityData[sensorIndex].getHumidityActive();
+    sensorObject["lvl"] = humidityData.getCurrentHumidityLvl();
+    sensorObject["threshold"] = humidityData.getHumidityThreshold();
+    sensorObject["active"] = humidityData.getHumidityActive();
 }
 
-const JsonArray JSONHandler::buildHumidityJson()
+JsonArray JSONUtil::buildHumidityJson(const std::vector<HumidityData> &humidityData)
 {
-    const int numSensors = MAX_SENSORS_NO;
-
     DynamicJsonDocument doc(1024);
     JsonArray humidityArray = doc.createNestedArray();
 
-    for (int i = 0; i < numSensors; i++)
+    for (size_t i = 0; i < humidityData.size(); i++)
     {
-        createSensorJson(humidityArray, i);
+        createSensorJson(humidityData[i], humidityArray, static_cast<int>(i));
     }
-
     return humidityArray;
 }
 
-static const std::string JSONHandler::serialize()
+std::string JSONUtil::serialize(const std::shared_ptr<DataProvider> &dataProvider)
 {
     DynamicJsonDocument doc(1024);
-
-    doc["room-humidity"] = m_dataProvider->getRoomHumidity();
-    doc["temperature"] = m_dataProvider->getTemperature();
-    doc["sensor"] = m_dataProvider->getSensorToWater();
-    doc["time"] = TimeConverter::convertTime(TimeConverter::ConverstionType::JSON, m_dataProvider->getCurrentTime());
-    doc["humidity"] = buildHumidityJson();
+    doc["room-humidity"] = dataProvider->getRoomHumidity();
+    doc["temperature"] = dataProvider->getTemperature();
+    doc["sensor"] = dataProvider->getSensorToWater();
+    doc["humidity"] = buildHumidityJson(dataProvider->getHumidityData());
 
     std::ostringstream jsonOss;
-
     serializeJson(doc, jsonOss);
-
     return jsonOss.str();
 }
 
-void JSONHandler::handleData(uint8_t *data, size_t len)
+void JSONUtil::handleData(std::shared_ptr<DataProvider> dataProvider, uint8_t *data, size_t len)
 {
+    StaticJsonDocument<BUFFER_SIZE> m_receivedJson;
     DeserializationError error = deserializeJson(m_receivedJson, (char *)data, len);
+
     if (error)
     {
         Serial.print(F("deserializeJson() failed: "));
@@ -64,14 +54,16 @@ void JSONHandler::handleData(uint8_t *data, size_t len)
         return;
     }
 
-    if (strcmp(m_receivedJson["type"], "edit") == 0)
+    const char *type = m_receivedJson["type"];
+
+    if (strcmp(type, "edit") == 0)
     {
         uint8_t id = m_receivedJson["id"];
 
         if (m_receivedJson.containsKey("threshold"))
         {
             uint16_t threshold = m_receivedJson["threshold"];
-            m_dataProvider->setHandlerThreshold(id, threshold);
+            dataProvider->setHandlerThreshold(id, threshold);
         }
 
         if (m_receivedJson.containsKey("pin"))
@@ -80,7 +72,7 @@ void JSONHandler::handleData(uint8_t *data, size_t len)
             // PIN handling To be Added
         }
     }
-    else if (strcmp(m_receivedJson["type"], "logs") == 0)
+    else if (strcmp(type, "logs") == 0)
     {
         // Handle logs
         Serial.println("Handle Logs");

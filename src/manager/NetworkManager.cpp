@@ -5,19 +5,17 @@
  *   Author: Lankow
  */
 #include "manager/NetworkManager.hpp"
+#include "SPIFFS.h"
 #include "config.hpp"
 #include "constants.hpp"
-#include "Logger.hpp"
-#include "handler/JSONHandler.hpp"
-#include "SPIFFS.h"
+#include "utils/Logger.hpp"
+#include "utils/JSONUtil.hpp"
 
 AsyncWebServer m_server(80);
 AsyncWebSocket m_websocket("/ws");
-JSONHandler m_JSONHandler(nullptr);
 
 void NetworkManager::init()
 {
-  m_JSONHandler = JSONHandler(m_dataProvider);
   initWiFi();
   initTimeViaNTP();
   initSPIFFS();
@@ -27,8 +25,8 @@ void NetworkManager::init()
 
 void NetworkManager::cyclic()
 {
-  m_logger->log(Logger::INFO, "NetworkManager - Cyclic Task");
-  std::string message = m_JSONHandler.serialize();
+  Logger::log(Logger::INFO, "NetworkManager - Cyclic Task");
+  std::string message = JSONUtil::serialize(m_dataProvider);
   m_websocket.textAll(message.c_str());
 };
 
@@ -37,7 +35,7 @@ void redirectToIndex(AsyncWebServerRequest *request)
   request->redirect("http://" + WiFi.localIP().toString());
 }
 
-void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len)
+void NetworkManager::onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len)
 {
   switch (type)
   {
@@ -48,7 +46,7 @@ void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType 
     Serial.printf("WebSocket client #%u disconnected\n", client->id());
     break;
   case WS_EVT_DATA:
-    m_JSONHandler.handleData(data, len);
+    JSONUtil::handleData(m_dataProvider, data, len);
     break;
   case WS_EVT_PONG:
   case WS_EVT_ERROR:
@@ -64,7 +62,7 @@ void NetworkManager::initTimeViaNTP()
   }
   else
   {
-    m_logger->log(Logger::ERROR, "WiFi connection not available - Time update is not possible...");
+    Logger::log(Logger::ERROR, "WiFi connection not available - Time update is not possible...");
   }
 };
 
@@ -99,7 +97,7 @@ void NetworkManager::initWiFi()
 
     if (connectionCounter >= MAX_RETRIES)
     {
-      m_logger->log(Logger::ERROR, "Encountered error when connecting to WiFi... \n");
+      Logger::log(Logger::ERROR, "Encountered error when connecting to WiFi... \n");
       return;
     }
   }
@@ -111,7 +109,8 @@ void NetworkManager::initWiFi()
 
 void NetworkManager::initWebSocket()
 {
-  m_websocket.onEvent(onEvent);
+  m_websocket.onEvent([](AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len)
+                      { static_cast<NetworkManager *>(arg)->onEvent(server, client, type, arg, data, len); });
   m_server.addHandler(&m_websocket);
 }
 

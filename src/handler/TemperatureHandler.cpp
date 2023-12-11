@@ -5,7 +5,7 @@
  *   Author: Lankow
  */
 #include "handler/TemperatureHandler.hpp"
-#include "Logger.hpp"
+#include "utils/Logger.hpp"
 
 TemperatureHandler::TemperatureHandler(const uint8_t pin) : m_dht(pin, DHT11)
 {
@@ -17,7 +17,7 @@ void TemperatureHandler::handleTemperature()
   float t = m_dht.readTemperature();
   if (isnan(t))
   {
-    m_logger->log(Logger::ERROR, "Temperature read error.");
+    Logger::log(Logger::ERROR, "Temperature read error.");
   }
   else
   {
@@ -30,7 +30,7 @@ void TemperatureHandler::handleRoomHumidity()
   float t = m_dht.readHumidity();
   if (isnan(t))
   {
-    m_logger->log(Logger::ERROR, "Room Humidity read error.");
+    Logger::log(Logger::ERROR, "Room Humidity read error.");
   }
   else
   {
@@ -40,12 +40,12 @@ void TemperatureHandler::handleRoomHumidity()
 
 void TemperatureHandler::init()
 {
-  m_logger->log(Logger::INFO, "TemperatureHandler - Init");
+  Logger::log(Logger::INFO, "TemperatureHandler - Init");
 }
 
 void TemperatureHandler::cyclic()
 {
-  m_logger->log(Logger::INFO, "TemperatureHandler - Cyclic Task");
+  Logger::log(Logger::INFO, "TemperatureHandler - Cyclic Task");
   handleTemperature();
   handleRoomHumidity();
 }

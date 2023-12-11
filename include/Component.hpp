@@ -17,14 +17,12 @@ class Component
 {
 public:
   void setDataProvider(std::shared_ptr<DataProvider> dataProvider);
-  void setLogger(std::shared_ptr<Logger> logger);
 
   virtual void init() = 0;
   virtual void cyclic() = 0;
 
 protected:
   std::shared_ptr<DataProvider> m_dataProvider;
-  std::shared_ptr<Logger> m_logger;
 };
 
 #endif // COMPONENT_HPP

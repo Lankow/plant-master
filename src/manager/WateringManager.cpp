@@ -6,7 +6,7 @@
  */
 #include <vector>
 #include "manager/WateringManager.hpp"
-#include "Logger.hpp"
+#include "utils/Logger.hpp"
 
 Status WateringManager::checkHumidity()
 {
@@ -18,7 +18,7 @@ Status WateringManager::checkHumidity()
     {
         if (humidityData[i].getCurrentHumidityLvl() < humidityData[i].getHumidityThreshold() && humidityData[i].getHumidityActive())
         {
-            m_logger->log(Logger::INFO, "Needs Watering");
+            Logger::log(Logger::INFO, "Needs Watering");
             m_dataProvider->setSensorToWater(i);
             return result;
         }
@@ -30,11 +30,11 @@ Status WateringManager::checkHumidity()
 
 void WateringManager::init()
 {
-    m_logger->log(Logger::INFO, "WateringManager - Init");
+    Logger::log(Logger::INFO, "WateringManager - Init");
 }
 
 void WateringManager::cyclic()
 {
-    m_logger->log(Logger::INFO, "WateringManager - Cyclic Task");
+    Logger::log(Logger::INFO, "WateringManager - Cyclic Task");
     checkHumidity();
 }
