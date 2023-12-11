@@ -11,12 +11,10 @@ const AboutContent: React.FC<AboutContentProps> = ({ handleCloseModal }) => {
       <DialogTitle>About Plant-Master</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Typography>
-            Visit my{" "}
-            <Link href="https://github.com/Lankow/plant-master" target="_blank">
-              Github
-            </Link>
-          </Typography>
+          Visit my{" "}
+          <Link href="https://github.com/Lankow/plant-master" target="_blank">
+            Github
+          </Link>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
