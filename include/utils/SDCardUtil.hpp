@@ -17,7 +17,7 @@ class SDCardUtil
 public:
   static void createLogFile();
   static void appendLogFile(const std::string &message);
-  static std::vector<std::string> SDCardUtil::getListOfLogFiles();
+  static std::vector<std::string> getListOfLogFiles();
 
 private:
   static std::string m_logName;

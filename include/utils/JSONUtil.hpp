@@ -14,8 +14,10 @@
 class JSONUtil
 {
 public:
-  static void handleData(std::shared_ptr<DataProvider> dataProvider, uint8_t *data, size_t len);
+  static WebSocketEvtType getEventType(std::shared_ptr<DataProvider> dataProvider, uint8_t *data, size_t len);
   static std::string serialize(const std::shared_ptr<DataProvider> &dataProvider);
+  static std::string toJSONString(const std::vector<std::string> &logsList);
+  static uint16_t deserializeByKey(uint8_t *data, size_t len, const std::string &keyName);
 
 private:
   static JsonArray buildHumidityJson(const std::vector<HumidityData> &humidityData);

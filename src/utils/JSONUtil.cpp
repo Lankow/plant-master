@@ -42,7 +42,7 @@ std::string JSONUtil::serialize(const std::shared_ptr<DataProvider> &dataProvide
     return jsonOss.str();
 }
 
-void JSONUtil::handleData(std::shared_ptr<DataProvider> dataProvider, uint8_t *data, size_t len)
+WebSocketEvtType JSONUtil::getEventType(std::shared_ptr<DataProvider> dataProvider, uint8_t *data, size_t len)
 {
     StaticJsonDocument<BUFFER_SIZE> m_receivedJson;
     DeserializationError error = deserializeJson(m_receivedJson, (char *)data, len);
@@ -51,30 +51,60 @@ void JSONUtil::handleData(std::shared_ptr<DataProvider> dataProvider, uint8_t *d
     {
         Serial.print(F("deserializeJson() failed: "));
         Serial.println(error.f_str());
-        return;
+        return WebSocketEvtType::UNKNOWN;
     }
 
     const char *type = m_receivedJson["type"];
 
     if (strcmp(type, "edit") == 0)
     {
-        uint8_t id = m_receivedJson["id"];
-
-        if (m_receivedJson.containsKey("threshold"))
-        {
-            uint16_t threshold = m_receivedJson["threshold"];
-            dataProvider->setHandlerThreshold(id, threshold);
-        }
-
-        if (m_receivedJson.containsKey("pin"))
-        {
-            uint8_t pin = m_receivedJson["pin"];
-            // PIN handling To be Added
-        }
+        return WebSocketEvtType::SET_THRESHOLD;
     }
     else if (strcmp(type, "logs") == 0)
     {
-        // Handle logs
-        Serial.println("Handle Logs");
+        return WebSocketEvtType::GET_LOGS;
+    }
+    else
+    {
+        return WebSocketEvtType::UNKNOWN;
+    }
+}
+
+std::string JSONUtil::toJSONString(const std::vector<std::string> &logsList)
+{
+    DynamicJsonDocument doc(1024);
+    JsonObject logsObject = doc.createNestedObject("logs");
+    JsonArray logsArray = logsObject.createNestedArray("files");
+
+    for (const auto &log : logsList)
+    {
+        logsArray.add(log);
+    }
+
+    std::string logsJson;
+    serializeJson(doc, logsJson);
+
+    return logsJson;
+}
+
+uint16_t JSONUtil::deserializeByKey(uint8_t *data, size_t len, const std::string &keyName)
+{
+    StaticJsonDocument<BUFFER_SIZE> m_receivedJson;
+    DeserializationError error = deserializeJson(m_receivedJson, (char *)data, len);
+
+    if (error)
+    {
+        Serial.print(F("deserializeJson() failed: "));
+        Serial.println(error.f_str());
+        return 0;
+    }
+
+    if (m_receivedJson.containsKey(keyName))
+    {
+        return m_receivedJson[keyName];
+    }
+    else
+    {
+        return 0;
     }
 }

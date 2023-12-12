@@ -10,6 +10,7 @@
 #include "constants.hpp"
 #include "utils/Logger.hpp"
 #include "utils/JSONUtil.hpp"
+#include "utils/SDCardUtil.hpp"
 
 AsyncWebServer m_server(80);
 AsyncWebSocket m_websocket("/ws");
@@ -35,8 +36,37 @@ void redirectToIndex(AsyncWebServerRequest *request)
   request->redirect("http://" + WiFi.localIP().toString());
 }
 
+void NetworkManager::handleWsDataEvent(WebSocketEvtType evtType, uint8_t *data, size_t len)
+{
+  std::vector<std::string> logsList;
+  std::string logsJson;
+  uint16_t threshold;
+  uint8_t id;
+
+  switch (evtType)
+  {
+  case WebSocketEvtType::SET_THRESHOLD:
+    threshold = JSONUtil::deserializeByKey(data, len, "threshold");
+    id = JSONUtil::deserializeByKey(data, len, "id");
+
+    m_dataProvider->setHandlerThreshold(id, threshold);
+    break;
+  case WebSocketEvtType::GET_LOGS:
+    logsList = SDCardUtil::getListOfLogFiles();
+    logsJson = JSONUtil::toJSONString(logsList);
+
+    m_websocket.textAll(logsJson.c_str());
+    break;
+  case WebSocketEvtType::UNKNOWN:
+  default:
+    Logger::log(Logger::ERROR, "Unknown Type of WS Data Event to be handled.");
+  }
+}
+
 void NetworkManager::onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len)
 {
+  WebSocketEvtType eventType = WebSocketEvtType::UNKNOWN;
+
   switch (type)
   {
   case WS_EVT_CONNECT:
@@ -46,7 +76,8 @@ void NetworkManager::onEvent(AsyncWebSocket *server, AsyncWebSocketClient *clien
     Serial.printf("WebSocket client #%u disconnected\n", client->id());
     break;
   case WS_EVT_DATA:
-    JSONUtil::handleData(m_dataProvider, data, len);
+    eventType = JSONUtil::getEventType(m_dataProvider, data, len);
+    handleWsDataEvent(eventType, data, len);
     break;
   case WS_EVT_PONG:
   case WS_EVT_ERROR:

@@ -76,6 +76,13 @@ enum class Status
   ADDITIONAL_ACTION
 };
 
+enum class WebSocketEvtType
+{
+  SET_THRESHOLD,
+  GET_LOGS,
+  UNKNOWN
+};
+
 // OTHER CONSTANTS
 #define DHT_TYPE DHT11
 #define SYSTIME_LENGTH 16
