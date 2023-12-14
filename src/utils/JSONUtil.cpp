@@ -42,15 +42,21 @@ std::string JSONUtil::serialize(const std::shared_ptr<DataProvider> &dataProvide
     return jsonOss.str();
 }
 
-WebSocketEvtType JSONUtil::getEventType(std::shared_ptr<DataProvider> dataProvider, uint8_t *data, size_t len)
+WebSocketEvtType JSONUtil::getEventType(uint8_t *data, size_t len)
 {
-    StaticJsonDocument<BUFFER_SIZE> m_receivedJson;
-    DeserializationError error = deserializeJson(m_receivedJson, (char *)data, len);
+    StaticJsonDocument<512> m_receivedJson;
+    DeserializationError error = deserializeJson(m_receivedJson, (const char *)data, len);
 
     if (error)
     {
         Serial.print(F("deserializeJson() failed: "));
         Serial.println(error.f_str());
+        return WebSocketEvtType::UNKNOWN;
+    }
+
+    if (!m_receivedJson.containsKey("type"))
+    {
+        Serial.println(F("JSON data does not contain 'type' field."));
         return WebSocketEvtType::UNKNOWN;
     }
 
@@ -89,8 +95,9 @@ std::string JSONUtil::toJSONString(const std::vector<std::string> &logsList)
 
 uint16_t JSONUtil::deserializeByKey(uint8_t *data, size_t len, const std::string &keyName)
 {
-    StaticJsonDocument<BUFFER_SIZE> m_receivedJson;
-    DeserializationError error = deserializeJson(m_receivedJson, (char *)data, len);
+    StaticJsonDocument<512> m_receivedJson;
+
+    DeserializationError error = deserializeJson(m_receivedJson, (const char *)data, len);
 
     if (error)
     {
@@ -101,10 +108,23 @@ uint16_t JSONUtil::deserializeByKey(uint8_t *data, size_t len, const std::string
 
     if (m_receivedJson.containsKey(keyName))
     {
-        return m_receivedJson[keyName];
+        if (m_receivedJson[keyName].is<uint16_t>())
+        {
+            return m_receivedJson[keyName].as<uint16_t>();
+        }
+        else if (m_receivedJson[keyName].is<uint8_t>())
+        {
+            return m_receivedJson[keyName].as<uint8_t>();
+        }
+        else
+        {
+            Serial.println(F("Unexpected data type for the specified key."));
+            return 0;
+        }
     }
     else
     {
+        Serial.println(F("Key not found in JSON."));
         return 0;
     }
 }

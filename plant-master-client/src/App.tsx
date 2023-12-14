@@ -40,10 +40,12 @@ function App() {
   const sendUpdate = useCallback(({ id, threshold, pin }: { id: number; threshold?: number; pin?: number }) => {
     const updatedData: { type: string; id: number; threshold?: number; pin?: number } = {
       type: "edit",
-      id,
+      id: id,
       threshold: threshold !== initialThreshold ? threshold : undefined,
       pin: pin !== initialPin ? pin : undefined
     }
+
+    console.log(JSON.stringify(updatedData))
 
     websocket.current?.send(JSON.stringify(updatedData))
   }, [])
@@ -70,8 +72,11 @@ function App() {
     websocket.current.onmessage = (message: IMessageEvent) => {
       const dataFromServer = JSON.parse(message.data.toString())
       if (dataFromServer.humidity) {
+        console.log(dataFromServer.humidity)
         setSensors(dataFromServer.humidity)
         setDataReceived(true)
+      } else if (dataFromServer.logs) {
+        console.log(dataFromServer.logs)
       } else {
         setDataReceived(false)
       }

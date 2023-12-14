@@ -65,6 +65,8 @@ void DataProvider::setHandlerHumidityLvl(const uint8_t handlerId, const uint16_t
 
 void DataProvider::setHandlerThreshold(const uint8_t handlerId, const uint16_t threshold)
 {
+    Serial.println(handlerId);
+    Serial.println(threshold);
     m_humidityData[handlerId].setHumidityThreshold(threshold);
 };
 

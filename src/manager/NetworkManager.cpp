@@ -49,6 +49,9 @@ void NetworkManager::handleWsDataEvent(WebSocketEvtType evtType, uint8_t *data, 
     threshold = JSONUtil::deserializeByKey(data, len, "threshold");
     id = JSONUtil::deserializeByKey(data, len, "id");
 
+    Serial.println(threshold);
+    Serial.println(id);
+
     m_dataProvider->setHandlerThreshold(id, threshold);
     break;
   case WebSocketEvtType::GET_LOGS:
@@ -76,7 +79,7 @@ void NetworkManager::onEvent(AsyncWebSocket *server, AsyncWebSocketClient *clien
     Serial.printf("WebSocket client #%u disconnected\n", client->id());
     break;
   case WS_EVT_DATA:
-    eventType = JSONUtil::getEventType(m_dataProvider, data, len);
+    eventType = JSONUtil::getEventType(data, len);
     handleWsDataEvent(eventType, data, len);
     break;
   case WS_EVT_PONG:

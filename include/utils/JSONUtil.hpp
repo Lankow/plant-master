@@ -14,7 +14,7 @@
 class JSONUtil
 {
 public:
-  static WebSocketEvtType getEventType(std::shared_ptr<DataProvider> dataProvider, uint8_t *data, size_t len);
+  static WebSocketEvtType getEventType(uint8_t *data, size_t len);
   static std::string serialize(const std::shared_ptr<DataProvider> &dataProvider);
   static std::string toJSONString(const std::vector<std::string> &logsList);
   static uint16_t deserializeByKey(uint8_t *data, size_t len, const std::string &keyName);
