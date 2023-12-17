@@ -20,6 +20,12 @@ function App() {
   const [dataReceived, setDataReceived] = useState(false)
   const [sensors, setSensors] = useState(Array.from({ length: 8 }, () => ({ id: 0xff, lvl: 0, threshold: 0, active: false })))
 
+  const [logsState, setLogsState] = useState({
+    files: [] as string[],
+    count: 0,
+    page: 1
+  })
+
   const resetInputs = useCallback(() => {
     setEditedPin(initialPin)
     setEditedThreshold(initialThreshold)
@@ -72,11 +78,15 @@ function App() {
     websocket.current.onmessage = (message: IMessageEvent) => {
       const dataFromServer = JSON.parse(message.data.toString())
       if (dataFromServer.humidity) {
-        console.log(dataFromServer.humidity)
         setSensors(dataFromServer.humidity)
         setDataReceived(true)
       } else if (dataFromServer.logs) {
-        console.log(dataFromServer.logs)
+        setLogsState({
+          files: dataFromServer.logs.files,
+          count: dataFromServer.logs.count,
+          page: dataFromServer.logs.page
+        })
+        console.log(logsState)
       } else {
         setDataReceived(false)
       }

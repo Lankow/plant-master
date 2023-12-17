@@ -3,6 +3,9 @@ import { DialogTitle, DialogContent, DialogContentText, DialogActions, Button } 
 
 interface LogsContentProps {
   handleCloseModal: () => void
+  files: string[]
+  count: number
+  currentPage: number
 }
 
 const LogsContent: React.FC<LogsContentProps> = ({ handleCloseModal }) => {

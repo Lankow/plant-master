@@ -80,6 +80,10 @@ std::string JSONUtil::toJSONString(const std::vector<std::string> &logsList)
 {
     DynamicJsonDocument doc(1024);
     JsonObject logsObject = doc.createNestedObject("logs");
+
+    logsObject["count"] = logsList.size();
+    logsObject["page"] = 0;
+
     JsonArray logsArray = logsObject.createNestedArray("files");
 
     for (const auto &log : logsList)

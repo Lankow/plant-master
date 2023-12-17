@@ -48,10 +48,6 @@ void NetworkManager::handleWsDataEvent(WebSocketEvtType evtType, uint8_t *data, 
   case WebSocketEvtType::SET_THRESHOLD:
     threshold = JSONUtil::deserializeByKey(data, len, "threshold");
     id = JSONUtil::deserializeByKey(data, len, "id");
-
-    Serial.println(threshold);
-    Serial.println(id);
-
     m_dataProvider->setHandlerThreshold(id, threshold);
     break;
   case WebSocketEvtType::GET_LOGS:
@@ -81,6 +77,7 @@ void NetworkManager::onEvent(AsyncWebSocket *server, AsyncWebSocketClient *clien
   case WS_EVT_DATA:
     eventType = JSONUtil::getEventType(data, len);
     handleWsDataEvent(eventType, data, len);
+    Serial.println("Entered here");
     break;
   case WS_EVT_PONG:
   case WS_EVT_ERROR:
