@@ -29,7 +29,6 @@ public:
     void setTemperature(const float temperature);
     void setRoomHumidity(const float roomHumidity);
     void setSensorToWater(const uint8_t sensorToWaterId);
-    void setCurrentTime(const std::time_t currentTime);
 
     void setHandlerHumidityLvl(const uint8_t handlerId, const uint16_t humidityLvl);
     void setHandlerThreshold(const uint8_t handlerId, const uint16_t threshold);

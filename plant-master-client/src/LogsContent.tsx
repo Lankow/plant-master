@@ -1,19 +1,26 @@
 import React from "react"
-import { DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from "@mui/material"
+import { DialogTitle, DialogContent, DialogActions, Button, CircularProgress, Pagination, Link } from "@mui/material"
 
 interface LogsContentProps {
   handleCloseModal: () => void
   files: string[]
-  count: number
-  currentPage: number
 }
 
-const LogsContent: React.FC<LogsContentProps> = ({ handleCloseModal }) => {
+const LogsContent: React.FC<LogsContentProps> = ({ handleCloseModal, files }) => {
   return (
     <>
       <DialogTitle>Logs</DialogTitle>
       <DialogContent>
-        <DialogContentText>Logs TBD</DialogContentText>
+        {files.length > 0 ? (
+          <>
+            {files.map((file, index) => (
+              <Link key={index}>{file}</Link>
+            ))}
+          </>
+        ) : (
+          <CircularProgress />
+        )}
+        <Pagination count={5} />
       </DialogContent>
       <DialogActions>
         <Button variant="contained" onClick={handleCloseModal}>
@@ -23,5 +30,4 @@ const LogsContent: React.FC<LogsContentProps> = ({ handleCloseModal }) => {
     </>
   )
 }
-
 export default LogsContent

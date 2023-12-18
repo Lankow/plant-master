@@ -86,7 +86,6 @@ function App() {
           count: dataFromServer.logs.count,
           page: dataFromServer.logs.page
         })
-        console.log(logsState)
       } else {
         setDataReceived(false)
       }
@@ -129,6 +128,7 @@ function App() {
         setEditedThreshold={setEditedThreshold}
         handleCloseModal={handleCloseModal}
         handleSaveChanges={handleSaveChanges}
+        logFiles={logsState.files}
       />
     </Box>
   )

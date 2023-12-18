@@ -22,5 +22,6 @@ public:
 private:
   static JsonArray buildHumidityJson(const std::vector<HumidityData> &humidityData);
   static void createSensorJson(const HumidityData &humidityData, JsonArray &humidityArray, const int sensorIndex);
+  static StaticJsonDocument<512> m_receivedJson;
 };
 #endif // JSON_UTIL_HPP

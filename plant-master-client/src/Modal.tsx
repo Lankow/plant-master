@@ -15,6 +15,7 @@ interface ModalProps {
   setEditedThreshold: React.Dispatch<React.SetStateAction<number>>
   handleCloseModal: () => void
   handleSaveChanges: () => void
+  logFiles: string[]
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -25,12 +26,13 @@ const Modal: React.FC<ModalProps> = ({
   setEditedPin,
   setEditedThreshold,
   handleCloseModal,
-  handleSaveChanges
+  handleSaveChanges,
+  logFiles
 }) => {
   const renderContent = () => {
     switch (openedModal) {
       case "Logs":
-        return <LogsContent handleCloseModal={handleCloseModal} />
+        return <LogsContent files={logFiles} handleCloseModal={handleCloseModal} />
       case "About":
         return <AboutContent handleCloseModal={handleCloseModal} />
       case "Edit":

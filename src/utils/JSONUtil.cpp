@@ -8,6 +8,8 @@
 #include <vector>
 #include "utils/JSONUtil.hpp"
 
+StaticJsonDocument<512> JSONUtil::m_receivedJson;
+
 void JSONUtil::createSensorJson(const HumidityData &humidityData, JsonArray &humidityArray, const int sensorIndex)
 {
     JsonObject sensorObject = humidityArray.createNestedObject();
@@ -44,8 +46,7 @@ std::string JSONUtil::serialize(const std::shared_ptr<DataProvider> &dataProvide
 
 WebSocketEvtType JSONUtil::getEventType(uint8_t *data, size_t len)
 {
-    StaticJsonDocument<512> m_receivedJson;
-    DeserializationError error = deserializeJson(m_receivedJson, (const char *)data, len);
+    DeserializationError error = deserializeJson(m_receivedJson, (char *)data, len);
 
     if (error)
     {
@@ -99,17 +100,6 @@ std::string JSONUtil::toJSONString(const std::vector<std::string> &logsList)
 
 uint16_t JSONUtil::deserializeByKey(uint8_t *data, size_t len, const std::string &keyName)
 {
-    StaticJsonDocument<512> m_receivedJson;
-
-    DeserializationError error = deserializeJson(m_receivedJson, (const char *)data, len);
-
-    if (error)
-    {
-        Serial.print(F("deserializeJson() failed: "));
-        Serial.println(error.f_str());
-        return 0;
-    }
-
     if (m_receivedJson.containsKey(keyName))
     {
         if (m_receivedJson[keyName].is<uint16_t>())
