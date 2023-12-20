@@ -62,7 +62,7 @@ std::vector<std::string> SDCardUtil::getListOfLogFiles()
     return fileList;
   }
 
-  while (true)
+  while (fileList.size() < MAX_LOG_FILES)
   {
     File entry = root.openNextFile();
     if (!entry)

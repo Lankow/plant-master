@@ -10,6 +10,7 @@
 // MIN MAX VALUES AND SIZES
 static const uint8_t MAX_SENSORS_NO = 8;
 static const uint8_t MAX_RETRIES = 10;
+static const uint8_t MAX_LOG_FILES = 10;
 
 static const uint16_t ANALOG_PIN_MAX = 4095;
 static const uint16_t ANALOG_PIN_MIN = 0;

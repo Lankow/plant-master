@@ -14,9 +14,6 @@
 
 AsyncWebServer m_server(80);
 AsyncWebSocket m_websocket("/ws");
-uint16_t threshold;
-uint8_t id;
-bool toBeSet = false;
 
 void NetworkManager::init()
 {
@@ -32,11 +29,6 @@ void NetworkManager::cyclic()
   Logger::log(Logger::INFO, "NetworkManager - Cyclic Task");
   std::string message = JSONUtil::serialize(m_dataProvider);
   m_websocket.textAll(message.c_str());
-  if (toBeSet)
-  {
-    m_dataProvider->setHandlerThreshold(id, threshold);
-    toBeSet = false;
-  }
 };
 
 void redirectToIndex(AsyncWebServerRequest *request)
@@ -46,6 +38,8 @@ void redirectToIndex(AsyncWebServerRequest *request)
 
 void NetworkManager::handleWsDataEvent(WebSocketEvtType evtType, uint8_t *data, size_t len)
 {
+  uint16_t threshold;
+  uint8_t id;
   std::vector<std::string> logsList;
   std::string logsJson;
 
@@ -54,7 +48,7 @@ void NetworkManager::handleWsDataEvent(WebSocketEvtType evtType, uint8_t *data, 
   case WebSocketEvtType::SET_THRESHOLD:
     threshold = JSONUtil::deserializeByKey(data, len, "threshold");
     id = JSONUtil::deserializeByKey(data, len, "id");
-    toBeSet = true;
+    m_dataProvider->setHandlerThreshold(id, threshold);
     break;
   case WebSocketEvtType::GET_LOGS:
     logsList = SDCardUtil::getListOfLogFiles();
@@ -145,8 +139,8 @@ void NetworkManager::initWiFi()
 
 void NetworkManager::initWebSocket()
 {
-  m_websocket.onEvent([](AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len)
-                      { static_cast<NetworkManager *>(arg)->onEvent(server, client, type, arg, data, len); });
+  m_websocket.onEvent([this](AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len)
+                      { this->onEvent(server, client, type, arg, data, len); });
   m_server.addHandler(&m_websocket);
 }
 
