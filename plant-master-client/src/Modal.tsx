@@ -16,6 +16,7 @@ interface ModalProps {
   handleCloseModal: () => void
   handleSaveChanges: () => void
   logFiles: string[]
+  logCount: number
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -27,12 +28,13 @@ const Modal: React.FC<ModalProps> = ({
   setEditedThreshold,
   handleCloseModal,
   handleSaveChanges,
-  logFiles
+  logFiles,
+  logCount
 }) => {
   const renderContent = () => {
     switch (openedModal) {
       case "Logs":
-        return <LogsContent files={logFiles} handleCloseModal={handleCloseModal} />
+        return <LogsContent files={logFiles} logCount={logCount} handleCloseModal={handleCloseModal} />
       case "About":
         return <AboutContent handleCloseModal={handleCloseModal} />
       case "Edit":

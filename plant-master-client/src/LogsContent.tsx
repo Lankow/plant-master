@@ -1,12 +1,15 @@
 import React from "react"
 import { DialogTitle, DialogContent, DialogActions, Button, CircularProgress, Pagination, Link } from "@mui/material"
 
+const logsPerPage = 10
+
 interface LogsContentProps {
   handleCloseModal: () => void
   files: string[]
+  logCount: number
 }
 
-const LogsContent: React.FC<LogsContentProps> = ({ handleCloseModal, files }) => {
+const LogsContent: React.FC<LogsContentProps> = ({ handleCloseModal, files, logCount }) => {
   return (
     <>
       <DialogTitle>Logs</DialogTitle>
@@ -16,11 +19,11 @@ const LogsContent: React.FC<LogsContentProps> = ({ handleCloseModal, files }) =>
             {files.map((file, index) => (
               <Link key={index}>{file}</Link>
             ))}
+            <Pagination count={logCount / logsPerPage} />
           </>
         ) : (
           <CircularProgress />
         )}
-        <Pagination count={5} />
       </DialogContent>
       <DialogActions>
         <Button variant="contained" onClick={handleCloseModal}>

@@ -58,11 +58,12 @@ function App() {
 
   const handleGetLogs = useCallback(() => {
     handleOpenModal("Logs")
-    const logsRequest: { type: string } = {
-      type: "logs"
+    const logsRequest: { type: string; page: number } = {
+      type: "logs",
+      page: logsState.page - 1
     }
     websocket.current?.send(JSON.stringify(logsRequest))
-  }, [handleOpenModal])
+  }, [handleOpenModal, logsState.page])
 
   const handleSaveChanges = useCallback(() => {
     sendUpdate({
@@ -129,6 +130,7 @@ function App() {
         handleCloseModal={handleCloseModal}
         handleSaveChanges={handleSaveChanges}
         logFiles={logsState.files}
+        logCount={logsState.count}
       />
     </Box>
   )
