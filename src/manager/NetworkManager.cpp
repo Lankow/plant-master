@@ -4,85 +4,34 @@
  *   Created on: 2023/09/26
  *   Author: Lankow
  */
+#include <SPIFFS.h>
 #include "manager/NetworkManager.hpp"
-#include "SPIFFS.h"
 #include "config.hpp"
 #include "constants.hpp"
 #include "utils/Logger.hpp"
 #include "utils/JSONUtil.hpp"
 #include "utils/SDCardUtil.hpp"
 
-AsyncWebServer m_server(80);
-AsyncWebSocket m_websocket("/ws");
+std::shared_ptr<AsyncWebServer> m_server = std::make_shared<AsyncWebServer>(80);
+std::shared_ptr<AsyncWebSocket> m_websocket = std::make_shared<AsyncWebSocket>("/ws");
+
+NetworkManager::NetworkManager() : m_serverManager(m_server), m_webSocketManager(m_server, m_websocket){};
 
 void NetworkManager::init()
 {
   initWiFi();
   initTimeViaNTP();
   initSPIFFS();
-  initWebSocket();
-  initServer();
+  m_webSocketManager.init();
+  m_webSocketManager.setDataProvider(m_dataProvider);
+  m_serverManager.init();
 };
 
 void NetworkManager::cyclic()
 {
   Logger::log(Logger::INFO, "NetworkManager - Cyclic Task");
-  std::string message = JSONUtil::serialize(m_dataProvider);
-  m_websocket.textAll(message.c_str());
+  m_webSocketManager.cyclic();
 };
-
-void redirectToIndex(AsyncWebServerRequest *request)
-{
-  request->redirect("http://" + WiFi.localIP().toString());
-}
-
-void NetworkManager::handleWsDataEvent(WebSocketEvtType evtType, uint8_t *data, size_t len)
-{
-  uint16_t threshold;
-  uint8_t id;
-  std::vector<std::string> logsList;
-  std::string logsJson;
-
-  switch (evtType)
-  {
-  case WebSocketEvtType::SET_THRESHOLD:
-    threshold = JSONUtil::deserializeByKey(data, len, "threshold");
-    id = JSONUtil::deserializeByKey(data, len, "id");
-    m_dataProvider->setHandlerThreshold(id, threshold);
-    break;
-  case WebSocketEvtType::GET_LOGS:
-    logsList = SDCardUtil::getListOfLogFiles();
-    logsJson = JSONUtil::toJSONString(logsList);
-    m_websocket.textAll(logsJson.c_str());
-    break;
-  case WebSocketEvtType::UNKNOWN:
-  default:
-    Logger::log(Logger::ERROR, "Unknown Type of WS Data Event to be handled.");
-  }
-}
-
-void NetworkManager::onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len)
-{
-  WebSocketEvtType eventType = WebSocketEvtType::UNKNOWN;
-
-  switch (type)
-  {
-  case WS_EVT_CONNECT:
-    Serial.printf("WebSocket client #%u connected from %s\n", client->id(), client->remoteIP().toString().c_str());
-    break;
-  case WS_EVT_DISCONNECT:
-    Serial.printf("WebSocket client #%u disconnected\n", client->id());
-    break;
-  case WS_EVT_DATA:
-    eventType = JSONUtil::getEventType(data, len);
-    handleWsDataEvent(eventType, data, len);
-    Serial.println("Entered here");
-    break;
-  case WS_EVT_PONG:
-  case WS_EVT_ERROR:
-    break;
-  }
-}
 
 void NetworkManager::initTimeViaNTP()
 {
@@ -136,21 +85,3 @@ void NetworkManager::initWiFi()
 
   Serial.printf("WiFi Connected - IP Address: %u.%u.%u.%u \n", ip[0], ip[1], ip[2], ip[3]);
 }
-
-void NetworkManager::initWebSocket()
-{
-  m_websocket.onEvent([this](AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len)
-                      { this->onEvent(server, client, type, arg, data, len); });
-  m_server.addHandler(&m_websocket);
-}
-
-void NetworkManager::initServer()
-{
-  DefaultHeaders::Instance().addHeader("Access-Control-Allow-Origin", "*");
-  DefaultHeaders::Instance().addHeader("Access-Control-Allow-Methods", "GET, POST, PUT");
-  DefaultHeaders::Instance().addHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  m_server.serveStatic("/", SPIFFS, "/").setDefaultFile("index.html");
-  m_server.onNotFound(redirectToIndex);
-  m_server.begin();
-};

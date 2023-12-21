@@ -21,8 +21,6 @@ public:
   void init() override;
   void cyclic() override;
 
-  friend class Logger;
-
 private:
   SPIClass m_spi;
 

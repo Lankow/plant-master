@@ -10,22 +10,24 @@
 #include <WiFi.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
-#include "DataProvider.hpp"
 #include "Component.hpp"
+#include "ServerManager.hpp"
+#include "WebSocketManager.hpp"
 
 class NetworkManager : public Component
 {
+public:
+    NetworkManager();
+
+    void init() override;
+    void cyclic() override;
+
 private:
+    ServerManager m_serverManager;
+    WebSocketManager m_webSocketManager;
+
     void initWiFi();
     void initTimeViaNTP();
     void initSPIFFS();
-    void initServer();
-    void initWebSocket();
-    void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len);
-    void handleWsDataEvent(WebSocketEvtType evtType, uint8_t *data, size_t len);
-
-public:
-    void init() override;
-    void cyclic() override;
 };
 #endif // NETWORK_HANDLER_HPP
