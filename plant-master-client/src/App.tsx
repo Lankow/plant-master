@@ -1,15 +1,40 @@
-import { IMessageEvent, w3cwebsocket } from "websocket"
-import { useCallback, useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import { Box, CircularProgress, Container, CssBaseline, Grid } from "@mui/material"
 import HumiditySensor from "./HumiditySensor"
 import { Footer } from "./Footer"
 import TopBar from "./TopBar"
 import Modal from "./Modal"
+import { IMessageEvent, w3cwebsocket } from "websocket"
 
 const debugMode = true
 const initialPin = 0
 const initialThreshold = 4000
 const serverAddress = "ws://192.168.1.184/ws"
+
+interface Sensor {
+  id: number
+  lvl: number
+  threshold: number
+  active: boolean
+}
+
+interface LogsState {
+  files: string[]
+  count: number
+  page: number
+}
+
+interface UpdatedData {
+  type: string
+  id: number
+  threshold?: number
+  pin?: number
+}
+
+interface LogsRequest {
+  type: string
+  page: number
+}
 
 function App() {
   const websocket = useRef<w3cwebsocket | null>(null)
@@ -18,10 +43,9 @@ function App() {
   const [editedId, setEditedId] = useState(0xff)
   const [openedModal, setOpenedModal] = useState("")
   const [dataReceived, setDataReceived] = useState(false)
-  const [sensors, setSensors] = useState(Array.from({ length: 8 }, () => ({ id: 0xff, lvl: 0, threshold: 0, active: false })))
-
-  const [logsState, setLogsState] = useState({
-    files: [] as string[],
+  const [sensors, setSensors] = useState<Array<Sensor>>(Array.from({ length: 8 }, () => ({ id: 0xff, lvl: 0, threshold: 0, active: false })))
+  const [logsState, setLogsState] = useState<LogsState>({
+    files: [],
     count: 0,
     page: 1
   })
@@ -29,7 +53,7 @@ function App() {
   const resetInputs = useCallback(() => {
     setEditedPin(initialPin)
     setEditedThreshold(initialThreshold)
-  }, [setEditedPin, setEditedThreshold])
+  }, [])
 
   const handleOpenModal = useCallback(
     (modalName: string) => {
@@ -44,9 +68,9 @@ function App() {
   }, [])
 
   const sendUpdate = useCallback(({ id, threshold, pin }: { id: number; threshold?: number; pin?: number }) => {
-    const updatedData: { type: string; id: number; threshold?: number; pin?: number } = {
+    const updatedData: UpdatedData = {
       type: "edit",
-      id: id,
+      id,
       threshold: threshold !== initialThreshold ? threshold : undefined,
       pin: pin !== initialPin ? pin : undefined
     }
@@ -58,7 +82,7 @@ function App() {
 
   const handleGetLogs = useCallback(() => {
     handleOpenModal("Logs")
-    const logsRequest: { type: string; page: number } = {
+    const logsRequest: LogsRequest = {
       type: "logs",
       page: logsState.page - 1
     }
@@ -103,8 +127,8 @@ function App() {
           <Grid container spacing={3}>
             {sensors.map((sensor, index) =>
               sensor.active || debugMode ? (
-                <HumiditySensor //
-                  key={index}
+                <HumiditySensor
+                  key={index} //
                   id={sensor.id}
                   lvl={sensor.lvl}
                   threshold={sensor.threshold}
