@@ -65,5 +65,6 @@
     "iostream": "cpp",
     "cfenv": "cpp",
     "typeindex": "cpp"
-  }
+  },
+  "cmake.configureOnOpen": false
 }
