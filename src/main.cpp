@@ -1,64 +1,164 @@
 #include <Arduino.h>
-#include <memory> // Include the memory header for std::shared_ptr
+#include <Wire.h>  
+#include "SSD1306Wire.h"
+#include "OLEDDisplayUi.h"
+#include <Preferences.h>
+#include <WiFi.h>
+#include <ESPAsyncWebServer.h>
 
-#include "constants.hpp"
-#include "DataProvider.hpp"
-#include "Component.hpp"
-#include "utils/Logger.hpp"
-#include "handler/HumidityHandler.hpp"
-#include "handler/TemperatureHandler.hpp"
-#include "handler/SDCardHandler.hpp"
-#include "handler/PumpHandler.hpp"
-#include "handler/ValveHandler.hpp"
-#include "manager/NetworkManager.hpp"
-#include "manager/WateringManager.hpp"
+#define INITIAL_SCREEN_DURATION 3000
+#define CONFIG_PAGE_SSID "config_plant_master"
+#define CONFIG_PAGE_PASSWORD "plantmaster"
 
-// Define shared pointers for component instances.
-std::shared_ptr<NetworkManager> networkManager = std::make_shared<NetworkManager>();
-std::shared_ptr<SDCardHandler> sdCardHandler = std::make_shared<SDCardHandler>(EspPins::PIN_18, EspPins::PIN_19, EspPins::PIN_23, EspPins::PIN_5);
-std::shared_ptr<HumidityHandler> humidityHandler1 = std::make_shared<HumidityHandler>(EspPins::PIN_34);
-std::shared_ptr<HumidityHandler> humidityHandler2 = std::make_shared<HumidityHandler>(EspPins::PIN_35);
-std::shared_ptr<TemperatureHandler> temperatureHandler = std::make_shared<TemperatureHandler>(EspPins::PIN_21);
-std::shared_ptr<ValveHandler> valveHandler = std::make_shared<ValveHandler>();
-std::shared_ptr<PumpHandler> pumpHandler = std::make_shared<PumpHandler>(EspPins::PIN_4);
-std::shared_ptr<WateringManager> wateringManager = std::make_shared<WateringManager>();
+SSD1306Wire display(0x3c, SDA, SCL); 
+Preferences preferences;
+AsyncWebServer server(80);
 
-std::shared_ptr<DataProvider> dataProvider = std::make_shared<DataProvider>();
-
-// Create an array of shared pointers to components.
-std::shared_ptr<Component> components[] = {
-    networkManager,
-    sdCardHandler,
-    humidityHandler1,
-    humidityHandler2,
-    temperatureHandler,
-    valveHandler,
-    pumpHandler,
-    wateringManager,
-};
-
-void setup()
-{
-  Serial.begin(921600);
-  // Set data provider and logger for each component.
-  for (auto &component : components)
-  {
-    component->setDataProvider(dataProvider);
-  }
-
-  // Initialize components.
-  for (auto &component : components)
-  {
-    component->init();
-  }
+void drawInitialScreen(){
+    display.clear();
+    display.drawString(30, 10, "Plant-Master");
+    display.drawHorizontalLine(10, 26, 100);
+    display.drawString(35, 30, "by Lankow");
+    display.display();
 }
 
-void loop()
-{
-  delay(1000);
-  // Trigger cyclic tasks for components.
-  for (auto &component : components)
-  {
-    component->cyclic();
-  }
+void drawConfigScreen(){
+    display.clear();
+    display.drawString(10, 0, "Config SSID:");
+    display.drawString(10, 10, CONFIG_PAGE_SSID);
+    display.drawHorizontalLine(10, 24, 100);
+    display.drawString(10, 25, "Config PASSWORD:");
+    display.drawString(10, 35, CONFIG_PAGE_PASSWORD);
+    display.display();
+}
+
+bool wifiCredentialsExist() {
+    if (!preferences.begin("wifi-config", true)) {
+        Serial.println("Failed to open NVS namespace.");
+        return false;
+    }
+    bool ssidExists = preferences.isKey("ssid");
+    bool passwordExists = preferences.isKey("password");
+    preferences.end();
+    return ssidExists && passwordExists;
+}
+
+bool connectToWiFi() {
+    if (!preferences.begin("wifi-config", false)) {
+        Serial.println("Failed to open NVS namespace.");
+        return false;
+    }
+    String ssid = preferences.getString("ssid");
+    String password = preferences.getString("password");
+    preferences.end();
+
+    WiFi.begin(ssid.c_str(), password.c_str());
+
+    int retryCount = 0;
+    while (WiFi.status() != WL_CONNECTED && retryCount < 20) {
+        delay(500);
+        retryCount++;
+    }
+
+    return WiFi.status() == WL_CONNECTED;
+}
+
+void clearWifiCredentials() {
+    if (!preferences.begin("wifi-config", false)) {
+        Serial.println("Failed to open NVS namespace.");
+        return;
+    }
+    preferences.remove("ssid");
+    preferences.remove("password");
+    preferences.end();
+}
+
+void setupAccessPoint() {
+    WiFi.softAP(CONFIG_PAGE_SSID, CONFIG_PAGE_PASSWORD);
+
+    server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
+        request->send(200, "text/html", R"(
+            <!DOCTYPE html>
+            <html>
+            <body>
+                <h1>Configure WiFi</h1>
+                <form action="/save" method="POST">
+                    SSID: <input type="text" name="ssid"><br>
+                    Password: <input type="password" name="password"><br>
+                    <input type="submit" value="Save">
+                </form>
+            </body>
+            </html>
+        )");
+    });
+
+    server.on("/save", HTTP_POST, [](AsyncWebServerRequest *request) {
+        String ssid, password;
+        if (request->hasParam("ssid", true)) {
+            ssid = request->getParam("ssid", true)->value();
+        }
+        if (request->hasParam("password", true)) {
+            password = request->getParam("password", true)->value();
+        }
+
+        if (!ssid.isEmpty() && !password.isEmpty()) {
+            if (!preferences.begin("wifi-config", false)) {
+                Serial.println("Failed to open NVS namespace.");
+                return;
+            }
+            preferences.putString("ssid", ssid);
+            preferences.putString("password", password);
+            preferences.end();
+
+            request->send(200, "text/plain", "Credentials saved. Rebooting...");
+
+            // Attempt to connect to WiFi
+            WiFi.begin(ssid.c_str(), password.c_str());
+            int retryCount = 0;
+            while (WiFi.status() != WL_CONNECTED && retryCount < 20) {
+                delay(500);
+                retryCount++;
+            }
+
+            if (WiFi.status() == WL_CONNECTED) {
+                ESP.restart(); // Restart to apply changes
+            } else {
+                clearWifiCredentials(); // Clear invalid credentials
+            }
+        } else {
+            request->send(400, "text/plain", "Invalid input");
+        }
+    });
+
+    server.begin();
+}
+
+bool connectToSavedWiFiOrSetupAP() {
+    if (wifiCredentialsExist()) {
+        if (connectToWiFi()) {
+            return true;
+        } else {
+            clearWifiCredentials();
+        }
+    }
+    setupAccessPoint();
+    drawConfigScreen();
+    return false;
+}
+void setup() {
+    Serial.begin(115200);
+
+    display.init();
+    drawInitialScreen();
+    delay(INITIAL_SCREEN_DURATION);
+
+    if (connectToSavedWiFiOrSetupAP()) {
+        Serial.println("Connected to WiFi successfully.");
+    } else {
+        Serial.println("Failed to connect to WiFi. Access Point 'config_plant_master' is set up.");
+    }
+}
+
+void loop() {
+    delay(1000);
 }
