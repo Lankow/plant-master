@@ -1,5 +1,5 @@
 import React from "react"
-import { DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Typography, Link } from "@mui/material"
+import { DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Link } from "@mui/material"
 
 interface AboutContentProps {
   handleCloseModal: () => void

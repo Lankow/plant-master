@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { Box, CircularProgress, Container, CssBaseline, Grid } from "@mui/material"
 import HumiditySensor from "./HumiditySensor"
 import { Footer } from "./Footer"

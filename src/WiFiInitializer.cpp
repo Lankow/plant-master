@@ -13,6 +13,8 @@ WiFiInitializer::WiFiInitializer(std::shared_ptr<DisplayRenderer> displayRendere
 bool WiFiInitializer::connectToSavedWiFiOrSetupAP() {
     if (wifiCredentialsExist()) {
         if (connectToWiFi()) {
+            IPAddress ip = WiFi.localIP();
+            Serial.printf("WiFi Connected - IP Address: %u.%u.%u.%u \n", ip[0], ip[1], ip[2], ip[3]);
             return true;
         } else {
             clearWifiCredentials();
@@ -41,6 +43,12 @@ bool WiFiInitializer::connectToWiFi() {
     String ssid = m_preferences.getString("ssid");
     String password = m_preferences.getString("password");
     m_preferences.end();
+
+    if (!WiFi.config(LOCAL_IP, GATEWAY, SUBNET, PRIMARY_DNS, SECONDARY_DNS))
+    {
+        Serial.println("STA Failed to configure");
+        return false;
+    }
 
     WiFi.begin(ssid.c_str(), password.c_str());
 
