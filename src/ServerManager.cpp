@@ -10,7 +10,7 @@
 #include "ServerManager.hpp"
 #include "Constants.hpp"
 
-ServerManager::ServerManager() : m_server(ASYNC_SERVER_PORT), m_websocket(WEBSOCKET_URL.c_str()){};
+ServerManager::ServerManager(std::shared_ptr<DisplayRenderer> displayRenderer) : m_server(ASYNC_SERVER_PORT), m_websocket(WEBSOCKET_URL.c_str()), m_displayRenderer(displayRenderer){};
 
 void ServerManager::init(){
     if (WiFi.status() == WL_CONNECTED){
@@ -36,6 +36,7 @@ void ServerManager::initServer(){
                         this->redirectToIndex(request); 
                         });
   m_server.begin();
+  // m_displayRenderer->drawConnectedScreen(WiFi.localIP().toString().c_str());
 };
 
 void ServerManager::redirectToIndex(AsyncWebServerRequest *request)

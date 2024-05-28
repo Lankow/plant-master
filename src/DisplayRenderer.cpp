@@ -29,9 +29,9 @@ void DisplayRenderer::drawConfigScreen(std::string ssid, std::string password){
     m_display.display();
 }
 
-void DisplayRenderer::drawConnectScreen(std::string ip){
+void DisplayRenderer::drawConnectedScreen(std::string ip){
     m_display.clear();
-    m_display.drawString(10, 0, "Config SSID:");
+    m_display.drawString(10, 0, "Plant-Master Server:");
     m_display.drawHorizontalLine(10, 10, 100);
     m_display.drawString(10, 12, ip.c_str());
     m_display.display();

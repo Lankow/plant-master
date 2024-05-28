@@ -18,7 +18,7 @@ class DisplayRenderer
 
     void drawInitialScreen();
     void drawConfigScreen(std::string ssid, std::string password);
-    void drawConnectScreen(std::string ip);
+    void drawConnectedScreen(std::string ip);
 
     private:
     SSD1306Wire m_display;

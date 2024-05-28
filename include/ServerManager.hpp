@@ -9,15 +9,17 @@
 #include <ESPAsyncWebServer.h>
 #include <AsyncTCP.h>
 #include <memory>
+#include "DisplayRenderer.hpp"
 
 class ServerManager
 {
     public:
-    ServerManager();
+    ServerManager(std::shared_ptr<DisplayRenderer> displayRenderer);
     
     void init();
 
     private:
+    std::shared_ptr<DisplayRenderer> m_displayRenderer;
     AsyncWebServer m_server;
     AsyncWebSocket m_websocket;
 
