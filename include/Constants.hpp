@@ -23,4 +23,22 @@ static const IPAddress SUBNET(255, 255, 0, 0);
 static const IPAddress PRIMARY_DNS(8, 8, 8, 8);
 static const IPAddress SECONDARY_DNS(8, 8, 4, 4);
 
+// ESP PINS
+enum EspPins : uint8_t
+{
+  PIN_LED_BUILTIN = 2,
+  PIN_4 = 4,
+  PIN_5 = 5,
+  PIN_17 = 17,
+  PIN_18 = 18,
+  PIN_19 = 19,
+  PIN_20 = 20,
+  PIN_21 = 21,
+  PIN_22 = 22,
+  PIN_23 = 23,
+  PIN_32 = 32,
+  PIN_34 = 34,
+  PIN_35 = 35
+};
+
 #endif // CONSTANTS_HPP
