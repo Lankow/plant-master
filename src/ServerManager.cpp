@@ -20,6 +20,11 @@ void ServerManager::init(){
     }
 }
 
+void ServerManager::cyclic()
+{
+  m_websocket.textAll("");
+}
+
 void ServerManager::initServer(){
   DefaultHeaders::Instance().addHeader("Access-Control-Allow-Origin", "*");
   DefaultHeaders::Instance().addHeader("Access-Control-Allow-Methods", "GET, POST, PUT");

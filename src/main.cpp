@@ -30,8 +30,12 @@ void setup() {
 }
 
 void loop(){
+    #ifdef PLANT_MASTER_SERVER
+    serverManager->cyclic();
+    #else
     humidityReader->readHumidity();
     dhtReader->readRoomHumidity();
     dhtReader->readRoomTemperature();
+    #endif
     delay(1000);
 }

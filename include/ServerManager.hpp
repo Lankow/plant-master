@@ -18,6 +18,7 @@ class ServerManager
     ServerManager(std::shared_ptr<DisplayRenderer> displayRenderer);
     
     void init();
+    void cyclic();
 
     private:
     std::shared_ptr<DisplayRenderer> m_displayRenderer;
