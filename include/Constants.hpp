@@ -29,6 +29,8 @@ enum EspPins : uint8_t
   PIN_LED_BUILTIN = 2,
   PIN_4 = 4,
   PIN_5 = 5,
+  PIN_12 = 12,
+  PIN_14 = 14,
   PIN_17 = 17,
   PIN_18 = 18,
   PIN_19 = 19,

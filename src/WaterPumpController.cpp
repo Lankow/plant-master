@@ -7,10 +7,12 @@
 
 #include "WaterPumpController.hpp"
 
-WaterPumpController::WaterPumpController(const uint8_t pin){};
+WaterPumpController::WaterPumpController(const uint8_t pin): m_operatedPin(pin){};
 
-void WaterPumpController::turnOn(){};
+void WaterPumpController::turnOn(){
+    digitalWrite(m_operatedPin, HIGH);
+};
 
-void WaterPumpController::turnOff(){};
-
-void WaterPumpController::toggle(){};
+void WaterPumpController::turnOff(){
+    digitalWrite(m_operatedPin, LOW);
+};

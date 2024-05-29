@@ -17,8 +17,8 @@ std::shared_ptr<ServerManager> serverManager = std::make_shared<ServerManager>(d
 #else
 std::shared_ptr<HumidityReader> humidityReader = std::make_shared<HumidityReader>(EspPins::PIN_34);
 std::shared_ptr<DHTReader> dhtReader = std::make_shared<DHTReader>(EspPins::PIN_21);
-std::shared_ptr<WaterPumpController> waterPumpController = std::make_shared<WaterPumpController>(EspPins::PIN_17);
-std::shared_ptr<ValveController> valveController = std::make_shared<ValveController>(EspPins::PIN_18);
+std::shared_ptr<WaterPumpController> waterPumpController = std::make_shared<WaterPumpController>(EspPins::PIN_18);
+std::shared_ptr<ValveController> valveController = std::make_shared<ValveController>(EspPins::PIN_12);
 #endif
 
 void setup() {
@@ -30,6 +30,7 @@ void setup() {
     }
     #else
     Serial.println("Plant Master Sensor.");
+    pinMode(EspPins::PIN_18, OUTPUT);  
     #endif
 }
 
@@ -40,8 +41,10 @@ void loop(){
     humidityReader->readHumidity();
     dhtReader->readRoomHumidity();
     dhtReader->readRoomTemperature();
-    waterPumpController->toggle();
+    waterPumpController->turnOn();
+    delay(4000);
+    waterPumpController->turnOff();
     valveController->toggle();
     #endif
-    delay(1000);
+    delay(4000);
 }

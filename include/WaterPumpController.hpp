@@ -16,7 +16,6 @@ class WaterPumpController
 
         void turnOn();
         void turnOff();
-        void toggle();
 
     private:
         uint8_t m_operatedPin;
