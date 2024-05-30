@@ -9,6 +9,17 @@
 
 #include <string>
 
+static const uint16_t ANALOG_PIN_MAX = 4095;
+static const uint16_t ANALOG_PIN_MIN = 0;
+
+static const uint8_t MAX_HUMIDITY_SENSORS_AMOUNT = 4;
+
+static const uint16_t DEFAULT_HUMIDITY = ANALOG_PIN_MAX;
+static const uint16_t DEFAULT_HUMIDITY_THRESHOLD = ANALOG_PIN_MAX;
+
+static const float DEFAULT_ROOM_TEMPERATURE = 0;
+static const float DEFAULT_ROOM_HUMIDITY = 0;
+
 static const std::string CONFIG_PAGE_SSID = "config_plant_master";
 static const std::string CONFIG_PAGE_PASSWORD = "plantmaster";
 static const std::string WEBSOCKET_URL = "/ws";
