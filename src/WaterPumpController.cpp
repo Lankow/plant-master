@@ -9,6 +9,10 @@
 
 WaterPumpController::WaterPumpController(const uint8_t pin): m_operatedPin(pin){};
 
+void WaterPumpController::init(){
+    pinMode(m_operatedPin, OUTPUT);
+}
+
 void WaterPumpController::turnOn(){
     digitalWrite(m_operatedPin, HIGH);
 };

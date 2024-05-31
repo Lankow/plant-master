@@ -9,6 +9,8 @@
 
 #include <string>
 
+static const uint32_t CYCLE_TIME_MS = 1000;
+
 static const uint16_t ANALOG_PIN_MAX = 4095;
 static const uint16_t ANALOG_PIN_MIN = 0;
 

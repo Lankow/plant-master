@@ -14,10 +14,12 @@ class WaterPumpController
     public:
         WaterPumpController(const uint8_t pin);
 
-        void turnOn();
-        void turnOff();
+        void init();
 
     private:
+        void turnOn();
+        void turnOff();
+        
         uint8_t m_operatedPin;
 };
 
