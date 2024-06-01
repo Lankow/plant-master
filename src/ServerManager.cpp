@@ -12,12 +12,14 @@
 
 ServerManager::ServerManager(std::shared_ptr<DisplayRenderer> displayRenderer) : m_server(ASYNC_SERVER_PORT), m_websocket(WEBSOCKET_URL.c_str()), m_displayRenderer(displayRenderer){};
 
-void ServerManager::init(){
-    if (WiFi.status() == WL_CONNECTED){
-        Serial.println("Initializing Server...");
-        initSPIFFS();
-        initServer();
-    }
+void ServerManager::init()
+{
+  if (WiFi.status() == WL_CONNECTED)
+  {
+    Serial.println("Initializing Server...");
+    initSPIFFS();
+    initServer();
+  }
 }
 
 void ServerManager::cyclic()
@@ -25,21 +27,21 @@ void ServerManager::cyclic()
   m_websocket.textAll("");
 }
 
-void ServerManager::initServer(){
+void ServerManager::initServer()
+{
   DefaultHeaders::Instance().addHeader("Access-Control-Allow-Origin", "*");
   DefaultHeaders::Instance().addHeader("Access-Control-Allow-Methods", "GET, POST, PUT");
   DefaultHeaders::Instance().addHeader("Access-Control-Allow-Headers", "Content-Type");
 
   m_websocket.onEvent([this](AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len)
-                       { this->onEvent(server, client, type, arg, data, len); });
+                      { this->onEvent(server, client, type, arg, data, len); });
   m_server.addHandler(&m_websocket);
 
   m_server.serveStatic("/", SPIFFS, "/").setDefaultFile("index.html");
   m_server.onNotFound([this](AsyncWebServerRequest *request)
-                       {
+                      {
                         Serial.println("Page not found.");
-                        this->redirectToIndex(request); 
-                        });
+                        this->redirectToIndex(request); });
   m_server.begin();
   // m_displayRenderer->drawConnectedScreen(WiFi.localIP().toString().c_str());
 };

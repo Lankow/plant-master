@@ -14,21 +14,21 @@
 
 class WiFiInitializer
 {
-    public:
-        WiFiInitializer(std::shared_ptr<DisplayRenderer> displayRenderer, uint16_t port);
-        
-        bool connectToSavedWiFiOrSetupAP();
+public:
+    WiFiInitializer(std::shared_ptr<DisplayRenderer> displayRenderer, uint16_t port);
 
-    private:
-        std::shared_ptr<DisplayRenderer> m_displayRenderer;
-        AsyncWebServer m_server;
-        IPAddress m_apIP;
-        Preferences m_preferences;
+    bool connectToSavedWiFiOrSetupAP();
 
-        bool wifiCredentialsExist(); 
-        bool connectToWiFi();
-        void clearWifiCredentials();
-        void setupAccessPoint();
+private:
+    std::shared_ptr<DisplayRenderer> m_displayRenderer;
+    AsyncWebServer m_server;
+    IPAddress m_apIP;
+    Preferences m_preferences;
+
+    bool wifiCredentialsExist();
+    bool connectToWiFi();
+    void clearWifiCredentials();
+    void setupAccessPoint();
 };
 
 #endif // WIFI_INITIALIZER_HPP

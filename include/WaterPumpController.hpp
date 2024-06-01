@@ -11,16 +11,16 @@
 
 class WaterPumpController
 {
-    public:
-        WaterPumpController(const uint8_t pin);
+public:
+    WaterPumpController(const uint8_t pin);
 
-        void init();
+    void init();
 
-    private:
-        void turnOn();
-        void turnOff();
-        
-        uint8_t m_operatedPin;
+private:
+    uint8_t m_operatedPin;
+
+    void turnOn();
+    void turnOff();
 };
 
 #endif // WATER_PUMP_CONTROLLER_HPP

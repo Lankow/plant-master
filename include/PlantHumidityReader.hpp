@@ -11,11 +11,12 @@
 
 class PlantHumidityReader
 {
-    public:
+public:
     PlantHumidityReader(const uint8_t pin);
+
     void readHumidity();
 
-    private:
+private:
     uint8_t m_operatedPin;
 };
 

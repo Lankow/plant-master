@@ -6,7 +6,8 @@
  */
 #include "DataStorage.hpp"
 
-DataStorage::DataStorage(){
+DataStorage::DataStorage()
+{
     for (int i = 0; i < MAX_HUMIDITY_SENSORS_AMOUNT; i++)
     {
         m_plantsHumidityData.push_back(PlantHumidityData());
@@ -38,14 +39,18 @@ void DataStorage::setRoomHumidity(const float roomHumidity)
     m_roomHumidity = roomHumidity;
 }
 
-void DataStorage::setPlantHumidity(const uint8_t index, const uint16_t humidity){
-    if(m_plantsHumidityData.size()>index){
+void DataStorage::setPlantHumidity(const uint8_t index, const uint16_t humidity)
+{
+    if (m_plantsHumidityData.size() > index)
+    {
         m_plantsHumidityData[index].setCurrentHumidity(humidity);
     }
 };
 
-void DataStorage::setHumidityThreshold(const uint8_t index, const uint16_t threshold){
-    if(m_plantsHumidityData.size()>index){
+void DataStorage::setHumidityThreshold(const uint8_t index, const uint16_t threshold)
+{
+    if (m_plantsHumidityData.size() > index)
+    {
         m_plantsHumidityData[index].setHumidityThreshold(threshold);
     }
 };

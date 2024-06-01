@@ -6,9 +6,10 @@
  */
 #include "PlantHumidityReader.hpp"
 
-PlantHumidityReader::PlantHumidityReader(const uint8_t pin):m_operatedPin(pin){};
+PlantHumidityReader::PlantHumidityReader(const uint8_t pin) : m_operatedPin(pin){};
 
-void PlantHumidityReader::readHumidity(){
+void PlantHumidityReader::readHumidity()
+{
     uint16_t humidity = analogRead(m_operatedPin);
     Serial.println(humidity);
 }

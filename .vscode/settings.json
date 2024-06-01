@@ -1,4 +1,6 @@
 {
+  "editor.formatOnSave": true,
+  "C_Cpp.clang_format_fallbackStyle": "Visual Studio",
   "files.associations": {
     "*.js": "javascriptreact",
     "array": "cpp",

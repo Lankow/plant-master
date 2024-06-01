@@ -11,15 +11,15 @@
 
 class ValveController
 {
-    public:
-        ValveController(const uint8_t pin);
+public:
+    ValveController(const uint8_t pin);
 
-        void turnOn();
-        void turnOff();
-        void toggle();
-        
-    private:
-        uint8_t m_operatedPin;
+    void turnOn();
+    void turnOff();
+    void toggle();
+
+private:
+    uint8_t m_operatedPin;
 };
 
 #endif // VALVE_CONTROLLER_HPP

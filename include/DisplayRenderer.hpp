@@ -7,20 +7,20 @@
 #ifndef DISPLAY_RENDERER_HPP
 #define DISPLAY_RENDERER_HPP
 
-#include <Wire.h>  
+#include <Wire.h>
 #include "SSD1306Wire.h"
 #include "OLEDDisplayUi.h"
 
 class DisplayRenderer
 {
-    public:
+public:
     DisplayRenderer();
 
     void drawInitialScreen();
     void drawConfigScreen(std::string ssid, std::string password);
     void drawConnectedScreen(std::string ip);
 
-    private:
+private:
     SSD1306Wire m_display;
 };
 

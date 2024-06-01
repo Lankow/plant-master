@@ -14,12 +14,12 @@
 
 class JSONConverter
 {
-    public:
+public:
     JSONConverter();
 
     std::string serializeDataStorage(const std::shared_ptr<DataStorage> &dataStorage);
 
-    private:
+private:
 };
 
 #endif // JSON_CONVERTER_HPP

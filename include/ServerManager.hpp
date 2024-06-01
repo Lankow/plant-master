@@ -14,13 +14,13 @@
 
 class ServerManager
 {
-    public:
+public:
     ServerManager(std::shared_ptr<DisplayRenderer> displayRenderer);
-    
+
     void init();
     void cyclic();
 
-    private:
+private:
     std::shared_ptr<DisplayRenderer> m_displayRenderer;
     AsyncWebServer m_server;
     AsyncWebSocket m_websocket;

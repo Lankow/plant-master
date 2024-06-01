@@ -12,16 +12,16 @@
 
 class PlantHumidityData
 {
-    public:
+public:
     PlantHumidityData();
-    
+
     uint16_t getCurrentHumidity() const;
     uint16_t getHumidityThreshold() const;
 
     void setCurrentHumidity(const uint16_t humidity);
-    void setHumidityThreshold(const uint16_t theshold);  
+    void setHumidityThreshold(const uint16_t theshold);
 
-    private:
+private:
     uint16_t m_currentHumidity = DEFAULT_HUMIDITY;
     uint16_t m_humidityThreshold = DEFAULT_HUMIDITY_THRESHOLD;
 };

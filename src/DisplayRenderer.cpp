@@ -7,9 +7,10 @@
 #include "DisplayRenderer.hpp"
 #include "Constants.hpp"
 
-DisplayRenderer::DisplayRenderer(): m_display(0x03, SDA, SCL){};
+DisplayRenderer::DisplayRenderer() : m_display(0x03, SDA, SCL){};
 
-void DisplayRenderer::drawInitialScreen(){
+void DisplayRenderer::drawInitialScreen()
+{
     m_display.clear();
     m_display.drawString(30, 10, "Plant-Master");
     m_display.drawHorizontalLine(10, 26, 100);
@@ -19,7 +20,8 @@ void DisplayRenderer::drawInitialScreen(){
     delay(INITIAL_SCREEN_DURATION);
 }
 
-void DisplayRenderer::drawConfigScreen(std::string ssid, std::string password){
+void DisplayRenderer::drawConfigScreen(std::string ssid, std::string password)
+{
     m_display.clear();
     m_display.drawString(10, 0, "Config SSID:");
     m_display.drawString(10, 10, ssid.c_str());
@@ -29,7 +31,8 @@ void DisplayRenderer::drawConfigScreen(std::string ssid, std::string password){
     m_display.display();
 }
 
-void DisplayRenderer::drawConnectedScreen(std::string ip){
+void DisplayRenderer::drawConnectedScreen(std::string ip)
+{
     m_display.clear();
     m_display.drawString(10, 0, "Plant-Master Server:");
     m_display.drawHorizontalLine(10, 10, 100);

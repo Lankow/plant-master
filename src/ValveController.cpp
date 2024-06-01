@@ -9,8 +9,8 @@
 
 ValveController::ValveController(const uint8_t pin){};
 
-void ValveController::turnOn(){};
+void ValveController::turnOn() {};
 
-void ValveController::turnOff(){};
+void ValveController::turnOff() {};
 
-void ValveController::toggle(){};
+void ValveController::toggle() {};

@@ -14,7 +14,7 @@
 
 class DataStorage
 {
-    public:
+public:
     DataStorage();
 
     const std::vector<PlantHumidityData> &getPlantsHumidityData() const;
@@ -26,7 +26,7 @@ class DataStorage
     void setPlantHumidity(const uint8_t index, const uint16_t humidity);
     void setHumidityThreshold(const uint8_t index, const uint16_t threshold);
 
-    private:
+private:
     std::vector<PlantHumidityData> m_plantsHumidityData;
     float m_roomTemperature = DEFAULT_ROOM_TEMPERATURE;
     float m_roomHumidity = DEFAULT_ROOM_HUMIDITY;

@@ -8,7 +8,7 @@
 #define PLANT_MASTER_HPP
 
 #include <Arduino.h>
-#include <memory> 
+#include <memory>
 #include "DisplayRenderer.hpp"
 #include "WiFiInitializer.hpp"
 #include "ServerManager.hpp"
@@ -16,13 +16,13 @@
 
 class PlantMaster
 {
-    public:
+public:
     PlantMaster();
-    
+
     void init();
     void cyclic();
 
-    private:
+private:
     std::shared_ptr<DisplayRenderer> m_displayRenderer;
     WiFiInitializer m_wiFiInitializer;
     ServerManager m_serverManager;

@@ -12,13 +12,14 @@
 
 class DHTReader
 {
-    public:
-        DHTReader(const uint8_t pin);
+public:
+    DHTReader(const uint8_t pin);
 
-        void readRoomTemperature();
-        void readRoomHumidity();
-    private:
-        DHT m_dht;
+    void readRoomTemperature();
+    void readRoomHumidity();
+
+private:
+    DHT m_dht;
 };
 
 #endif // DHT_READER_HPP

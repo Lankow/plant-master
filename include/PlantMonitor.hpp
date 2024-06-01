@@ -8,7 +8,7 @@
 #define PLANT_MONITOR_HPP
 
 #include <Arduino.h>
-#include <memory> 
+#include <memory>
 #include "PlantHumidityReader.hpp"
 #include "DHTReader.hpp"
 #include "WaterPumpController.hpp"
@@ -16,13 +16,13 @@
 
 class PlantMonitor
 {
-    public:
+public:
     PlantMonitor();
-    
+
     void init();
     void cyclic();
 
-    private:
+private:
     PlantHumidityReader m_plantHumidityReader;
     DHTReader m_dhtReader;
     WaterPumpController m_waterPumpController;

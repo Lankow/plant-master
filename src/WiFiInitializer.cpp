@@ -10,13 +10,18 @@
 
 WiFiInitializer::WiFiInitializer(std::shared_ptr<DisplayRenderer> displayRenderer, uint16_t port) : m_displayRenderer(displayRenderer), m_preferences(), m_server(port){};
 
-bool WiFiInitializer::connectToSavedWiFiOrSetupAP() {
-    if (wifiCredentialsExist()) {
-        if (connectToWiFi()) {
+bool WiFiInitializer::connectToSavedWiFiOrSetupAP()
+{
+    if (wifiCredentialsExist())
+    {
+        if (connectToWiFi())
+        {
             IPAddress ip = WiFi.localIP();
             Serial.printf("WiFi Connected - IP Address: %u.%u.%u.%u \n", ip[0], ip[1], ip[2], ip[3]);
             return true;
-        } else {
+        }
+        else
+        {
             clearWifiCredentials();
         }
     }
@@ -24,8 +29,10 @@ bool WiFiInitializer::connectToSavedWiFiOrSetupAP() {
     return false;
 }
 
-bool WiFiInitializer::wifiCredentialsExist() {
-    if (!m_preferences.begin("wifi-config", true)) {
+bool WiFiInitializer::wifiCredentialsExist()
+{
+    if (!m_preferences.begin("wifi-config", true))
+    {
         Serial.println("Failed to open NVS namespace.");
         return false;
     }
@@ -35,8 +42,10 @@ bool WiFiInitializer::wifiCredentialsExist() {
     return ssidExists && passwordExists;
 }
 
-bool WiFiInitializer::connectToWiFi() {
-    if (!m_preferences.begin("wifi-config", false)) {
+bool WiFiInitializer::connectToWiFi()
+{
+    if (!m_preferences.begin("wifi-config", false))
+    {
         Serial.println("Failed to open NVS namespace.");
         return false;
     }
@@ -53,7 +62,8 @@ bool WiFiInitializer::connectToWiFi() {
     WiFi.begin(ssid.c_str(), password.c_str());
 
     int retryCount = 0;
-    while (WiFi.status() != WL_CONNECTED && retryCount < 20) {
+    while (WiFi.status() != WL_CONNECTED && retryCount < 20)
+    {
         delay(500);
         retryCount++;
     }
@@ -61,8 +71,10 @@ bool WiFiInitializer::connectToWiFi() {
     return WiFi.status() == WL_CONNECTED;
 }
 
-void WiFiInitializer::clearWifiCredentials() {
-    if (!m_preferences.begin("wifi-config", false)) {
+void WiFiInitializer::clearWifiCredentials()
+{
+    if (!m_preferences.begin("wifi-config", false))
+    {
         Serial.println("Failed to open NVS namespace.");
         return;
     }
@@ -71,12 +83,13 @@ void WiFiInitializer::clearWifiCredentials() {
     m_preferences.end();
 }
 
-void WiFiInitializer::setupAccessPoint() {
+void WiFiInitializer::setupAccessPoint()
+{
     WiFi.softAP(CONFIG_PAGE_SSID.c_str(), CONFIG_PAGE_PASSWORD.c_str());
     m_apIP = WiFi.softAPIP();
 
-    m_server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
-        request->send(200, "text/html", R"(
+    m_server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
+                { request->send(200, "text/html", R"(
             <!DOCTYPE html>
             <html>
             <body>
@@ -88,10 +101,10 @@ void WiFiInitializer::setupAccessPoint() {
                 </form>
             </body>
             </html>
-        )");
-    });
+        )"); });
 
-    m_server.on("/save", HTTP_POST, [this](AsyncWebServerRequest *request) {
+    m_server.on("/save", HTTP_POST, [this](AsyncWebServerRequest *request)
+                {
         String ssid, password;
         if (request->hasParam("ssid", true)) {
             ssid = request->getParam("ssid", true)->value();
@@ -126,8 +139,7 @@ void WiFiInitializer::setupAccessPoint() {
             }
         } else {
             request->send(400, "text/plain", "Invalid input");
-        }
-    });
+        } });
 
     m_server.begin();
 }

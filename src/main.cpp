@@ -1,29 +1,31 @@
 #include <Arduino.h>
-#include <memory> 
+#include <memory>
 #include "PlantMaster.hpp"
 #include "PlantMonitor.hpp"
 #include "Constants.hpp"
 
 #ifdef PLANT_MASTER
-    PlantMaster plantMaster;
+PlantMaster plantMaster;
 #else
-    PlantMonitor plantMonitor;
+PlantMonitor plantMonitor;
 #endif
 
-void setup() {
+void setup()
+{
     Serial.begin(115200);
-    #ifdef PLANT_MASTER
+#ifdef PLANT_MASTER
     plantMaster.init();
-    #else
+#else
     plantMonitor.init();
-    #endif
+#endif
 }
 
-void loop(){
-    #ifdef PLANT_MASTER
+void loop()
+{
+#ifdef PLANT_MASTER
     plantMaster.cyclic();
-    #else
+#else
     plantMonitor.cyclic();
-    #endif
+#endif
     delay(CYCLE_TIME_MS);
 }
