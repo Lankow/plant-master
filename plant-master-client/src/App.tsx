@@ -1,9 +1,7 @@
 import {  useEffect, useRef } from "react"
-import { Box, CircularProgress, Container, CssBaseline, Grid } from "@mui/material"
-import HumiditySensor from "./HumiditySensor"
+import { Box, Container, CssBaseline } from "@mui/material"
 import { Footer } from "./Footer"
 import TopBar from "./TopBar"
-import Modal from "./Modal"
 import { IMessageEvent, w3cwebsocket } from "websocket"
 
 
