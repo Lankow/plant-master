@@ -38,6 +38,12 @@ void ServerManager::initServer()
   m_server.addHandler(&m_websocket);
 
   m_server.serveStatic("/", SPIFFS, "/").setDefaultFile("index.html");
+  m_server.on("/connect", HTTP_GET, [this](AsyncWebServerRequest *request)
+              {
+                Serial.println("Root endpoint accessed.");
+                // this->startMonitorConnection();
+                request->send(200, "text/plain", "Initializing Plant-Monitor Connection..."); });
+
   m_server.onNotFound([this](AsyncWebServerRequest *request)
                       {
                         Serial.println("Page not found.");
