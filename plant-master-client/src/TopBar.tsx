@@ -2,9 +2,10 @@ import { AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/materi
 import React from "react"
 
 interface TopBarProps {
+  handleOpenModal: (modal: string) => void
 }
 
-const TopBar: React.FC<TopBarProps> = () => {
+const TopBar: React.FC<TopBarProps> = ({ handleOpenModal}) => {
   return (
     <AppBar component="nav" position="static">
       <Container maxWidth="xl">
@@ -13,7 +14,10 @@ const TopBar: React.FC<TopBarProps> = () => {
             Plant-Master
           </Typography>
           <Box sx={{ display: { sm: "block" } }}>
-            <Button sx={{ color: "#fff" }}>
+            <Button sx={{ color: "#fff" }} onClick={() => handleOpenModal("ConnectMonitor")}>
+              Connect Monitor
+            </Button>
+            <Button sx={{ color: "#fff" }} onClick={() => handleOpenModal("About")}>
               About
             </Button>
             <Button sx={{ color: "#fff" }}>

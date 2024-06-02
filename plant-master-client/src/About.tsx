@@ -5,7 +5,7 @@ interface AboutContentProps {
   handleCloseModal: () => void
 }
 
-const AboutContent: React.FC<AboutContentProps> = ({ handleCloseModal }) => {
+const About: React.FC<AboutContentProps> = ({ handleCloseModal }) => {
   return (
     <>
       <DialogTitle>About Plant-Master</DialogTitle>
@@ -26,4 +26,4 @@ const AboutContent: React.FC<AboutContentProps> = ({ handleCloseModal }) => {
   )
 }
 
-export default AboutContent
+export default About
