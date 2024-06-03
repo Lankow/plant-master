@@ -17,7 +17,7 @@ class WiFiInitializer
 public:
     WiFiInitializer(std::shared_ptr<DisplayRenderer> displayRenderer, uint16_t port);
 
-    bool connectToSavedWiFiOrSetupAP();
+    bool init();
 
 private:
     std::shared_ptr<DisplayRenderer> m_displayRenderer;
@@ -26,6 +26,7 @@ private:
     Preferences m_preferences;
 
     bool wifiCredentialsExist();
+    bool connectMonitorRequested();
     bool connectToWiFi();
     void clearWifiCredentials();
     void setupAccessPoint();

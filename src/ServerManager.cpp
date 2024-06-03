@@ -7,6 +7,7 @@
 #include <Arduino.h>
 #include <SPIFFS.h>
 #include <WiFi.h>
+#include <Preferences.h>
 #include "ServerManager.hpp"
 #include "Constants.hpp"
 
@@ -27,6 +28,24 @@ void ServerManager::cyclic()
   m_websocket.textAll("");
 }
 
+void ServerManager::requestMonitorConnection()
+{
+  Preferences preferences;
+
+  if (!preferences.begin("wifi-config", false)) // Open in read-write mode
+  {
+    Serial.println("Failed to open NVS namespace.");
+    return;
+  }
+
+  Serial.println("Setting connectionRequested to true.");
+  preferences.putBool("connect", true);
+  preferences.end();
+
+  delay(100);    // Add a small delay to ensure the preferences are saved
+  ESP.restart(); // Restart to connect monitor
+}
+
 void ServerManager::initServer()
 {
   DefaultHeaders::Instance().addHeader("Access-Control-Allow-Origin", "*");
@@ -40,9 +59,9 @@ void ServerManager::initServer()
   m_server.serveStatic("/", SPIFFS, "/").setDefaultFile("index.html");
   m_server.on("/connect", HTTP_GET, [this](AsyncWebServerRequest *request)
               {
-                Serial.println("Root endpoint accessed.");
-                // this->startMonitorConnection();
-                request->send(200, "text/plain", "Initializing Plant-Monitor Connection..."); });
+                request->send(200, "text/plain", "Initializing Plant-Monitor Connection...");
+                Serial.println("Requesting Monitor Connection.");
+                this->requestMonitorConnection(); });
 
   m_server.onNotFound([this](AsyncWebServerRequest *request)
                       {

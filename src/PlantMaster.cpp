@@ -14,7 +14,7 @@ PlantMaster::PlantMaster()
 
 void PlantMaster::init()
 {
-    if (m_wiFiInitializer.connectToSavedWiFiOrSetupAP())
+    if (m_wiFiInitializer.init())
     {
         Serial.println("Connected to WiFi successfully.");
         m_serverManager.init();
