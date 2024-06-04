@@ -9,7 +9,6 @@
 
 #include <Arduino.h>
 #include <memory>
-#include "DisplayRenderer.hpp"
 #include "WiFiInitializer.hpp"
 #include "ServerManager.hpp"
 #include "DataStorage.hpp"
@@ -23,7 +22,6 @@ public:
     void cyclic();
 
 private:
-    std::shared_ptr<DisplayRenderer> m_displayRenderer;
     WiFiInitializer m_wiFiInitializer;
     ServerManager m_serverManager;
     DataStorage m_dataStorage;

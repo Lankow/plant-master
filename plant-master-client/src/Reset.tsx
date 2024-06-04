@@ -1,21 +1,21 @@
 import React from "react"
 import { DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Link } from "@mui/material"
 
-interface ConnectMonitorProps {
+interface ResetProps {
   handleCloseModal: () => void
 }
 
-const ConnectMonitor: React.FC<ConnectMonitorProps> = ({ handleCloseModal }) => {
+const Reset: React.FC<ResetProps> = ({ handleCloseModal }) => {
   return (
     <>
-      <DialogTitle>Connect Monitor</DialogTitle>
+      <DialogTitle>Reset Plant-Master</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          In order to connect Plant-Monitor press button below and wait until proccess is complete.
+          Do You really want to reset data saved on Your Plant-Master?
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Link href={"/connect"}>
+        <Link href={"/reset"}>
             <Button variant="contained">Confirm</Button>
         </Link>
         <Button variant="contained" onClick={handleCloseModal}>
@@ -26,4 +26,4 @@ const ConnectMonitor: React.FC<ConnectMonitorProps> = ({ handleCloseModal }) => 
   )
 }
 
-export default ConnectMonitor
+export default Reset

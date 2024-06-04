@@ -22,8 +22,14 @@ static const uint16_t DEFAULT_HUMIDITY_THRESHOLD = ANALOG_PIN_MAX;
 static const float DEFAULT_ROOM_TEMPERATURE = 0;
 static const float DEFAULT_ROOM_HUMIDITY = 0;
 
+#ifdef PLANT_MASTER
 static const std::string CONFIG_PAGE_SSID = "config_plant_master";
 static const std::string CONFIG_PAGE_PASSWORD = "plantmaster";
+#else
+static const std::string CONFIG_PAGE_SSID = "config_plant_monitor";
+static const std::string CONFIG_PAGE_PASSWORD = "plantmonitor";
+#endif
+
 static const std::string WEBSOCKET_URL = "/ws";
 
 static const uint16_t INITIAL_SCREEN_DURATION = 3000;

@@ -8,14 +8,19 @@
 #include "Constants.hpp"
 
 PlantMonitor::PlantMonitor()
-    : m_dhtReader(EspPins::PIN_21),
+    : m_wiFiInitializer(),
+      m_dhtReader(EspPins::PIN_21),
       m_plantHumidityReader(EspPins::PIN_34),
       m_valveController(EspPins::PIN_12),
       m_waterPumpController(EspPins::PIN_18){};
 
 void PlantMonitor::init()
 {
-    m_waterPumpController.init();
+    if (m_wiFiInitializer.init())
+    {
+        Serial.println("Connected to WiFi successfully.");
+        m_waterPumpController.init();
+    }
 };
 
 void PlantMonitor::cyclic()

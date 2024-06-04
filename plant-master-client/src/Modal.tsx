@@ -1,7 +1,7 @@
 import React from "react"
 import { Dialog } from "@mui/material"
 import About from "./About"
-import ConnectMonitor from "./ConnectMonitor"
+import Reset from "./Reset"
 
 interface ModalProps {
   open: boolean
@@ -17,8 +17,8 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
   const renderContent = () => {
     switch (openedModal) {
-      case "ConnectMonitor":
-        return <ConnectMonitor handleCloseModal={handleCloseModal} />
+      case "Reset":
+        return <Reset handleCloseModal={handleCloseModal} />
       case "About":
         return <About handleCloseModal={handleCloseModal} />
       default:

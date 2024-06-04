@@ -11,7 +11,7 @@
 #include "ServerManager.hpp"
 #include "Constants.hpp"
 
-ServerManager::ServerManager(std::shared_ptr<DisplayRenderer> displayRenderer) : m_server(ASYNC_SERVER_PORT), m_websocket(WEBSOCKET_URL.c_str()), m_displayRenderer(displayRenderer){};
+ServerManager::ServerManager() : m_server(ASYNC_SERVER_PORT), m_websocket(WEBSOCKET_URL.c_str()){};
 
 void ServerManager::init()
 {
@@ -28,22 +28,22 @@ void ServerManager::cyclic()
   m_websocket.textAll("");
 }
 
-void ServerManager::requestMonitorConnection()
+void ServerManager::performReset()
 {
   Preferences preferences;
 
-  if (!preferences.begin("wifi-config", false)) // Open in read-write mode
+  if (!preferences.begin("wifi-config", false))
   {
     Serial.println("Failed to open NVS namespace.");
     return;
   }
 
-  Serial.println("Setting connectionRequested to true.");
-  preferences.putBool("connect", true);
+  Serial.println("Performing Plant-Master reset...");
+  preferences.clear();
   preferences.end();
 
-  delay(100);    // Add a small delay to ensure the preferences are saved
-  ESP.restart(); // Restart to connect monitor
+  delay(100);
+  ESP.restart();
 }
 
 void ServerManager::initServer()
@@ -57,11 +57,10 @@ void ServerManager::initServer()
   m_server.addHandler(&m_websocket);
 
   m_server.serveStatic("/", SPIFFS, "/").setDefaultFile("index.html");
-  m_server.on("/connect", HTTP_GET, [this](AsyncWebServerRequest *request)
+  m_server.on("/reset", HTTP_GET, [this](AsyncWebServerRequest *request)
               {
-                request->send(200, "text/plain", "Initializing Plant-Monitor Connection...");
-                Serial.println("Requesting Monitor Connection.");
-                this->requestMonitorConnection(); });
+                request->send(200, "text/plain", "Initializing Plant-Master reset...");
+                this->performReset(); });
 
   m_server.onNotFound([this](AsyncWebServerRequest *request)
                       {

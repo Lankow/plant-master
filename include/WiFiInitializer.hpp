@@ -15,18 +15,16 @@
 class WiFiInitializer
 {
 public:
-    WiFiInitializer(std::shared_ptr<DisplayRenderer> displayRenderer, uint16_t port);
+    WiFiInitializer();
 
     bool init();
 
 private:
-    std::shared_ptr<DisplayRenderer> m_displayRenderer;
     AsyncWebServer m_server;
     IPAddress m_apIP;
     Preferences m_preferences;
 
     bool wifiCredentialsExist();
-    bool connectMonitorRequested();
     bool connectToWiFi();
     void clearWifiCredentials();
     void setupAccessPoint();

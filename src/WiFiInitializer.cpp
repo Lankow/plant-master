@@ -8,7 +8,7 @@
 #include "WiFiInitializer.hpp"
 #include "Constants.hpp"
 
-WiFiInitializer::WiFiInitializer(std::shared_ptr<DisplayRenderer> displayRenderer, uint16_t port) : m_displayRenderer(displayRenderer), m_preferences(), m_server(port){};
+WiFiInitializer::WiFiInitializer() : m_preferences(), m_server(ASYNC_SERVER_PORT){};
 
 bool WiFiInitializer::init()
 {
@@ -25,41 +25,9 @@ bool WiFiInitializer::init()
         return false;
     }
 
-    if (connectMonitorRequested())
-    {
-        setupAccessPoint();
-        return false;
-    }
-
     IPAddress ip = WiFi.localIP();
     Serial.printf("WiFi Connected - IP Address: %u.%u.%u.%u \n", ip[0], ip[1], ip[2], ip[3]);
     return true;
-}
-
-bool WiFiInitializer::connectMonitorRequested()
-{
-    if (!m_preferences.begin("wifi-config", false)) // Open in read-write mode
-    {
-        Serial.println("Failed to open NVS namespace.");
-        return false;
-    }
-
-    Serial.println("Wi-Fi config for monitor connection opened.");
-    bool connectMonitorRequested = false;
-
-    if (m_preferences.isKey("connect"))
-    {
-        Serial.println("Validating if Connection has been requested.");
-        connectMonitorRequested = m_preferences.getBool("connect");
-        if (connectMonitorRequested)
-        {
-            Serial.println("Monitor Connection Requested.");
-            m_preferences.putBool("connect", false); // Update the key to false
-        }
-    }
-
-    m_preferences.end(); // Close NVS
-    return connectMonitorRequested;
 }
 
 bool WiFiInitializer::wifiCredentialsExist()
@@ -175,4 +143,5 @@ void WiFiInitializer::setupAccessPoint()
         } });
 
     m_server.begin();
+    Serial.println(m_apIP.toString());
 }

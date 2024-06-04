@@ -7,9 +7,8 @@
 #include "PlantMaster.hpp"
 
 PlantMaster::PlantMaster()
-    : m_displayRenderer(std::make_shared<DisplayRenderer>()),
-      m_serverManager(m_displayRenderer),
-      m_wiFiInitializer(m_displayRenderer, 80),
+    : m_serverManager(),
+      m_wiFiInitializer(),
       m_dataStorage(){};
 
 void PlantMaster::init()

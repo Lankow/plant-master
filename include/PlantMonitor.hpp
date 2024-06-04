@@ -13,6 +13,7 @@
 #include "DHTReader.hpp"
 #include "WaterPumpController.hpp"
 #include "ValveController.hpp"
+#include "WiFiInitializer.hpp"
 
 class PlantMonitor
 {
@@ -23,6 +24,7 @@ public:
     void cyclic();
 
 private:
+    WiFiInitializer m_wiFiInitializer;
     PlantHumidityReader m_plantHumidityReader;
     DHTReader m_dhtReader;
     WaterPumpController m_waterPumpController;
