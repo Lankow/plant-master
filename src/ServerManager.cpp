@@ -8,6 +8,7 @@
 #include <SPIFFS.h>
 #include <WiFi.h>
 #include <Preferences.h>
+#include <PubSubClient.h>
 #include "ServerManager.hpp"
 #include "Constants.hpp"
 
