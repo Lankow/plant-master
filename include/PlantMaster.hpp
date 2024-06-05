@@ -11,6 +11,7 @@
 #include <memory>
 #include "WiFiInitializer.hpp"
 #include "ServerManager.hpp"
+#include "MQTTManager.hpp"
 #include "DataStorage.hpp"
 
 class PlantMaster
@@ -24,6 +25,7 @@ public:
 private:
     WiFiInitializer m_wiFiInitializer;
     ServerManager m_serverManager;
+    MQTTManager m_mqttManager;
     DataStorage m_dataStorage;
 };
 

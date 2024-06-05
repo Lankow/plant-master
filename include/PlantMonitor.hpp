@@ -14,6 +14,7 @@
 #include "WaterPumpController.hpp"
 #include "ValveController.hpp"
 #include "WiFiInitializer.hpp"
+#include "MQTTManager.hpp"
 
 class PlantMonitor
 {
@@ -25,6 +26,7 @@ public:
 
 private:
     WiFiInitializer m_wiFiInitializer;
+    MQTTManager m_mqttManager;
     PlantHumidityReader m_plantHumidityReader;
     DHTReader m_dhtReader;
     WaterPumpController m_waterPumpController;
