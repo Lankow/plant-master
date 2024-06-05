@@ -7,12 +7,16 @@
 #include "MQTTManager.hpp"
 #include "Constants.hpp"
 
-MQTTManager::MQTTManager() : m_espClient(), m_client(m_espClient){};
+MQTTManager::MQTTManager() : m_espClient(), m_client(m_espClient), m_broker(){};
 
 void MQTTManager::init()
 {
     if (WiFi.status() == WL_CONNECTED)
     {
+#ifdef PLANT_MASTER
+        Serial.println("Initializing MQTT Broker...");
+        m_broker.init(MQTT_SERVER_PORT);
+#endif
         Serial.println("Initializing MQTT...");
         m_client.setServer(MQTT_SERVER_IP, MQTT_SERVER_PORT);
         m_client.setCallback([this](char *topic, uint8_t *payload, unsigned int length)
@@ -23,6 +27,9 @@ void MQTTManager::init()
 
 void MQTTManager::cyclic()
 {
+#ifdef PLANT_MASTER
+    m_broker.update();
+#endif
     if (!m_client.connected())
     {
         connectMQTT();

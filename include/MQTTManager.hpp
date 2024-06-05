@@ -11,6 +11,9 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include "Constants.hpp"
+#include "sMQTTBroker.h"
+
+#define PLANT_MASTER
 
 class MQTTManager
 {
@@ -28,6 +31,9 @@ private:
 
     WiFiClient m_espClient;
     PubSubClient m_client;
+#ifdef PLANT_MASTER
+    sMQTTBroker m_broker;
+#endif
 };
 
 #endif // MQTT_MANAGER_HPP
