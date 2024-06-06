@@ -5,11 +5,19 @@
  *   Author: Lankow
  */
 #include "PlantHumidityReader.hpp"
+#include "Constants.hpp"
 
-PlantHumidityReader::PlantHumidityReader(const uint8_t pin) : m_operatedPin(pin){};
+PlantHumidityReader::PlantHumidityReader(const uint8_t pin, std::shared_ptr<MQTTManager> mqttManager)
+    : m_operatedPin(pin),
+      m_mqttManager(mqttManager){};
+
+void PlantHumidityReader::cyclic()
+{
+    readHumidity();
+}
 
 void PlantHumidityReader::readHumidity()
 {
     uint16_t humidity = analogRead(m_operatedPin);
-    Serial.println(humidity);
+    m_mqttManager->publish(MQTT_PLANT_HUMIDITY, std::to_string(humidity), 2, false);
 }

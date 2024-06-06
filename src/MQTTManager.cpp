@@ -7,8 +7,10 @@
 #include "MQTTManager.hpp"
 #include "Constants.hpp"
 
-MQTTManager::MQTTManager() : m_broker(), m_client(){};
+// Constructor definition
+MQTTManager::MQTTManager() : m_broker(), m_client() {}
 
+// Method to initialize the MQTTManager
 void MQTTManager::init()
 {
     if (WiFi.status() == WL_CONNECTED)
@@ -33,8 +35,9 @@ void MQTTManager::init()
 
         m_client.setServer(MQTT_SERVER_IP, MQTT_SERVER_PORT);
     }
-};
+}
 
+// Method to cyclically check and manage MQTT connections and messages
 void MQTTManager::cyclic()
 {
 #ifdef PLANT_MASTER
@@ -49,8 +52,9 @@ void MQTTManager::cyclic()
     {
         Serial.println("Connected");
     }
-};
+}
 
+// Method called when MQTT connects
 void MQTTManager::onMqttConnect(bool sessionPresent)
 {
     Serial.println("Connected to MQTT.");
@@ -63,21 +67,25 @@ void MQTTManager::onMqttConnect(bool sessionPresent)
 #endif
 }
 
+// Method called when MQTT disconnects
 void MQTTManager::onMqttDisconnect(AsyncMqttClientDisconnectReason reason)
 {
     Serial.println("Disconnected from MQTT.");
 }
 
+// Method called when MQTT subscription is acknowledged
 void MQTTManager::onMqttSubscribe(uint16_t packetId, uint8_t qos)
 {
     Serial.println("Subscribe acknowledged.");
 }
 
+// Method called when MQTT unsubscription is acknowledged
 void MQTTManager::onMqttUnsubscribe(uint16_t packetId)
 {
     Serial.println("Unsubscribe acknowledged.");
 }
 
+// Method called when an MQTT message is received
 void MQTTManager::onMqttMessage(char *topic, char *payload, AsyncMqttClientMessageProperties properties, size_t len, size_t index, size_t total)
 {
     Serial.println("Message received:");
@@ -85,4 +93,22 @@ void MQTTManager::onMqttMessage(char *topic, char *payload, AsyncMqttClientMessa
     Serial.println(topic);
     Serial.print("  payload: ");
     Serial.println(payload);
+}
+
+// Method to publish a message to a specific MQTT topic
+void MQTTManager::publish(const std::string &topic, const std::string &message, uint8_t qos, bool retain)
+{
+    if (m_client.connected())
+    {
+        m_client.publish(topic.c_str(), qos, retain, message.c_str());
+        Serial.println("Message published:");
+        Serial.print("  topic: ");
+        Serial.println(topic.c_str());
+        Serial.print("  message: ");
+        Serial.println(message.c_str());
+    }
+    else
+    {
+        Serial.println("Failed to publish message. MQTT client is not connected.");
+    }
 }

@@ -54,11 +54,13 @@ bool WiFiInitializer::connectToWiFi()
     String password = m_preferences.getString("password");
     m_preferences.end();
 
+#ifdef PLANT_MASTER
     if (!WiFi.config(LOCAL_IP, GATEWAY, SUBNET, PRIMARY_DNS, SECONDARY_DNS))
     {
         Serial.println("STA Failed to configure");
         return false;
     }
+#endif
 
     WiFi.begin(ssid.c_str(), password.c_str());
 

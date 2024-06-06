@@ -8,16 +8,21 @@
 #define PLANT_HUMIDITY_READER_HPP
 
 #include <Arduino.h>
+#include <memory>
+#include "MQTTManager.hpp"
 
 class PlantHumidityReader
 {
 public:
-    PlantHumidityReader(const uint8_t pin);
+    PlantHumidityReader(const uint8_t pin, std::shared_ptr<MQTTManager> mqttManager);
 
-    void readHumidity();
+    void cyclic();
 
 private:
+    std::shared_ptr<MQTTManager> m_mqttManager;
     uint8_t m_operatedPin;
+
+    void readHumidity();
 };
 
 #endif // PLANT_HUMIDITY_READER_HPP

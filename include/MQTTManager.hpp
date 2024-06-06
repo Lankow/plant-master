@@ -22,6 +22,7 @@ public:
 
     void init();
     void cyclic();
+    void publish(const std::string &topic, const std::string &message, uint8_t qos, bool retain);
 
 private:
     AsyncMqttClient m_client;

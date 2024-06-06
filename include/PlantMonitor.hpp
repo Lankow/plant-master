@@ -25,8 +25,8 @@ public:
     void cyclic();
 
 private:
+    std::shared_ptr<MQTTManager> m_mqttManager;
     WiFiInitializer m_wiFiInitializer;
-    MQTTManager m_mqttManager;
     PlantHumidityReader m_plantHumidityReader;
     DHTReader m_dhtReader;
     WaterPumpController m_waterPumpController;

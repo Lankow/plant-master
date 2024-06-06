@@ -6,10 +6,20 @@
  */
 #include "DHTReader.hpp"
 
-DHTReader::DHTReader(const uint8_t pin) : m_dht(pin, DHT11)
+DHTReader::DHTReader(const uint8_t pin, std::shared_ptr<MQTTManager> mqttManager)
+    : m_dht(pin, DHT11),
+      m_mqttManager(mqttManager){};
+
+void DHTReader::init()
 {
   m_dht.begin();
-};
+}
+
+void DHTReader::cyclic()
+{
+  readRoomTemperature();
+  readRoomHumidity();
+}
 
 void DHTReader::readRoomTemperature()
 {
@@ -20,7 +30,7 @@ void DHTReader::readRoomTemperature()
   }
   else
   {
-    Serial.println(temperature);
+    m_mqttManager->publish(MQTT_ROOM_TEMPERATURE, std::to_string(temperature), 2, false);
   }
 }
 
@@ -29,7 +39,7 @@ void DHTReader::readRoomHumidity()
   float humidity = m_dht.readHumidity();
   if (isnan(humidity))
   {
-    Serial.println("Room Humidity read error.");
+    m_mqttManager->publish(MQTT_ROOM_HUMIDITY, std::to_string(humidity), 2, false);
   }
   else
   {

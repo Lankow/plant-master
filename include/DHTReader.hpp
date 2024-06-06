@@ -9,17 +9,23 @@
 
 #include <Arduino.h>
 #include <DHT.h>
+#include <memory>
+#include "MQTTManager.hpp"
 
 class DHTReader
 {
 public:
-    DHTReader(const uint8_t pin);
+    DHTReader(const uint8_t pin, std::shared_ptr<MQTTManager> mqttManager);
+
+    void init();
+    void cyclic();
+
+private:
+    std::shared_ptr<MQTTManager> m_mqttManager;
+    DHT m_dht;
 
     void readRoomTemperature();
     void readRoomHumidity();
-
-private:
-    DHT m_dht;
 };
 
 #endif // DHT_READER_HPP
