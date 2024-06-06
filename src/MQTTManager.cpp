@@ -7,7 +7,7 @@
 #include "MQTTManager.hpp"
 #include "Constants.hpp"
 
-MQTTManager::MQTTManager() : m_espClient(), m_client(m_espClient), m_broker(){};
+MQTTManager::MQTTManager() : m_broker(), m_client(){};
 
 void MQTTManager::init()
 {
@@ -18,10 +18,20 @@ void MQTTManager::init()
         m_broker.init(MQTT_SERVER_PORT);
 #endif
         Serial.println("Initializing MQTT...");
+
+        // Using lambda functions for MQTT callbacks
+        m_client.onConnect([this](bool sessionPresent)
+                           { this->onMqttConnect(sessionPresent); });
+        m_client.onDisconnect([this](AsyncMqttClientDisconnectReason reason)
+                              { this->onMqttDisconnect(reason); });
+        m_client.onSubscribe([this](uint16_t packetId, uint8_t qos)
+                             { this->onMqttSubscribe(packetId, qos); });
+        m_client.onUnsubscribe([this](uint16_t packetId)
+                               { this->onMqttUnsubscribe(packetId); });
+        m_client.onMessage([this](char *topic, char *payload, AsyncMqttClientMessageProperties properties, size_t len, size_t index, size_t total)
+                           { this->onMqttMessage(topic, payload, properties, len, index, total); });
+
         m_client.setServer(MQTT_SERVER_IP, MQTT_SERVER_PORT);
-        m_client.setCallback([this](char *topic, uint8_t *payload, unsigned int length)
-                             { this->callback(topic, payload, length); });
-        connectMQTT();
     }
 };
 
@@ -32,40 +42,47 @@ void MQTTManager::cyclic()
 #endif
     if (!m_client.connected())
     {
-        connectMQTT();
+        Serial.println("Not Connected");
+        m_client.connect();
+    }
+    else
+    {
+        Serial.println("Connected");
     }
 };
 
-void MQTTManager::connectMQTT()
+void MQTTManager::onMqttConnect(bool sessionPresent)
 {
-    if (m_client.connect(MQTT_IDENTIFIER.c_str()))
-    {
+    Serial.println("Connected to MQTT.");
 #ifdef PLANT_MASTER
-        m_client.subscribe(MQTT_PLANT_HUMIDITY.c_str());
-        m_client.subscribe(MQTT_ROOM_HUMIDITY.c_str());
-        m_client.subscribe(MQTT_ROOM_TEMPERATURE.c_str());
+    m_client.subscribe(MQTT_PLANT_HUMIDITY.c_str(), 2);
+    m_client.subscribe(MQTT_ROOM_HUMIDITY.c_str(), 2);
+    m_client.subscribe(MQTT_ROOM_TEMPERATURE.c_str(), 2);
 #else
-        m_client.subscribe(MQTT_PLANT_THRESHOLD.c_str());
+    m_client.subscribe(MQTT_PLANT_THRESHOLD.c_str(), 2);
 #endif
-    }
 }
 
-void MQTTManager::callback(char *topic, byte *payload, unsigned int length)
+void MQTTManager::onMqttDisconnect(AsyncMqttClientDisconnectReason reason)
 {
+    Serial.println("Disconnected from MQTT.");
+}
+
+void MQTTManager::onMqttSubscribe(uint16_t packetId, uint8_t qos)
+{
+    Serial.println("Subscribe acknowledged.");
+}
+
+void MQTTManager::onMqttUnsubscribe(uint16_t packetId)
+{
+    Serial.println("Unsubscribe acknowledged.");
+}
+
+void MQTTManager::onMqttMessage(char *topic, char *payload, AsyncMqttClientMessageProperties properties, size_t len, size_t index, size_t total)
+{
+    Serial.println("Message received:");
+    Serial.print("  topic: ");
     Serial.println(topic);
-    for (int i = 0; i < length; i++)
-    {
-        Serial.print((char)payload[i]);
-    }
-    Serial.println();
-};
-
-void MQTTManager::publish(std::string topic, std::string message)
-{
-    m_client.publish(topic.c_str(), message.c_str());
-};
-
-void MQTTManager::subscribe(std::string topic)
-{
-    m_client.subscribe(topic.c_str());
-};
+    Serial.print("  payload: ");
+    Serial.println(payload);
+}

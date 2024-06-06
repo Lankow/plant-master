@@ -9,7 +9,7 @@
 
 #include <Arduino.h>
 #include <WiFi.h>
-#include <PubSubClient.h>
+#include <AsyncMqttClient.h>
 #include "Constants.hpp"
 #include "sMQTTBroker.h"
 
@@ -24,16 +24,16 @@ public:
     void cyclic();
 
 private:
-    void connectMQTT();
-    void callback(char *topic, byte *payload, unsigned int length);
-    void publish(std::string topic, std::string message);
-    void subscribe(std::string topic);
-
-    WiFiClient m_espClient;
-    PubSubClient m_client;
+    AsyncMqttClient m_client;
 #ifdef PLANT_MASTER
     sMQTTBroker m_broker;
 #endif
+
+    void onMqttConnect(bool sessionPresent);
+    void onMqttDisconnect(AsyncMqttClientDisconnectReason reason);
+    void onMqttSubscribe(uint16_t packetId, uint8_t qos);
+    void onMqttUnsubscribe(uint16_t packetId);
+    void onMqttMessage(char *topic, char *payload, AsyncMqttClientMessageProperties properties, size_t len, size_t index, size_t total);
 };
 
 #endif // MQTT_MANAGER_HPP
