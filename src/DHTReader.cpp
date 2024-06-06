@@ -30,7 +30,7 @@ void DHTReader::readRoomTemperature()
   }
   else
   {
-    m_mqttManager->publish(MQTT_ROOM_TEMPERATURE, std::to_string(temperature), 2, false);
+    m_mqttManager->publish(MQTT_ROOM_TEMPERATURE, std::to_string(temperature), 0, false);
   }
 }
 
@@ -39,7 +39,7 @@ void DHTReader::readRoomHumidity()
   float humidity = m_dht.readHumidity();
   if (isnan(humidity))
   {
-    m_mqttManager->publish(MQTT_ROOM_HUMIDITY, std::to_string(humidity), 2, false);
+    m_mqttManager->publish(MQTT_ROOM_HUMIDITY, std::to_string(humidity), 0, false);
   }
   else
   {

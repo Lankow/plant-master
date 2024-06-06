@@ -19,5 +19,5 @@ void PlantHumidityReader::cyclic()
 void PlantHumidityReader::readHumidity()
 {
     uint16_t humidity = analogRead(m_operatedPin);
-    m_mqttManager->publish(MQTT_PLANT_HUMIDITY, std::to_string(humidity), 2, false);
+    m_mqttManager->publish(MQTT_PLANT_HUMIDITY, std::to_string(humidity), 0, false);
 }

@@ -9,8 +9,6 @@
 
 #include <string>
 
-static const uint32_t CYCLE_TIME_MS = 1000;
-
 static const uint16_t ANALOG_PIN_MAX = 4095;
 static const uint16_t ANALOG_PIN_MIN = 0;
 
@@ -43,10 +41,14 @@ static const std::string MQTT_ROOM_TEMPERATURE = "room/temperature";
 static const std::string MQTT_ROOM_HUMIDITY = "room/humidity";
 
 #ifdef PLANT_MASTER
+static const uint32_t CYCLE_TIME_MS = 200;
+
 static const std::string CONFIG_PAGE_SSID = "config_plant_master";
 static const std::string CONFIG_PAGE_PASSWORD = "plantmaster";
 static const std::string MQTT_IDENTIFIER = "PlantMaster";
 #else
+static const uint32_t CYCLE_TIME_MS = 1000;
+
 static const std::string CONFIG_PAGE_SSID = "config_plant_monitor";
 static const std::string CONFIG_PAGE_PASSWORD = "plantmonitor";
 static const std::string MQTT_IDENTIFIER = "PlantMonitor";

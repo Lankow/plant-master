@@ -52,10 +52,6 @@ void MQTTManager::cyclic()
         Serial.println("Not Connected");
         m_client.connect();
     }
-    else
-    {
-        Serial.println("Connected");
-    }
 }
 
 // Method called when MQTT connects
@@ -75,8 +71,9 @@ void MQTTManager::onMqttConnect(bool sessionPresent)
 void MQTTManager::onMqttDisconnect(AsyncMqttClientDisconnectReason reason)
 {
     Serial.println("Disconnected from MQTT.");
+    Serial.print("Reason: ");
+    Serial.println(static_cast<int>(reason)); // Print the reason code
 }
-
 // Method called when MQTT subscription is acknowledged
 void MQTTManager::onMqttSubscribe(uint16_t packetId, uint8_t qos)
 {
@@ -95,8 +92,13 @@ void MQTTManager::onMqttMessage(char *topic, char *payload, AsyncMqttClientMessa
     Serial.println("Message received:");
     Serial.print("  topic: ");
     Serial.println(topic);
+
     Serial.print("  payload: ");
-    Serial.println(payload);
+    for (size_t i = 0; i < len; ++i)
+    {
+        Serial.print(payload[i]);
+    }
+    Serial.println();
 }
 
 // Method to publish a message to a specific MQTT topic
