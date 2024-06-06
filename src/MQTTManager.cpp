@@ -8,8 +8,12 @@
 #include "Constants.hpp"
 
 // Constructor definition
+#ifdef PLANT_MASTER
 MQTTManager::MQTTManager() : m_broker(), m_client() {}
+#else
+MQTTManager::MQTTManager() : m_client() {}
 
+#endif
 // Method to initialize the MQTTManager
 void MQTTManager::init()
 {

@@ -4,8 +4,6 @@
 #include "PlantMonitor.hpp"
 #include "Constants.hpp"
 
-#define PLANT_MASTER
-
 #ifdef PLANT_MASTER
 PlantMaster plantMaster;
 #else

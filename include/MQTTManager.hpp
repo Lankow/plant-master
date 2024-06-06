@@ -13,8 +13,6 @@
 #include "Constants.hpp"
 #include "sMQTTBroker.h"
 
-#define PLANT_MASTER
-
 class MQTTManager
 {
 public:
