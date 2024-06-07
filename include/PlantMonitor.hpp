@@ -15,6 +15,7 @@
 #include "ValveController.hpp"
 #include "WiFiInitializer.hpp"
 #include "MQTTManager.hpp"
+#include "DataHandler.hpp"
 
 class PlantMonitor
 {
@@ -26,6 +27,7 @@ public:
 
 private:
     std::shared_ptr<MQTTManager> m_mqttManager;
+    std::shared_ptr<DataHandler> m_dataHandler;
     WiFiInitializer m_wiFiInitializer;
     PlantHumidityReader m_plantHumidityReader;
     DHTReader m_dhtReader;

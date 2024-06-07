@@ -7,10 +7,11 @@
 #include "PlantMaster.hpp"
 
 PlantMaster::PlantMaster()
-    : m_serverManager(),
-      m_mqttManager(),
-      m_wiFiInitializer(),
-      m_dataStorage(){};
+    : m_dataStorage(std::make_shared<DataStorage>()),
+      m_dataHandler(std::make_shared<DataHandler>(m_dataStorage)),
+      m_mqttManager(m_dataHandler),
+      m_serverManager(),
+      m_wiFiInitializer(){};
 
 void PlantMaster::init()
 {

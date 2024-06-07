@@ -8,8 +8,8 @@
 #include "Constants.hpp"
 
 PlantMonitor::PlantMonitor()
-
-    : m_mqttManager(std::make_shared<MQTTManager>()),
+    : m_dataHandler(std::make_shared<DataHandler>()),
+      m_mqttManager(std::make_shared<MQTTManager>(m_dataHandler)),
       m_wiFiInitializer(),
       m_dhtReader(EspPins::PIN_21, m_mqttManager),
       m_plantHumidityReader(EspPins::PIN_34, m_mqttManager),

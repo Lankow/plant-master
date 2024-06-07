@@ -12,17 +12,19 @@
 #include <AsyncMqttClient.h>
 #include "Constants.hpp"
 #include "sMQTTBroker.h"
+#include "DataHandler.hpp"
 
 class MQTTManager
 {
 public:
-    MQTTManager();
+    MQTTManager(std::shared_ptr<DataHandler> dataHandler);
 
     void init();
     void cyclic();
     void publish(const std::string &topic, const std::string &message, uint8_t qos, bool retain);
 
 private:
+    std::shared_ptr<DataHandler> m_dataHandler;
     AsyncMqttClient m_client;
 #ifdef PLANT_MASTER
     sMQTTBroker m_broker;

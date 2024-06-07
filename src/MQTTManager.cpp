@@ -9,11 +9,11 @@
 
 // Constructor definition
 #ifdef PLANT_MASTER
-MQTTManager::MQTTManager() : m_broker(), m_client() {}
+MQTTManager::MQTTManager(std::shared_ptr<DataHandler> dataHandler) : m_dataHandler(dataHandler), m_broker(), m_client() {}
 #else
-MQTTManager::MQTTManager() : m_client() {}
-
+MQTTManager::MQTTManager(std::shared_ptr<DataHandler> dataHandler) : m_dataHandler(dataHandler), m_client() {}
 #endif
+
 // Method to initialize the MQTTManager
 void MQTTManager::init()
 {
@@ -89,16 +89,10 @@ void MQTTManager::onMqttUnsubscribe(uint16_t packetId)
 // Method called when an MQTT message is received
 void MQTTManager::onMqttMessage(char *topic, char *payload, AsyncMqttClientMessageProperties properties, size_t len, size_t index, size_t total)
 {
-    Serial.println("Message received:");
-    Serial.print("  topic: ");
-    Serial.println(topic);
+    std::string strTopic(topic);
+    std::string strPayload(payload, len);
 
-    Serial.print("  payload: ");
-    for (size_t i = 0; i < len; ++i)
-    {
-        Serial.print(payload[i]);
-    }
-    Serial.println();
+    m_dataHandler->handleData(strTopic, strPayload);
 }
 
 // Method to publish a message to a specific MQTT topic

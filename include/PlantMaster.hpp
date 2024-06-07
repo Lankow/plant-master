@@ -13,6 +13,7 @@
 #include "ServerManager.hpp"
 #include "MQTTManager.hpp"
 #include "DataStorage.hpp"
+#include "DataHandler.hpp"
 
 class PlantMaster
 {
@@ -23,10 +24,11 @@ public:
     void cyclic();
 
 private:
+    std::shared_ptr<DataStorage> m_dataStorage;
+    std::shared_ptr<DataHandler> m_dataHandler;
     WiFiInitializer m_wiFiInitializer;
     ServerManager m_serverManager;
     MQTTManager m_mqttManager;
-    DataStorage m_dataStorage;
 };
 
 #endif // PLANT_MASTER_HPP
