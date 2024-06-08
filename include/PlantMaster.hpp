@@ -14,7 +14,6 @@
 #include "MQTTManager.hpp"
 #include "DataStorage.hpp"
 #include "DataHandler.hpp"
-
 class PlantMaster
 {
 public:

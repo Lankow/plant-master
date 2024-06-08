@@ -9,8 +9,8 @@
 PlantMaster::PlantMaster()
     : m_dataStorage(std::make_shared<DataStorage>()),
       m_dataHandler(std::make_shared<DataHandler>(m_dataStorage)),
+      m_serverManager(m_dataStorage),
       m_mqttManager(m_dataHandler),
-      m_serverManager(),
       m_wiFiInitializer(){};
 
 void PlantMaster::init()

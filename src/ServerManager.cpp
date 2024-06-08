@@ -1,38 +1,48 @@
-/*
- *   ServerManager.cpp
- *   ----------------------
- *   Created on: 2024/05/27
- *   Author: Lankow
- */
 #include <Arduino.h>
 #include <SPIFFS.h>
 #include <WiFi.h>
 #include <Preferences.h>
-#include <PubSubClient.h>
+#include <AsyncTCP.h>
+#include <ESPAsyncWebServer.h>
+#include <AsyncWebSocket.h>
 #include "ServerManager.hpp"
 #include "Constants.hpp"
 
-ServerManager::ServerManager() : m_server(ASYNC_SERVER_PORT), m_websocket(WEBSOCKET_URL.c_str()){};
+ServerManager::ServerManager(std::shared_ptr<DataStorage> dataStorage)
+    : m_server(ASYNC_SERVER_PORT),
+      m_websocket("/ws"),
+      m_jsonConverter(dataStorage)
+{
+}
 
 void ServerManager::init()
 {
   if (WiFi.status() == WL_CONNECTED)
   {
     Serial.println("Initializing Server...");
-    initSPIFFS();
+    if (!initSPIFFS())
+    {
+      Serial.println("Failed to initialize SPIFFS");
+      return;
+    }
     initServer();
+  }
+  else
+  {
+    Serial.println("WiFi not connected. Server initialization aborted.");
   }
 }
 
 void ServerManager::cyclic()
 {
-  m_websocket.textAll("");
+  std::string message = m_jsonConverter.serializeDataStorage();
+
+  m_websocket.textAll(message.c_str());
 }
 
 void ServerManager::performReset()
 {
   Preferences preferences;
-
   if (!preferences.begin("wifi-config", false))
   {
     Serial.println("Failed to open NVS namespace.");
@@ -49,41 +59,42 @@ void ServerManager::performReset()
 
 void ServerManager::initServer()
 {
+  m_websocket.onEvent([this](AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len)
+                      { this->onEvent(server, client, type, arg, data, len); });
+
+  m_server.addHandler(&m_websocket);
+
   DefaultHeaders::Instance().addHeader("Access-Control-Allow-Origin", "*");
   DefaultHeaders::Instance().addHeader("Access-Control-Allow-Methods", "GET, POST, PUT");
   DefaultHeaders::Instance().addHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  m_websocket.onEvent([this](AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len)
-                      { this->onEvent(server, client, type, arg, data, len); });
-  m_server.addHandler(&m_websocket);
-
   m_server.serveStatic("/", SPIFFS, "/").setDefaultFile("index.html");
   m_server.on("/reset", HTTP_GET, [this](AsyncWebServerRequest *request)
               {
-                request->send(200, "text/plain", "Initializing Plant-Master reset...");
-                this->performReset(); });
+    request->send(200, "text/plain", "Initializing Plant-Master reset...");
+    this->performReset(); });
 
   m_server.onNotFound([this](AsyncWebServerRequest *request)
-                      {
-                        Serial.println("Page not found.");
-                        this->redirectToIndex(request); });
+                      { this->redirectToIndex(request); });
+
   m_server.begin();
-  // m_displayRenderer->drawConnectedScreen(WiFi.localIP().toString().c_str());
-};
+  Serial.printf("Server started on http://%s\n", WiFi.localIP().toString().c_str());
+}
 
 void ServerManager::redirectToIndex(AsyncWebServerRequest *request)
 {
   request->redirect("http://" + WiFi.localIP().toString());
 }
 
-void ServerManager::initSPIFFS()
+bool ServerManager::initSPIFFS()
 {
   if (!SPIFFS.begin(true))
   {
     Serial.println("An Error has occurred while mounting SPIFFS");
-    return;
+    return false;
   }
-};
+  return true;
+}
 
 void ServerManager::onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len)
 {
@@ -97,9 +108,11 @@ void ServerManager::onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client
     break;
   case WS_EVT_DATA:
     Serial.println("WS_EVT_DATA");
+    // Handle incoming WebSocket data here
     break;
   case WS_EVT_PONG:
   case WS_EVT_ERROR:
+    // Handle pong and error events if needed
     break;
   }
 }

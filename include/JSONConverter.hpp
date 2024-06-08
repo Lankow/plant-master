@@ -11,15 +11,19 @@
 #include <ArduinoJson.h>
 #include <memory>
 #include "DataStorage.hpp"
+#include "PlantHumidityData.hpp"
 
 class JSONConverter
 {
 public:
-    JSONConverter();
+    JSONConverter(std::shared_ptr<DataStorage> dataStorage);
 
-    std::string serializeDataStorage(const std::shared_ptr<DataStorage> &dataStorage);
+    std::string serializeDataStorage();
 
 private:
+    std::shared_ptr<DataStorage> m_dataStorage;
+    static JsonArray serializePlantsHumidity(const std::vector<PlantHumidityData> &planthumidityData);
+    static void serializePlantHumidityData(const PlantHumidityData &plantHumidityData, JsonArray &plantHumidityArray, const int sensorIndex);
 };
 
 #endif // JSON_CONVERTER_HPP
