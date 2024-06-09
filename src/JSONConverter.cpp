@@ -12,9 +12,9 @@ JSONConverter::JSONConverter(std::shared_ptr<DataStorage> dataStorage) : m_dataS
 std::string JSONConverter::serializeDataStorage()
 {
     DynamicJsonDocument doc(1024);
-    doc["room-humidity"] = m_dataStorage->getRoomHumidity();
-    doc["room-temperature"] = m_dataStorage->getRoomTemperature();
-    doc["plants-humidity"] = serializePlantsHumidity(m_dataStorage->getPlantsHumidityData());
+    doc["roomHumidity"] = m_dataStorage->getRoomHumidity();
+    doc["roomTemperature"] = m_dataStorage->getRoomTemperature();
+    doc["plantsHumidity"] = serializePlantsHumidity(m_dataStorage->getPlantsHumidityData());
 
     std::ostringstream jsonOss;
     serializeJson(doc, jsonOss);

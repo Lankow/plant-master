@@ -3,9 +3,11 @@ import React from "react"
 
 interface TopBarProps {
   handleOpenModal: (modal: string) => void
+  roomTemperature: number
+  roomHumidity: number
 }
 
-const TopBar: React.FC<TopBarProps> = ({ handleOpenModal}) => {
+const TopBar: React.FC<TopBarProps> = ({ handleOpenModal, roomTemperature, roomHumidity }) => {
   return (
     <AppBar component="nav" position="static">
       <Container maxWidth="xl">
@@ -13,15 +15,18 @@ const TopBar: React.FC<TopBarProps> = ({ handleOpenModal}) => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: { sm: "block", textTransform: "uppercase" } }}>
             Plant-Master
           </Typography>
+          <Typography sx={{ mr: 1 }}>
+            Room Temperature: {roomTemperature} °C
+          </Typography>
+          <Typography>
+            Room Humidity: {roomHumidity} %
+          </Typography>
           <Box sx={{ display: { sm: "block" } }}>
             <Button sx={{ color: "#fff" }} onClick={() => handleOpenModal("Reset")}>
               Reset
             </Button>
             <Button sx={{ color: "#fff" }} onClick={() => handleOpenModal("About")}>
               About
-            </Button>
-            <Button sx={{ color: "#fff" }}>
-              Get Logs
             </Button>
           </Box>
         </Toolbar>
