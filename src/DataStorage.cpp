@@ -21,7 +21,7 @@ float DataStorage::getRoomHumidity() const
 
 float DataStorage::getRoomTemperature() const
 {
-    return m_roomHumidity;
+    return m_roomTemperature;
 }
 
 const std::vector<PlantHumidityData> &DataStorage::getPlantsHumidityData() const

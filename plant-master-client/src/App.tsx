@@ -43,7 +43,7 @@ function App() {
       if(dataFromServer.roomHumidity){
         setRoomHumidity(dataFromServer.roomHumidity)
       }
-      if(dataFromServer.toomTemperature){
+      if(dataFromServer.roomTemperature){
         setRoomTemperature(dataFromServer.roomTemperature)
       }
     }
@@ -54,8 +54,8 @@ function App() {
     <Box id="root" sx={{ background: "#8ebeed", height: "100%" }}>
       <CssBaseline />
       <TopBar handleOpenModal={handleOpenModal} roomTemperature={roomTemperature} roomHumidity={roomHumidity}/>
-      <Container sx={{ p: 2, display: "flex", justifyContent: "center", alignItems: "center", minHeight: "85vh" }}>
-      <Grid container spacing={1}>
+      <Container sx={{ p: 2, minHeight: "85vh" }}>
+      <Grid container spacing={1} rowSpacing={0}>
             {sensors.map((sensor, index) => 
                 <HumidityPanel
                 key={index} //

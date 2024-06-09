@@ -26,7 +26,7 @@ void DHTReader::readRoomTemperature()
   float temperature = m_dht.readTemperature();
   if (isnan(temperature))
   {
-    Serial.println("Temperature read error.");
+    Serial.println("Room Temperature read error.");
   }
   else
   {
@@ -39,10 +39,10 @@ void DHTReader::readRoomHumidity()
   float humidity = m_dht.readHumidity();
   if (isnan(humidity))
   {
-    m_mqttManager->publish(MQTT_ROOM_HUMIDITY, std::to_string(humidity), 0, false);
+    Serial.println("Room humidity read error.");
   }
   else
   {
-    Serial.println(humidity);
+    m_mqttManager->publish(MQTT_ROOM_HUMIDITY, std::to_string(humidity), 0, false);
   }
 }

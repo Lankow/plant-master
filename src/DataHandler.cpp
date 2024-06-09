@@ -15,6 +15,7 @@ DataHandler::DataHandler(){};
 
 void DataHandler::handleData(const std::string &topic, const std::string &payload)
 {
+#ifdef PLANT_MASTER
     if (topic == MQTT_PLANT_HUMIDITY)
     {
         int plantHumidity;
@@ -57,4 +58,5 @@ void DataHandler::handleData(const std::string &topic, const std::string &payloa
             Serial.println(payload.c_str());
         }
     }
+#endif
 }
