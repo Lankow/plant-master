@@ -14,6 +14,7 @@
 #include "MQTTManager.hpp"
 #include "DataStorage.hpp"
 #include "DataHandler.hpp"
+#include "ConfigHandler.hpp"
 class PlantMaster
 {
 public:
@@ -28,6 +29,7 @@ private:
     WiFiInitializer m_wiFiInitializer;
     ServerManager m_serverManager;
     MQTTManager m_mqttManager;
+    ConfigHandler m_configHandler;
 };
 
 #endif // PLANT_MASTER_HPP

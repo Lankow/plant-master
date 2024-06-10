@@ -11,7 +11,8 @@ PlantMaster::PlantMaster()
       m_dataHandler(std::make_shared<DataHandler>(m_dataStorage)),
       m_serverManager(m_dataStorage),
       m_mqttManager(m_dataHandler),
-      m_wiFiInitializer(){};
+      m_wiFiInitializer(),
+      m_configHandler(){};
 
 void PlantMaster::init()
 {
@@ -20,6 +21,7 @@ void PlantMaster::init()
         Serial.println("Connected to WiFi successfully.");
         m_serverManager.init();
         m_mqttManager.init();
+        m_configHandler.init();
     }
 };
 
