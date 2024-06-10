@@ -16,11 +16,12 @@
 #include "WiFiInitializer.hpp"
 #include "MQTTManager.hpp"
 #include "DataHandler.hpp"
+#include "ConfigHandler.hpp"
 
 class PlantMonitor
 {
 public:
-    PlantMonitor();
+    PlantMonitor(std::shared_ptr<ConfigHandler> configHandler);
 
     void init();
     void cyclic();
@@ -28,6 +29,7 @@ public:
 private:
     std::shared_ptr<MQTTManager> m_mqttManager;
     std::shared_ptr<DataHandler> m_dataHandler;
+    std::shared_ptr<ConfigHandler> m_configHandler;
     WiFiInitializer m_wiFiInitializer;
     PlantHumidityReader m_plantHumidityReader;
     DHTReader m_dhtReader;

@@ -1,0 +1,10 @@
+{
+    "humidityPins": [
+        {
+            "readerPin": 34,
+            "valvePin": 18
+        }
+    ],
+    "dhtPin": 21,
+    "waterPumpPin": 18
+}

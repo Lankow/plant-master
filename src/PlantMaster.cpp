@@ -6,13 +6,13 @@
  */
 #include "PlantMaster.hpp"
 
-PlantMaster::PlantMaster()
-    : m_dataStorage(std::make_shared<DataStorage>()),
+PlantMaster::PlantMaster(std::shared_ptr<ConfigHandler> configHandler)
+    : m_configHandler(),
+      m_dataStorage(std::make_shared<DataStorage>()),
       m_dataHandler(std::make_shared<DataHandler>(m_dataStorage)),
       m_serverManager(m_dataStorage),
       m_mqttManager(m_dataHandler),
-      m_wiFiInitializer(),
-      m_configHandler(){};
+      m_wiFiInitializer(){};
 
 void PlantMaster::init()
 {
@@ -21,7 +21,6 @@ void PlantMaster::init()
         Serial.println("Connected to WiFi successfully.");
         m_serverManager.init();
         m_mqttManager.init();
-        m_configHandler.init();
     }
 };
 

@@ -18,7 +18,7 @@
 class PlantMaster
 {
 public:
-    PlantMaster();
+    PlantMaster(std::shared_ptr<ConfigHandler> configHandler);
 
     void init();
     void cyclic();
@@ -26,10 +26,10 @@ public:
 private:
     std::shared_ptr<DataStorage> m_dataStorage;
     std::shared_ptr<DataHandler> m_dataHandler;
+    std::shared_ptr<ConfigHandler> m_configHandler;
     WiFiInitializer m_wiFiInitializer;
     ServerManager m_serverManager;
     MQTTManager m_mqttManager;
-    ConfigHandler m_configHandler;
 };
 
 #endif // PLANT_MASTER_HPP

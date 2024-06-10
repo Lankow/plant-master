@@ -3,16 +3,20 @@
 #include "PlantMaster.hpp"
 #include "PlantMonitor.hpp"
 #include "Constants.hpp"
+#include "ConfigHandler.hpp"
+
+std::shared_ptr<ConfigHandler> configHandler;
 
 #ifdef PLANT_MASTER
-PlantMaster plantMaster;
+PlantMaster plantMaster(configHandler);
 #else
-PlantMonitor plantMonitor;
+PlantMonitor plantMonitor(configHandler);
 #endif
 
 void setup()
 {
     Serial.begin(115200);
+    configHandler->init();
 #ifdef PLANT_MASTER
     plantMaster.init();
 #else

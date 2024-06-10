@@ -38,4 +38,6 @@
 .vscode/launch.json
 .vscode/ipch
 
-data/
+data/*
+
+!data/config*.json
