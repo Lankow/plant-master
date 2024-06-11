@@ -39,5 +39,3 @@
 .vscode/ipch
 
 data/*
-
-!data/config*.json
