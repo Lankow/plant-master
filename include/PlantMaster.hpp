@@ -12,9 +12,11 @@
 #include "WiFiInitializer.hpp"
 #include "ServerManager.hpp"
 #include "MQTTManager.hpp"
+#include "WateringManager.hpp"
 #include "DataStorage.hpp"
 #include "DataHandler.hpp"
 #include "ConfigHandler.hpp"
+
 class PlantMaster
 {
 public:
@@ -27,9 +29,10 @@ private:
     std::shared_ptr<DataStorage> m_dataStorage;
     std::shared_ptr<DataHandler> m_dataHandler;
     std::shared_ptr<ConfigHandler> m_configHandler;
+    std::shared_ptr<MQTTManager> m_mqttManager;
     WiFiInitializer m_wiFiInitializer;
     ServerManager m_serverManager;
-    MQTTManager m_mqttManager;
+    WateringManager m_wateringManager;
 };
 
 #endif // PLANT_MASTER_HPP
