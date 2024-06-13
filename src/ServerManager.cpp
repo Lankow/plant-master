@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include <SPIFFS.h>
 #include <WiFi.h>
-#include <Preferences.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <AsyncWebSocket.h>
@@ -39,24 +38,6 @@ void ServerManager::cyclic()
 
   m_websocket.textAll(message.c_str());
 }
-
-void ServerManager::performReset()
-{
-  Preferences preferences;
-  if (!preferences.begin("wifi-config", false))
-  {
-    Serial.println("Failed to open NVS namespace.");
-    return;
-  }
-
-  Serial.println("Performing Plant-Master reset...");
-  preferences.clear();
-  preferences.end();
-
-  delay(100);
-  ESP.restart();
-}
-
 void ServerManager::initServer()
 {
   m_websocket.onEvent([this](AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len)
@@ -69,11 +50,6 @@ void ServerManager::initServer()
   DefaultHeaders::Instance().addHeader("Access-Control-Allow-Headers", "Content-Type");
 
   m_server.serveStatic("/", SPIFFS, "/").setDefaultFile("index.html");
-  m_server.on("/reset", HTTP_GET, [this](AsyncWebServerRequest *request)
-              {
-    request->send(200, "text/plain", "Initializing Plant-Master reset...");
-    this->performReset(); });
-
   m_server.onNotFound([this](AsyncWebServerRequest *request)
                       { this->redirectToIndex(request); });
 

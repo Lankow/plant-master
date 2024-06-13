@@ -12,6 +12,10 @@
 static const uint16_t ANALOG_PIN_MAX = 4095;
 static const uint16_t ANALOG_PIN_MIN = 0;
 
+static const uint16_t RESET_BUTTON_PIN = 0;
+static const uint16_t RESET_THRESHOLD_TIME_MS = 3000;
+static const uint16_t RESET_DEFAULT_TIME = 0;
+
 static const uint8_t MAX_HUMIDITY_SENSORS_AMOUNT = 4;
 
 static const uint16_t DEFAULT_HUMIDITY = ANALOG_PIN_MAX;
