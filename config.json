@@ -1,8 +1,8 @@
 {
-    "version": "0.0.1",
     "humidityPins": [
         {
             "readerPin": 34,
+            "threshold": 2000,
             "valvePin": 18
         }
     ],
