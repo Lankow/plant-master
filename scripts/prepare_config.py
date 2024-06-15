@@ -4,34 +4,47 @@ import shutil
 import json
 
 # Constants
+CONFIG_NAME = "config.json"
+CONFIG_NAME_MASTER = "config-master.json"
+CONFIG_NAME_MONITOR = "config-monitor.json"
+
 DHT_PIN = "dhtPin"
 WATER_PUMP_PIN = "waterPumpPin"
-READER_PIN = "readerPin"
-VALVE_PIN = "valvePin"
-PIN_NAMES = [DHT_PIN, WATER_PUMP_PIN, READER_PIN, VALVE_PIN]
-
-DEFAULT_PINS = {
-    DHT_PIN: 21,
-    WATER_PUMP_PIN: 18,
-    READER_PIN: 34
-}
+READER_PINS = "readerPins"
+VALVE_PINS = "valvePins"
+THRESHOLDS = "thresholds"
 
 MIN_PIN = 1
 MAX_PIN = 34
 
+MIN_THRESHOLD = 0
+MAX_THRESHOLD = 4095
+
+DEFAULT_THRESHOLD = 4095
+DEFAULT_PINS = {
+    DHT_PIN: 21,
+    WATER_PUMP_PIN: 18,
+    READER_PINS: [34],
+    VALVE_PINS: [15]
+}
+
+PLANT_MASTER_FIELDS = [READER_PINS, VALVE_PINS, THRESHOLDS]
+PLANT_MONITOR_FIELDS = [DHT_PIN, WATER_PUMP_PIN, READER_PINS, VALVE_PINS]
+
 def handle_config():
     print("Initializing configuration...")
     cpp_defines = env.ParseFlags(env['BUILD_FLAGS']).get("CPPDEFINES")
-    config_file_path = "config.json"
 
-    if os.path.isfile(config_file_path):
-        validate_config(config_file_path)
+    if os.path.isfile(CONFIG_NAME):
+        validate_config(CONFIG_NAME)
     else:
-        print(f"{config_file_path} not found in parent directory.")
+        print(f"{CONFIG_NAME} not found.")
         generate_default_config()
 
-    generate_output_config(cpp_defines)
-    # move_config()
+    if "PLANT_MASTER" in cpp_defines:
+        generate_output_config(CONFIG_NAME_MASTER, PLANT_MASTER_FIELDS, cpp_defines)
+    else:
+        generate_output_config(CONFIG_NAME_MONITOR, PLANT_MONITOR_FIELDS, cpp_defines)
 
 def get_version(cpp_defines):
     version_value = None
@@ -48,37 +61,47 @@ def get_version(cpp_defines):
 
 def generate_default_config():
     print("Generating default configuration...")
+    default_config = {key: value for key, value in DEFAULT_PINS.items()}
+    default_config[THRESHOLDS] = [DEFAULT_THRESHOLD]
+    with open(CONFIG_NAME, 'w') as file:
+        json.dump(default_config, file, indent=4)
 
-def generate_output_config(cpp_defines):
-    print("Generating output configuration...")
+def generate_output_config(output_config_name, fields, cpp_defines):
+    print(f"Generating {output_config_name}...")
     version = get_version(cpp_defines)
+    with open(CONFIG_NAME, 'r') as file:
+        config_data = json.load(file)
 
-    if "PLANT_MASTER" in cpp_defines:
-        output_config_path = "config-master.json"
-    else:
-        output_config_path = "config-monitor.json"
+    output_data = {"version": version}
+    for field in fields:
+        if field in config_data:
+            output_data[field] = config_data[field]
+
+    move_config(output_config_name, output_data)
 
 def validate_config(config_file_path):
     data = load_and_validate_json(config_file_path)
     if data:
         inspect_fields(data)
+        with open(config_file_path, 'w') as file:
+            json.dump(data, file, indent=4)
     else:
         remove_existing_config(config_file_path)
         generate_default_config()
 
-def add_default_value(value):
-    if value == "humidityPins":
-        print("Humidity Pins")
-    elif value == "dhtPin":
-        print("DHT Pin")
-    elif value == "waterPumpPin":
-        print("Water Pump Pin")
+def add_default_value(key):
+    if key in DEFAULT_PINS:
+        return DEFAULT_PINS[key]
+    elif key == THRESHOLDS:
+        return DEFAULT_THRESHOLD
+    return None
 
-def remove_existing_config():
+def remove_existing_config(config_file_path):
     print("Removing existing configuration...")
+    os.remove(config_file_path)
 
-def move_config(config_file_path, output_config_path):
-    print("Moving configuration...")
+def move_config(output_config_path, data):
+    print(f"Moving configuration to {output_config_path}...")
     data_dir = os.path.join(os.getcwd(), "data")
 
     if not os.path.exists(data_dir):
@@ -86,8 +109,9 @@ def move_config(config_file_path, output_config_path):
 
     dest_path = os.path.join(data_dir, output_config_path)
 
-    shutil.copy(config_file_path, dest_path)
-    print(f"Modified {config_file_path} copied as {dest_path}")
+    with open(dest_path, 'w') as file:
+        json.dump(data, file, indent=4)
+    print(f"Modified {output_config_path} copied as {dest_path}")
 
 def load_and_validate_json(file_path):
     try:
@@ -104,29 +128,37 @@ def load_and_validate_json(file_path):
 
 def inspect_fields(data):
     if isinstance(data, dict):
+        keys_to_delete = []
         for key, value in data.items():
-            if isinstance(value, dict):
-                print(f"Nested object found at key: {key}")
-                inspect_fields(value)  # Recursive call for nested objects
+            if key in DEFAULT_PINS:
+                if isinstance(value, list):
+                    for i, val in enumerate(value):
+                        if isinstance(val, int) and MIN_PIN <= val <= MAX_PIN:
+                            print(f"{key} is valid: {val}")
+                        else:
+                            print(f"{key} is not valid. Setting to default value: {DEFAULT_PINS[key]}")
+                            value[i] = DEFAULT_PINS[key]
+                elif isinstance(value, int) and MIN_PIN <= value <= MAX_PIN:
+                    print(f"{key} has a valid pin number: {value}.")
+                else:
+                    print(f"{key} is not valid. Setting to default value: {DEFAULT_PINS[key]}")
+                    data[key] = DEFAULT_PINS[key]
+            elif key == THRESHOLDS:
+                if isinstance(value, list):
+                    for i, val in enumerate(value):
+                        if MIN_THRESHOLD <= val <= MAX_THRESHOLD:
+                            print("Threshold is fine")
+                        else:
+                            print(f"Threshold is not valid. Setting to default value: {DEFAULT_THRESHOLD}")
+                            value[i] = DEFAULT_THRESHOLD
             else:
-                inspect_field(data, key, value)
-                print(f"Field: {key}, Value: {value}, Type: {type(value)}")
+                print(f"{key} is not a valid field. Removing...")
+                keys_to_delete.append(key)
+
+        for key in keys_to_delete:
+            del data[key]
     else:
         print("The JSON data is not an object (dictionary).")
-
-def inspect_field(data, key, value):
-    if key in PIN_NAMES:
-        if isinstance(value, int) and MIN_PIN <= value <= MAX_PIN:
-            print(f"{key} has a valid pin number: {value}.")
-        else:
-            default_pin = DEFAULT_PINS.get(key, None)
-            if default_pin is not None:
-                print(f"{key} must be a number between {MIN_PIN} and {MAX_PIN}. Setting to default value {default_pin}.")
-                data[key] = default_pin
-            else:
-                print(f"No default value available for {key}.")
-    else:
-        print(f"Field {key} is not a recognized pin.")
 
 print("---------------------")
 handle_config()
