@@ -32,6 +32,11 @@ PLANT_MASTER_FIELDS = [READER_PINS, VALVE_PINS, THRESHOLDS]
 PLANT_MONITOR_FIELDS = [DHT_PIN, WATER_PUMP_PIN, READER_PINS, VALVE_PINS]
 
 def handle_config():
+    """
+    Initializes the configuration by checking if the config.json file exists. If it exists, validates
+    the configuration. Otherwise, generates a default configuration. Depending on the build flags,
+    generates a master or monitor configuration output file.
+    """
     print("Initializing configuration...")
     cpp_defines = env.ParseFlags(env['BUILD_FLAGS']).get("CPPDEFINES")
 
@@ -47,6 +52,15 @@ def handle_config():
         generate_output_config(CONFIG_NAME_MONITOR, PLANT_MONITOR_FIELDS, cpp_defines)
 
 def get_version(cpp_defines):
+    """
+    Extracts the version from the build flags.
+
+    Args:
+        cpp_defines (list): List of build flags.
+
+    Returns:
+        str: Version string if found, else None.
+    """
     version_value = None
 
     for item in cpp_defines:
@@ -60,6 +74,9 @@ def get_version(cpp_defines):
     return version_value
 
 def generate_default_config():
+    """
+    Generates a default configuration file with default pin and threshold values.
+    """
     print("Generating default configuration...")
     default_config = {key: value for key, value in DEFAULT_PINS.items()}
     default_config[THRESHOLDS] = [DEFAULT_THRESHOLD]
@@ -67,6 +84,14 @@ def generate_default_config():
         json.dump(default_config, file, indent=4)
 
 def generate_output_config(output_config_name, fields, cpp_defines):
+    """
+    Generates the output configuration file based on the given fields and build flags.
+
+    Args:
+        output_config_name (str): Name of the output configuration file.
+        fields (list): List of fields to include in the output configuration.
+        cpp_defines (list): List of build flags.
+    """
     print(f"Generating {output_config_name}...")
     version = get_version(cpp_defines)
     with open(CONFIG_NAME, 'r') as file:
@@ -80,6 +105,13 @@ def generate_output_config(output_config_name, fields, cpp_defines):
     move_config(output_config_name, output_data)
 
 def validate_config(config_file_path):
+    """
+    Validates the configuration file by checking the fields and their values.
+    If the configuration is invalid, removes it and generates a default configuration.
+
+    Args:
+        config_file_path (str): Path to the configuration file.
+    """
     data = load_and_validate_json(config_file_path)
     if data:
         inspect_fields(data)
@@ -90,6 +122,15 @@ def validate_config(config_file_path):
         generate_default_config()
 
 def add_default_value(key):
+    """
+    Returns the default value for a given key.
+
+    Args:
+        key (str): Configuration key.
+
+    Returns:
+        The default value for the key if it exists, else None.
+    """
     if key in DEFAULT_PINS:
         return DEFAULT_PINS[key]
     elif key == THRESHOLDS:
@@ -97,10 +138,23 @@ def add_default_value(key):
     return None
 
 def remove_existing_config(config_file_path):
+    """
+    Removes the existing configuration file.
+
+    Args:
+        config_file_path (str): Path to the configuration file.
+    """
     print("Removing existing configuration...")
     os.remove(config_file_path)
 
 def move_config(output_config_path, data):
+    """
+    Moves the modified configuration to the data directory.
+
+    Args:
+        output_config_path (str): Path to the output configuration file.
+        data (dict): Configuration data to write to the file.
+    """
     print(f"Moving configuration to {output_config_path}...")
     data_dir = os.path.join(os.getcwd(), "data")
 
@@ -114,6 +168,15 @@ def move_config(output_config_path, data):
     print(f"Modified {output_config_path} copied as {dest_path}")
 
 def load_and_validate_json(file_path):
+    """
+    Loads and validates the JSON configuration file.
+
+    Args:
+        file_path (str): Path to the JSON file.
+
+    Returns:
+        dict: Loaded JSON data if valid, else None.
+    """
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
@@ -127,6 +190,13 @@ def load_and_validate_json(file_path):
         return None
 
 def inspect_fields(data):
+    """
+    Inspects the fields of the configuration data and validates them. Invalid fields
+    are set to default values or removed.
+
+    Args:
+        data (dict): Configuration data.
+    """
     if isinstance(data, dict):
         keys_to_delete = []
         for key, value in data.items():
