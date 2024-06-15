@@ -1,4 +1,3 @@
-# build_script.py
 import os
 import shutil
 
