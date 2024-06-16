@@ -19,9 +19,8 @@ public:
     void init();
 
 private:
-    void createConfigFile();
+    bool initSPIFFS();
     void readConfigFile();
-    void deleteConfigFile();
 };
 
 #endif // CONFIG_HANDLER_HPP

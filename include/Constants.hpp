@@ -50,6 +50,8 @@ static const uint32_t CYCLE_TIME_MS = 200;
 static const std::string CONFIG_PAGE_SSID = "config_plant_master";
 static const std::string CONFIG_PAGE_PASSWORD = "plantmaster";
 static const std::string MQTT_IDENTIFIER = "PlantMaster";
+
+static const std::string CONFIG_PATH = "/config-master.json";
 #else
 static const uint32_t CYCLE_TIME_MS = 1000;
 
@@ -57,6 +59,7 @@ static const std::string CONFIG_PAGE_SSID = "config_plant_monitor";
 static const std::string CONFIG_PAGE_PASSWORD = "plantmonitor";
 static const std::string MQTT_IDENTIFIER = "PlantMonitor";
 
+static const std::string CONFIG_PATH = "/config-monitor.json"
 #endif
 
 // ESP PINS

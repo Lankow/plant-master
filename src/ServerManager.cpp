@@ -19,11 +19,6 @@ void ServerManager::init()
   if (WiFi.status() == WL_CONNECTED)
   {
     Serial.println("Initializing Server...");
-    if (!initSPIFFS())
-    {
-      Serial.println("Failed to initialize SPIFFS");
-      return;
-    }
     initServer();
   }
   else
@@ -60,16 +55,6 @@ void ServerManager::initServer()
 void ServerManager::redirectToIndex(AsyncWebServerRequest *request)
 {
   request->redirect("http://" + WiFi.localIP().toString());
-}
-
-bool ServerManager::initSPIFFS()
-{
-  if (!SPIFFS.begin(true))
-  {
-    Serial.println("An Error has occurred while mounting SPIFFS");
-    return false;
-  }
-  return true;
 }
 
 void ServerManager::onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len)

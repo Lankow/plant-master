@@ -5,63 +5,43 @@
  *   Author: Lankow
  */
 #include "ConfigHandler.hpp"
+#include "Constants.hpp"
 
 ConfigHandler::ConfigHandler(){};
 
 void ConfigHandler::init()
 {
-    if (!SPIFFS.begin(true))
+    if (!initSPIFFS())
     {
         Serial.println("An error has occurred while mounting SPIFFS");
         return;
     }
     Serial.println("SPIFFS mounted successfully");
 
-    if (!SPIFFS.exists("/config.json"))
+    if (!SPIFFS.exists(CONFIG_PATH.c_str()))
     {
-        Serial.println("config.json does not exist. Creating file...");
-        createConfigFile();
-    }
-    else
-    {
-        Serial.println("config.json exists.");
-        deleteConfigFile();
+        Serial.println("Config file does not exist. Please rebuild project.");
         return;
     }
 
     readConfigFile();
 };
 
-void ConfigHandler::createConfigFile()
+bool ConfigHandler::initSPIFFS()
 {
-    StaticJsonDocument<200> jsonDoc;
-    jsonDoc["threshold"] = "4095";
-
-    File file = SPIFFS.open("/config.json", FILE_WRITE);
-    if (!file)
+    if (!SPIFFS.begin(true))
     {
-        Serial.println("Failed to create config.json");
-        return;
+        return false;
     }
-
-    if (serializeJson(jsonDoc, file) == 0)
-    {
-        Serial.println("Failed to write to config.json");
-    }
-    else
-    {
-        Serial.println("config.json created successfully");
-    }
-
-    file.close();
-};
+    return true;
+}
 
 void ConfigHandler::readConfigFile()
 {
-    File file = SPIFFS.open("/config.json");
+    File file = SPIFFS.open(CONFIG_PATH.c_str());
     if (!file)
     {
-        Serial.println("Failed to open config.json");
+        Serial.println("Failed to open Config file");
         return;
     }
 
@@ -73,30 +53,10 @@ void ConfigHandler::readConfigFile()
         Serial.println(error.c_str());
     }
 
-    const char *threshold = jsonDoc["threshold"];
+    const char *version = jsonDoc["version"];
 
-    Serial.println("Config settings:");
-    Serial.print("Threshold: ");
-    Serial.println(threshold);
+    Serial.print("Config version: ");
+    Serial.println(version);
 
     file.close();
 };
-
-void ConfigHandler::deleteConfigFile()
-{
-    if (SPIFFS.exists("/config.json"))
-    {
-        if (SPIFFS.remove("/config.json"))
-        {
-            Serial.println("config.json deleted successfully");
-        }
-        else
-        {
-            Serial.println("Failed to delete config.json");
-        }
-    }
-    else
-    {
-        Serial.println("config.json does not exist");
-    }
-}

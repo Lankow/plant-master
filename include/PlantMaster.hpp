@@ -33,6 +33,8 @@ private:
     WiFiInitializer m_wiFiInitializer;
     ServerManager m_serverManager;
     WateringManager m_wateringManager;
+
+    bool m_isInitialized;
 };
 
 #endif // PLANT_MASTER_HPP
