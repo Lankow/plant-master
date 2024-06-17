@@ -1,23 +1,25 @@
 /*
- *   ConfigHandler.hpp
+ *   Configurator.hpp
  *   ----------------------
  *   Created on: 2024/06/10
  *   Author: Lankow
  */
-#ifndef CONFIG_HANDLER_HPP
-#define CONFIG_HANDLER_HPP
+#ifndef CONFIGURATOR_HPP
+#define CONFIGURATOR_HPP
 
 #include <Arduino.h>
 #include <SPIFFS.h>
 #include <ArduinoJson.h>
+#include <vector>
 
-class ConfigHandler
+class Configurator
 {
 public:
-    ConfigHandler();
+    Configurator();
 
     void init();
     int getIntValue(const String &key);
+    std::vector<int> getIntArray(const String &key);
 
 private:
     bool initSPIFFS();
@@ -26,4 +28,4 @@ private:
     StaticJsonDocument<512> m_jsonDoc;
 };
 
-#endif // CONFIG_HANDLER_HPP
+#endif // CONFIGURATOR_HPP

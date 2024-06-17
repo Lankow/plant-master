@@ -6,9 +6,8 @@
  */
 #include "PlantMaster.hpp"
 
-PlantMaster::PlantMaster(std::shared_ptr<ConfigHandler> configHandler)
-    : m_configHandler(),
-      m_dataStorage(std::make_shared<DataStorage>()),
+PlantMaster::PlantMaster(std::shared_ptr<Configurator> configurator)
+    : m_dataStorage(std::make_shared<DataStorage>()),
       m_dataHandler(std::make_shared<DataHandler>(m_dataStorage)),
       m_serverManager(m_dataStorage),
       m_mqttManager(std::make_shared<MQTTManager>(m_dataHandler)),

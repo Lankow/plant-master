@@ -1,30 +1,35 @@
 #include <Arduino.h>
 #include <memory>
+#include "Configurator.hpp"
 #include "PlantMaster.hpp"
 #include "PlantMonitor.hpp"
 #include "Constants.hpp"
-#include "ConfigHandler.hpp"
 #include "ResetHandler.hpp"
 
-std::shared_ptr<ConfigHandler> configHandler;
+std::shared_ptr<Configurator> configurator;
 ResetHandler resetHandler;
 
 #ifdef PLANT_MASTER
-PlantMaster plantMaster(configHandler);
+std::shared_ptr<PlantMaster> plantMaster;
 #else
-PlantMonitor plantMonitor(configHandler);
+std::shared_ptr<PlantMonitor> plantMonitor;
 #endif
 
 void setup()
 {
     Serial.begin(115200);
     resetHandler.init();
-    configHandler->init();
+
+    // Initialize the configurator
+    configurator = std::make_shared<Configurator>();
+    configurator->init();
 
 #ifdef PLANT_MASTER
-    plantMaster.init();
+    plantMaster = std::make_shared<PlantMaster>(configurator);
+    plantMaster->init();
 #else
-    plantMonitor.init();
+    plantMonitor = std::make_shared<PlantMonitor>(configurator);
+    plantMonitor->init();
 #endif
 }
 
@@ -32,9 +37,9 @@ void loop()
 {
     resetHandler.cyclic();
 #ifdef PLANT_MASTER
-    plantMaster.cyclic();
+    plantMaster->cyclic();
 #else
-    plantMonitor.cyclic();
+    plantMonitor->cyclic();
 #endif
     delay(CYCLE_TIME_MS);
 }

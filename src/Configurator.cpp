@@ -1,15 +1,15 @@
 /*
- *   ConfigHandler.hpp
+ *   Configurator.hpp
  *   ----------------------
  *   Created on: 2024/06/10
  *   Author: Lankow
  */
-#include "ConfigHandler.hpp"
+#include "Configurator.hpp"
 #include "Constants.hpp"
 
-ConfigHandler::ConfigHandler(){};
+Configurator::Configurator(){};
 
-void ConfigHandler::init()
+void Configurator::init()
 {
     if (!initSPIFFS())
     {
@@ -27,7 +27,7 @@ void ConfigHandler::init()
     readConfigFile();
 }
 
-bool ConfigHandler::initSPIFFS()
+bool Configurator::initSPIFFS()
 {
     if (!SPIFFS.begin(true))
     {
@@ -36,7 +36,7 @@ bool ConfigHandler::initSPIFFS()
     return true;
 }
 
-void ConfigHandler::readConfigFile()
+void Configurator::readConfigFile()
 {
     File file = SPIFFS.open(CONFIG_PATH.c_str());
     if (!file)
@@ -59,7 +59,7 @@ void ConfigHandler::readConfigFile()
     file.close();
 }
 
-int ConfigHandler::getIntValue(const String &key)
+int Configurator::getIntValue(const String &key)
 {
     if (m_jsonDoc.containsKey(key))
     {
@@ -81,4 +81,42 @@ int ConfigHandler::getIntValue(const String &key)
         Serial.println(key);
         return 0;
     }
+}
+
+std::vector<int> Configurator::getIntArray(const String &key)
+{
+    std::vector<int> result;
+    if (m_jsonDoc.containsKey(key))
+    {
+        if (m_jsonDoc[key].is<JsonArray>())
+        {
+            JsonArray array = m_jsonDoc[key].as<JsonArray>();
+            for (JsonVariant value : array)
+            {
+                if (value.is<int>())
+                {
+                    result.push_back(value.as<int>());
+                    Serial.println(value.as<int>());
+                }
+                else
+                {
+                    Serial.print("Value in array for key ");
+                    Serial.print(key);
+                    Serial.println(" is not an integer.");
+                }
+            }
+        }
+        else
+        {
+            Serial.print("Value for key ");
+            Serial.print(key);
+            Serial.println(" is not an array.");
+        }
+    }
+    else
+    {
+        Serial.print("Key not found: ");
+        Serial.println(key);
+    }
+    return result;
 }

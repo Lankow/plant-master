@@ -15,12 +15,12 @@
 #include "WateringManager.hpp"
 #include "DataStorage.hpp"
 #include "DataHandler.hpp"
-#include "ConfigHandler.hpp"
+#include "Configurator.hpp"
 
 class PlantMaster
 {
 public:
-    PlantMaster(std::shared_ptr<ConfigHandler> configHandler);
+    PlantMaster(std::shared_ptr<Configurator> configurator);
 
     void init();
     void cyclic();
@@ -28,7 +28,6 @@ public:
 private:
     std::shared_ptr<DataStorage> m_dataStorage;
     std::shared_ptr<DataHandler> m_dataHandler;
-    std::shared_ptr<ConfigHandler> m_configHandler;
     std::shared_ptr<MQTTManager> m_mqttManager;
     WiFiInitializer m_wiFiInitializer;
     ServerManager m_serverManager;
