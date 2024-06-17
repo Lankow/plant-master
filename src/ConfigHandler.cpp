@@ -25,7 +25,7 @@ void ConfigHandler::init()
     }
 
     readConfigFile();
-};
+}
 
 bool ConfigHandler::initSPIFFS()
 {
@@ -45,18 +45,40 @@ void ConfigHandler::readConfigFile()
         return;
     }
 
-    StaticJsonDocument<200> jsonDoc;
-    DeserializationError error = deserializeJson(jsonDoc, file);
+    DeserializationError error = deserializeJson(m_jsonDoc, file);
     if (error)
     {
-        Serial.print("Failed to read file, using default configuration: ");
+        Serial.print("Failed to read file: ");
         Serial.println(error.c_str());
     }
-
-    const char *version = jsonDoc["version"];
-
-    Serial.print("Config version: ");
-    Serial.println(version);
+    else
+    {
+        Serial.println("Config file loaded successfully");
+    }
 
     file.close();
-};
+}
+
+int ConfigHandler::getIntValue(const String &key)
+{
+    if (m_jsonDoc.containsKey(key))
+    {
+        if (m_jsonDoc[key].is<int>())
+        {
+            return m_jsonDoc[key].as<int>();
+        }
+        else
+        {
+            Serial.print("Value for key ");
+            Serial.print(key);
+            Serial.println(" is not an integer.");
+            return 0;
+        }
+    }
+    else
+    {
+        Serial.print("Key not found: ");
+        Serial.println(key);
+        return 0;
+    }
+}

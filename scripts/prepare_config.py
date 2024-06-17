@@ -1,4 +1,4 @@
-Import("env")
+Import("env") # type: ignore
 import os
 import shutil
 import json
@@ -38,7 +38,7 @@ def handle_config():
     generates a master or monitor configuration output file.
     """
     print("Initializing configuration...")
-    cpp_defines = env.ParseFlags(env['BUILD_FLAGS']).get("CPPDEFINES")
+    cpp_defines = env.ParseFlags(env['BUILD_FLAGS']).get("CPPDEFINES") # type: ignore
 
     if os.path.isfile(CONFIG_NAME):
         validate_config(CONFIG_NAME)

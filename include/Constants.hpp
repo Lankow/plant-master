@@ -52,6 +52,14 @@ static const std::string CONFIG_PAGE_PASSWORD = "plantmaster";
 static const std::string MQTT_IDENTIFIER = "PlantMaster";
 
 static const std::string CONFIG_PATH = "/config-master.json";
+
+static const std::string JSON_VERSION = "version";
+static const std::string JSON_DHT_PIN = "dhtPin";
+static const std::string JSON_WATER_PUMP_PIN = "waterPumpPin";
+static const std::string JSON_READER_PINS = "readerPins";
+static const std::string JSON_VALVE_PINS = "valvePins";
+static const std::string JSON_THRESHOLDS = "thresholds";
+
 #else
 static const uint32_t CYCLE_TIME_MS = 1000;
 

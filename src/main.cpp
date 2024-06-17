@@ -20,6 +20,7 @@ void setup()
     Serial.begin(115200);
     resetHandler.init();
     configHandler->init();
+
 #ifdef PLANT_MASTER
     plantMaster.init();
 #else

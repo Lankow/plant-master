@@ -17,10 +17,13 @@ public:
     ConfigHandler();
 
     void init();
+    int getIntValue(const String &key);
 
 private:
     bool initSPIFFS();
     void readConfigFile();
+
+    StaticJsonDocument<512> m_jsonDoc;
 };
 
 #endif // CONFIG_HANDLER_HPP
