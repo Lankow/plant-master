@@ -13,11 +13,12 @@
 #include "Constants.hpp"
 #include "sMQTTBroker.h"
 #include "DataHandler.hpp"
+#include "Configurator.hpp"
 
 class MQTTManager
 {
 public:
-    MQTTManager(std::shared_ptr<DataHandler> dataHandler);
+    MQTTManager(std::shared_ptr<DataHandler> dataHandler, std::shared_ptr<Configurator> configurator);
 
     void init();
     void cyclic();
@@ -25,6 +26,7 @@ public:
 
 private:
     std::shared_ptr<DataHandler> m_dataHandler;
+    std::shared_ptr<Configurator> m_configurator;
     AsyncMqttClient m_client;
 #ifdef PLANT_MASTER
     sMQTTBroker m_broker;

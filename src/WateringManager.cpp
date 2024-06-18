@@ -30,6 +30,5 @@ void WateringManager::checkHumidity()
         }
     }
 
-    Serial.println("Watering not needed");
     m_waterPumpActive = false;
 }

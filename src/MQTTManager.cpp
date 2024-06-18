@@ -9,9 +9,16 @@
 
 // Constructor definition
 #ifdef PLANT_MASTER
-MQTTManager::MQTTManager(std::shared_ptr<DataHandler> dataHandler) : m_dataHandler(dataHandler), m_broker(), m_client() {}
+MQTTManager::MQTTManager(std::shared_ptr<DataHandler> dataHandler, std::shared_ptr<Configurator> configurator)
+    : m_dataHandler(dataHandler),
+      m_configurator(configurator),
+      m_broker(),
+      m_client() {}
 #else
-MQTTManager::MQTTManager(std::shared_ptr<DataHandler> dataHandler) : m_dataHandler(dataHandler), m_client() {}
+MQTTManager::MQTTManager(std::shared_ptr<DataHandler> dataHandler, std::shared_ptr<Configurator> configurator)
+    : m_dataHandler(dataHandler),
+      m_configurator(configurator),
+      m_client(){};
 #endif
 
 // Method to initialize the MQTTManager
@@ -59,9 +66,14 @@ void MQTTManager::onMqttConnect(bool sessionPresent)
 {
     Serial.println("Connected to MQTT.");
 #ifdef PLANT_MASTER
-    m_client.subscribe(MQTT_PLANT_HUMIDITY.c_str(), 2);
     m_client.subscribe(MQTT_ROOM_HUMIDITY.c_str(), 2);
     m_client.subscribe(MQTT_ROOM_TEMPERATURE.c_str(), 2);
+
+    for (int pin : m_configurator->getReaderPins())
+    {
+        std::string topic = MQTT_PLANT_HUMIDITY + "/" + std::to_string(pin);
+        m_client.subscribe(topic.c_str(), 2);
+    }
 #else
     m_client.subscribe(MQTT_PLANT_THRESHOLD.c_str(), 2);
 #endif
