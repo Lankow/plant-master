@@ -6,11 +6,14 @@
  */
 #include "DataStorage.hpp"
 
-DataStorage::DataStorage()
+DataStorage::DataStorage(std::shared_ptr<Configurator> configurator)
 {
-    for (int i = 0; i < MAX_HUMIDITY_SENSORS_AMOUNT; i++)
+    std::vector<int> pins = configurator->getReaderPins();
+    std::vector<int> thresholds = configurator->getThresholds();
+
+    for (int i = 0; i < pins.size(); i++)
     {
-        m_plantsHumidityData.push_back(PlantHumidityData());
+        m_plantsHumidityData.push_back(PlantHumidityData(pins[i], thresholds[i]));
     }
 };
 

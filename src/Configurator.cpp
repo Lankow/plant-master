@@ -27,6 +27,18 @@ void Configurator::init()
     readConfigFile();
 }
 
+#ifdef PLANT_MASTER
+std::vector<int> Configurator::getReaderPins() const
+{
+    return m_readerPins;
+}
+
+std::vector<int> Configurator::getThresholds() const
+{
+    return m_thresholds;
+}
+#endif
+
 bool Configurator::initSPIFFS()
 {
     if (!SPIFFS.begin(true))
@@ -54,6 +66,10 @@ void Configurator::readConfigFile()
     else
     {
         Serial.println("Config file loaded successfully");
+#ifdef PLANT_MASTER
+        m_readerPins = getIntArray(JSON_READER_PINS.c_str());
+        m_thresholds = getIntArray(JSON_THRESHOLDS.c_str());
+#endif
     }
 
     file.close();

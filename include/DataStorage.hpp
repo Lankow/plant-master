@@ -9,13 +9,15 @@
 
 #include <Arduino.h>
 #include <vector>
+#include <memory>
 #include "PlantHumidityData.hpp"
+#include "Configurator.hpp"
 #include "Constants.hpp"
 
 class DataStorage
 {
 public:
-    DataStorage();
+    DataStorage(std::shared_ptr<Configurator> configurator);
 
     const std::vector<PlantHumidityData> &getPlantsHumidityData() const;
     float getRoomTemperature() const;

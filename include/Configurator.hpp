@@ -18,14 +18,24 @@ public:
     Configurator();
 
     void init();
-    int getIntValue(const String &key);
-    std::vector<int> getIntArray(const String &key);
+
+    // Getter methods for specific configuration values
+#ifdef PLANT_MASTER
+    std::vector<int> getReaderPins() const;
+    std::vector<int> getThresholds() const;
+#endif
 
 private:
     bool initSPIFFS();
     void readConfigFile();
+    int getIntValue(const String &key);
+    std::vector<int> getIntArray(const String &key);
 
     StaticJsonDocument<512> m_jsonDoc;
+#ifdef PLANT_MASTER
+    std::vector<int> m_readerPins;
+    std::vector<int> m_thresholds;
+#endif
 };
 
 #endif // CONFIGURATOR_HPP
