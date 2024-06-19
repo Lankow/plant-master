@@ -44,11 +44,14 @@ void DataStorage::setRoomHumidity(const float roomHumidity)
     m_roomHumidity = roomHumidity;
 }
 
-void DataStorage::setPlantHumidity(const uint8_t index, const uint16_t humidity)
+void DataStorage::setPlantHumidity(const uint8_t pin, const uint16_t humidity)
 {
-    if (m_plantsHumidityData.size() > index)
+    for (int i = 0; i < m_plantsHumidityData.size(); i++)
     {
-        m_plantsHumidityData[index].setCurrentHumidity(humidity);
+        if (m_plantsHumidityData[i].getAssignedPin() == pin)
+        {
+            m_plantsHumidityData[i].setCurrentHumidity(humidity);
+        }
     }
 };
 

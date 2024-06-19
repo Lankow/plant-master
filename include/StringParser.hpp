@@ -14,6 +14,7 @@ class StringParser
 public:
     static bool parseStringToInt(const std::string &str, int &result);
     static bool parseStringToFloat(const std::string &str, float &result);
+    static bool extractNumberFromString(const std::string &str, int &result);
 };
 
 #endif // STRING_PARSER_HPP

@@ -16,18 +16,16 @@ DataHandler::DataHandler(){};
 void DataHandler::handleData(const std::string &topic, const std::string &payload)
 {
 #ifdef PLANT_MASTER
-    if (topic == MQTT_PLANT_HUMIDITY)
+    if (topic.find(MQTT_PLANT_HUMIDITY) != std::string::npos)
     {
-        int plantHumidity;
+        int pin, plantHumidity;
+
+        if (!StringParser::extractNumberFromString(topic, pin))
+            return;
+
         if (StringParser::parseStringToInt(payload, plantHumidity) && plantHumidity >= 0 && plantHumidity <= 65535)
         {
-            m_dataStorage->setPlantHumidity(0, static_cast<uint16_t>(plantHumidity));
-            Serial.println(plantHumidity);
-        }
-        else
-        {
-            Serial.println("Failed to parse plant humidity: ");
-            Serial.println(payload.c_str());
+            m_dataStorage->setPlantHumidity(pin, plantHumidity);
         }
     }
     else if (topic == MQTT_ROOM_HUMIDITY)
