@@ -6,6 +6,7 @@
  */
 #include "DataStorage.hpp"
 
+#ifdef PLANT_MASTER
 DataStorage::DataStorage(std::shared_ptr<Configurator> configurator)
 {
     std::vector<int> pins = configurator->getReaderPins();
@@ -17,6 +18,7 @@ DataStorage::DataStorage(std::shared_ptr<Configurator> configurator)
     }
 };
 
+#endif
 float DataStorage::getRoomHumidity() const
 {
     return m_roomHumidity;

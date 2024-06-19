@@ -19,6 +19,7 @@ class MQTTManager
 {
 public:
     MQTTManager(std::shared_ptr<DataHandler> dataHandler, std::shared_ptr<Configurator> configurator);
+    MQTTManager(std::shared_ptr<DataHandler> dataHandler);
 
     void init();
     void cyclic();

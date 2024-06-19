@@ -11,11 +11,12 @@
 #include <DHT.h>
 #include <memory>
 #include "MQTTManager.hpp"
+#include "Configurator.hpp"
 
 class DHTReader
 {
 public:
-    DHTReader(const uint8_t pin, std::shared_ptr<MQTTManager> mqttManager);
+    DHTReader(std::shared_ptr<Configurator> configurator, std::shared_ptr<MQTTManager> mqttManager);
 
     void init();
     void cyclic();

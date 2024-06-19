@@ -44,6 +44,13 @@ static const std::string MQTT_PLANT_THRESHOLD = "plant/threshold";
 static const std::string MQTT_ROOM_TEMPERATURE = "room/temperature";
 static const std::string MQTT_ROOM_HUMIDITY = "room/humidity";
 
+static const std::string JSON_VERSION = "version";
+static const std::string JSON_DHT_PIN = "dhtPin";
+static const std::string JSON_WATER_PUMP_PIN = "waterPumpPin";
+static const std::string JSON_READER_PINS = "readerPins";
+static const std::string JSON_VALVE_PINS = "valvePins";
+static const std::string JSON_THRESHOLDS = "thresholds";
+
 #ifdef PLANT_MASTER
 static const uint32_t CYCLE_TIME_MS = 200;
 
@@ -53,13 +60,6 @@ static const std::string MQTT_IDENTIFIER = "PlantMaster";
 
 static const std::string CONFIG_PATH = "/config-master.json";
 
-static const std::string JSON_VERSION = "version";
-static const std::string JSON_DHT_PIN = "dhtPin";
-static const std::string JSON_WATER_PUMP_PIN = "waterPumpPin";
-static const std::string JSON_READER_PINS = "readerPins";
-static const std::string JSON_VALVE_PINS = "valvePins";
-static const std::string JSON_THRESHOLDS = "thresholds";
-
 #else
 static const uint32_t CYCLE_TIME_MS = 1000;
 
@@ -67,7 +67,7 @@ static const std::string CONFIG_PAGE_SSID = "config_plant_monitor";
 static const std::string CONFIG_PAGE_PASSWORD = "plantmonitor";
 static const std::string MQTT_IDENTIFIER = "PlantMonitor";
 
-static const std::string CONFIG_PATH = "/config-monitor.json"
+static const std::string CONFIG_PATH = "/config-monitor.json";
 #endif
 
 // ESP PINS

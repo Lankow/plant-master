@@ -19,11 +19,10 @@ public:
 
     void init();
 
-    // Getter methods for specific configuration values
-#ifdef PLANT_MASTER
     std::vector<int> getReaderPins() const;
     std::vector<int> getThresholds() const;
-#endif
+    int getDhtPin() const;
+    int getWaterPumpPin() const;
 
 private:
     bool initSPIFFS();
@@ -31,11 +30,11 @@ private:
     int getIntValue(const String &key);
     std::vector<int> getIntArray(const String &key);
 
-    StaticJsonDocument<512> m_jsonDoc;
-#ifdef PLANT_MASTER
+    StaticJsonDocument<1024> m_jsonDoc;
     std::vector<int> m_readerPins;
     std::vector<int> m_thresholds;
-#endif
+    int m_dhtPin;
+    int m_waterPumpPin;
 };
 
 #endif // CONFIGURATOR_HPP

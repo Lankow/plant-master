@@ -15,9 +15,8 @@ MQTTManager::MQTTManager(std::shared_ptr<DataHandler> dataHandler, std::shared_p
       m_broker(),
       m_client() {}
 #else
-MQTTManager::MQTTManager(std::shared_ptr<DataHandler> dataHandler, std::shared_ptr<Configurator> configurator)
+MQTTManager::MQTTManager(std::shared_ptr<DataHandler> dataHandler)
     : m_dataHandler(dataHandler),
-      m_configurator(configurator),
       m_client(){};
 #endif
 

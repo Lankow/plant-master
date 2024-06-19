@@ -27,7 +27,6 @@ void Configurator::init()
     readConfigFile();
 }
 
-#ifdef PLANT_MASTER
 std::vector<int> Configurator::getReaderPins() const
 {
     return m_readerPins;
@@ -37,7 +36,16 @@ std::vector<int> Configurator::getThresholds() const
 {
     return m_thresholds;
 }
-#endif
+
+int Configurator::getDhtPin() const
+{
+    return m_dhtPin;
+}
+
+int Configurator::getWaterPumpPin() const
+{
+    return m_waterPumpPin;
+}
 
 bool Configurator::initSPIFFS()
 {
@@ -66,12 +74,19 @@ void Configurator::readConfigFile()
     else
     {
         Serial.println("Config file loaded successfully");
-#ifdef PLANT_MASTER
         m_readerPins = getIntArray(JSON_READER_PINS.c_str());
+
+#ifdef PLANT_MASTER
         m_thresholds = getIntArray(JSON_THRESHOLDS.c_str());
+#else
+        m_dhtPin = getIntValue(JSON_DHT_PIN.c_str());
+        Serial.println("DHT PIN:");
+        Serial.println(m_dhtPin);
+        m_waterPumpPin = getIntValue(JSON_WATER_PUMP_PIN.c_str());
+        Serial.println("WATER PUMP PIN:");
+        Serial.println(m_waterPumpPin);
 #endif
     }
-
     file.close();
 }
 
@@ -112,7 +127,6 @@ std::vector<int> Configurator::getIntArray(const String &key)
                 if (value.is<int>())
                 {
                     result.push_back(value.as<int>());
-                    Serial.println(value.as<int>());
                 }
                 else
                 {

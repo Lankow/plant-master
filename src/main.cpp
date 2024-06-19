@@ -23,7 +23,7 @@ void setup()
     // Initialize the configurator
     configurator = std::make_shared<Configurator>();
     configurator->init();
-
+    
 #ifdef PLANT_MASTER
     plantMaster = std::make_shared<PlantMaster>(configurator);
     plantMaster->init();

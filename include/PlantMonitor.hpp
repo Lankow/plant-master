@@ -28,12 +28,14 @@ public:
 
 private:
     std::shared_ptr<MQTTManager> m_mqttManager;
+    std::shared_ptr<Configurator> m_configurator;
     std::shared_ptr<DataHandler> m_dataHandler;
     WiFiInitializer m_wiFiInitializer;
     PlantHumidityReader m_plantHumidityReader;
     DHTReader m_dhtReader;
     WaterPumpController m_waterPumpController;
     ValveController m_valveController;
+    bool m_isInitialized;
 };
 
 #endif // PLANT_MONITOR_HPP

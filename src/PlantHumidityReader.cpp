@@ -7,8 +7,8 @@
 #include "PlantHumidityReader.hpp"
 #include "Constants.hpp"
 
-PlantHumidityReader::PlantHumidityReader(const uint8_t pin, std::shared_ptr<MQTTManager> mqttManager)
-    : m_operatedPin(pin),
+PlantHumidityReader::PlantHumidityReader(std::shared_ptr<Configurator> configurator, std::shared_ptr<MQTTManager> mqttManager)
+    : m_configurator(configurator),
       m_mqttManager(mqttManager){};
 
 void PlantHumidityReader::cyclic()
@@ -18,6 +18,10 @@ void PlantHumidityReader::cyclic()
 
 void PlantHumidityReader::readHumidity()
 {
-    uint16_t humidity = analogRead(m_operatedPin);
-    m_mqttManager->publish(MQTT_PLANT_HUMIDITY, std::to_string(humidity), 0, false);
+    for (int pin : m_configurator->getReaderPins())
+    {
+        uint16_t humidity = analogRead(pin);
+        Serial.println(humidity);
+        m_mqttManager->publish(MQTT_PLANT_HUMIDITY + "/" + std::to_string(pin), std::to_string(humidity), 0, false);
+    }
 }

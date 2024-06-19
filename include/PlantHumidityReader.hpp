@@ -10,17 +10,18 @@
 #include <Arduino.h>
 #include <memory>
 #include "MQTTManager.hpp"
+#include "Configurator.hpp"
 
 class PlantHumidityReader
 {
 public:
-    PlantHumidityReader(const uint8_t pin, std::shared_ptr<MQTTManager> mqttManager);
+    PlantHumidityReader(std::shared_ptr<Configurator> configurator, std::shared_ptr<MQTTManager> mqttManager);
 
     void cyclic();
 
 private:
     std::shared_ptr<MQTTManager> m_mqttManager;
-    uint8_t m_operatedPin;
+    std::shared_ptr<Configurator> m_configurator;
 
     void readHumidity();
 };
