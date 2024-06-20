@@ -37,6 +37,7 @@ void JSONConverter::serializePlantHumidityData(const PlantHumidityData &plantHum
 {
     JsonObject sensorObject = plantHumidityArray.createNestedObject();
     sensorObject["id"] = sensorIndex;
+    sensorObject["pin"] = plantHumidityData.getAssignedPin();
     sensorObject["humidity"] = plantHumidityData.getCurrentHumidity();
     sensorObject["threshold"] = plantHumidityData.getHumidityThreshold();
 }

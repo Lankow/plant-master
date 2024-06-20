@@ -16,15 +16,9 @@ const TopBar: React.FC<TopBarProps> = ({ handleOpenModal, roomTemperature, roomH
             Plant-Master
           </Typography>
           <Typography sx={{ mr: 1 }}>
-            Room Temperature: {roomTemperature} °C
-          </Typography>
-          <Typography>
-            Room Humidity: {roomHumidity} %
+            Room: {roomTemperature} °C / {roomHumidity} %
           </Typography>
           <Box sx={{ display: { sm: "block" } }}>
-            <Button sx={{ color: "#fff" }} onClick={() => handleOpenModal("Reset")}>
-              Reset
-            </Button>
             <Button sx={{ color: "#fff" }} onClick={() => handleOpenModal("About")}>
               About
             </Button>
