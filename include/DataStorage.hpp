@@ -25,8 +25,8 @@ public:
 
     void setRoomTemperature(const float roomTemperature);
     void setRoomHumidity(const float roomHumidity);
-    void setPlantHumidity(const uint8_t index, const uint16_t humidity);
-    void setHumidityThreshold(const uint8_t index, const uint16_t threshold);
+    void setPlantHumidity(const uint8_t pin, const uint16_t humidity);
+    void setHumidityThreshold(const uint8_t pin, const uint16_t threshold);
 
 private:
     std::vector<PlantHumidityData> m_plantsHumidityData;

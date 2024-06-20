@@ -69,7 +69,7 @@ void ServerManager::onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client
     break;
   case WS_EVT_DATA:
     Serial.println("WS_EVT_DATA");
-    // Handle incoming WebSocket data here
+    m_jsonConverter.handleWsEventData(data, len);
     break;
   case WS_EVT_PONG:
   case WS_EVT_ERROR:

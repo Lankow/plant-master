@@ -41,3 +41,44 @@ void JSONConverter::serializePlantHumidityData(const PlantHumidityData &plantHum
     sensorObject["humidity"] = plantHumidityData.getCurrentHumidity();
     sensorObject["threshold"] = plantHumidityData.getHumidityThreshold();
 }
+
+void JSONConverter::handleWsEventData(uint8_t *data, size_t len)
+{
+    DeserializationError error = deserializeJson(m_receivedJson, (char *)data, len);
+
+    if (error)
+    {
+        Serial.print(F("deserializeJson() failed: "));
+        Serial.println(error.f_str());
+        return;
+    }
+
+    uint16_t threshold = deserializeByKey(data, len, "threshold");
+    uint8_t pin = deserializeByKey(data, len, "pin");
+    m_dataStorage->setHumidityThreshold(pin, threshold);
+}
+
+uint16_t JSONConverter::deserializeByKey(uint8_t *data, size_t len, const std::string &keyName)
+{
+    if (m_receivedJson.containsKey(keyName))
+    {
+        if (m_receivedJson[keyName].is<uint16_t>())
+        {
+            return m_receivedJson[keyName].as<uint16_t>();
+        }
+        else if (m_receivedJson[keyName].is<uint8_t>())
+        {
+            return m_receivedJson[keyName].as<uint8_t>();
+        }
+        else
+        {
+            Serial.println(F("Unexpected data type for the specified key."));
+            return 0;
+        }
+    }
+    else
+    {
+        Serial.println(F("Key not found in JSON."));
+        return 0;
+    }
+}
