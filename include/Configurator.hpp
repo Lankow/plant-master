@@ -23,12 +23,14 @@ public:
     std::vector<int> getThresholds() const;
     int getDhtPin() const;
     int getWaterPumpPin() const;
+    void updateThreshold(int index, int value);
 
 private:
     bool initSPIFFS();
     void readConfigFile();
     int getIntValue(const String &key);
     std::vector<int> getIntArray(const String &key);
+    void writeConfigFile();
 
     StaticJsonDocument<1024> m_jsonDoc;
     std::vector<int> m_readerPins;

@@ -29,6 +29,7 @@ public:
     void setHumidityThreshold(const uint8_t pin, const uint16_t threshold);
 
 private:
+    std::shared_ptr<Configurator> m_configurator;
     std::vector<PlantHumidityData> m_plantsHumidityData;
     float m_roomTemperature = DEFAULT_ROOM_TEMPERATURE;
     float m_roomHumidity = DEFAULT_ROOM_HUMIDITY;

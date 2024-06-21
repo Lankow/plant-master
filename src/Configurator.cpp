@@ -150,3 +150,41 @@ std::vector<int> Configurator::getIntArray(const String &key)
     }
     return result;
 }
+
+void Configurator::updateThreshold(int index, int value)
+{
+    if (index >= 0 && index < m_thresholds.size())
+    {
+        m_thresholds[index] = value;
+        m_jsonDoc[JSON_THRESHOLDS.c_str()].clear();
+        for (int threshold : m_thresholds)
+        {
+            m_jsonDoc[JSON_THRESHOLDS.c_str()].add(threshold);
+        }
+        writeConfigFile();
+    }
+    else
+    {
+        Serial.println("Index out of range");
+    }
+}
+
+void Configurator::writeConfigFile()
+{
+    File file = SPIFFS.open(CONFIG_PATH.c_str(), FILE_WRITE);
+    if (!file)
+    {
+        Serial.println("Failed to open Config file for writing");
+        return;
+    }
+
+    if (serializeJson(m_jsonDoc, file) == 0)
+    {
+        Serial.println("Failed to write to Config file");
+    }
+    else
+    {
+        Serial.println("Config file updated successfully");
+    }
+    file.close();
+}

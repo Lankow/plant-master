@@ -7,7 +7,7 @@
 #include "DataStorage.hpp"
 
 #ifdef PLANT_MASTER
-DataStorage::DataStorage(std::shared_ptr<Configurator> configurator)
+DataStorage::DataStorage(std::shared_ptr<Configurator> configurator) : m_configurator(configurator)
 {
     std::vector<int> pins = configurator->getReaderPins();
     std::vector<int> thresholds = configurator->getThresholds();
@@ -62,6 +62,7 @@ void DataStorage::setHumidityThreshold(const uint8_t pin, const uint16_t thresho
         if (m_plantsHumidityData[i].getAssignedPin() == pin)
         {
             m_plantsHumidityData[i].setHumidityThreshold(threshold);
+            m_configurator->updateThreshold(i, threshold);
         }
     }
 };
