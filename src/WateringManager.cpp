@@ -25,10 +25,11 @@ void WateringManager::checkHumidity()
         if (plantsHumidityData[i].getCurrentHumidity() < plantsHumidityData[i].getHumidityThreshold())
         {
             Serial.println("Watering needed");
-            m_waterPumpActive = true;
+            m_mqttManager->publish(MQTT_PUMP_ACTIVE, PUMP_ACTIVE, 0, false);
+
             return;
         }
     }
 
-    m_waterPumpActive = false;
+    m_mqttManager->publish(MQTT_PUMP_ACTIVE, PUMP_INACTIVE, 0, false);
 }

@@ -8,11 +8,13 @@
 #define WATER_PUMP_CONTROLLER_HPP
 
 #include <Arduino.h>
+#include <memory>
+#include "Configurator.hpp"
 
 class WaterPumpController
 {
 public:
-    WaterPumpController(const uint8_t pin);
+    WaterPumpController(std::shared_ptr<Configurator> configurator);
 
     void init();
 

@@ -1,16 +1,14 @@
 import React from "react"
-import { DialogTitle, DialogContent, DialogContentText, DialogActions, Button, TextField, Slider, Typography } from "@mui/material"
+import { DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Slider } from "@mui/material"
 
 interface EditProps {
   editedThreshold: number
-  editedPin: number
   setEditedThreshold: React.Dispatch<React.SetStateAction<number>>
-  setEditedPin: React.Dispatch<React.SetStateAction<number>>
   handleCloseModal: () => void
   handleSaveChanges: () => void
 }
 
-const Edit: React.FC<EditProps> = ({ editedThreshold, editedPin, setEditedThreshold, setEditedPin, handleCloseModal, handleSaveChanges }) => {
+const Edit: React.FC<EditProps> = ({ editedThreshold, setEditedThreshold, handleCloseModal, handleSaveChanges }) => {
   return (
     <>
       <DialogTitle sx={{ ml: 1, mt: 2 }}>Edit Threshold</DialogTitle>

@@ -99,9 +99,7 @@ function App() {
       <Modal
         open={openedModal !== ""} //
         openedModal={openedModal}
-        editedPin={editedPin}
         editedThreshold={editedThreshold}
-        setEditedPin={setEditedPin}
         setEditedThreshold={setEditedThreshold}
         handleCloseModal={handleCloseModal}
         handleSaveChanges={handleSaveChanges}

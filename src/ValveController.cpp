@@ -7,10 +7,9 @@
 
 #include "ValveController.hpp"
 
-ValveController::ValveController(const uint8_t pin){};
+ValveController::ValveController(std::shared_ptr<Configurator> configurator)
+    : m_configurator(configurator){};
 
 void ValveController::turnOn() {};
 
 void ValveController::turnOff() {};
-
-void ValveController::toggle() {};

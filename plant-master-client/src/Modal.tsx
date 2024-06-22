@@ -7,9 +7,7 @@ import Edit from "./Edit"
 interface ModalProps {
   open: boolean
   openedModal: string
-  editedPin: number
   editedThreshold: number
-  setEditedPin: React.Dispatch<React.SetStateAction<number>>
   setEditedThreshold: React.Dispatch<React.SetStateAction<number>>
   handleCloseModal: () => void
   handleSaveChanges: () => void
@@ -18,9 +16,7 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({
   open, //
   openedModal,
-  editedPin,
   editedThreshold,
-  setEditedPin,
   setEditedThreshold,
   handleCloseModal,
   handleSaveChanges
@@ -36,9 +32,7 @@ const Modal: React.FC<ModalProps> = ({
         return (
           <Edit //
             editedThreshold={editedThreshold}
-            editedPin={editedPin}
             setEditedThreshold={setEditedThreshold}
-            setEditedPin={setEditedPin}
             handleCloseModal={handleCloseModal}
             handleSaveChanges={handleSaveChanges}
           />

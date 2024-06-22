@@ -23,9 +23,6 @@ private:
     std::shared_ptr<DataStorage> m_dataStorage;
     std::shared_ptr<MQTTManager> m_mqttManager;
 
-    bool m_waterPumpActive;
-    uint16_t m_valveActive;
-
     void checkHumidity();
 };
 

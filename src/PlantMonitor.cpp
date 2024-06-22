@@ -14,8 +14,8 @@ PlantMonitor::PlantMonitor(std::shared_ptr<Configurator> configurator)
       m_mqttManager(std::make_shared<MQTTManager>(m_dataHandler)),
       m_dhtReader(configurator, m_mqttManager),
       m_plantHumidityReader(configurator, m_mqttManager),
-      m_valveController(EspPins::PIN_12),
-      m_waterPumpController(EspPins::PIN_18){};
+      m_valveController(configurator),
+      m_waterPumpController(configurator){};
 
 void PlantMonitor::init()
 {

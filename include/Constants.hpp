@@ -40,9 +40,9 @@ static const IPAddress PRIMARY_DNS(8, 8, 8, 8);
 static const IPAddress SECONDARY_DNS(8, 8, 4, 4);
 
 static const std::string MQTT_PLANT_HUMIDITY = "plant/humidity";
-static const std::string MQTT_PLANT_THRESHOLD = "plant/threshold";
 static const std::string MQTT_ROOM_TEMPERATURE = "room/temperature";
 static const std::string MQTT_ROOM_HUMIDITY = "room/humidity";
+static const std::string MQTT_PUMP_ACTIVE = "pump/active";
 
 static const std::string JSON_VERSION = "version";
 static const std::string JSON_DHT_PIN = "dhtPin";
@@ -50,6 +50,9 @@ static const std::string JSON_WATER_PUMP_PIN = "waterPumpPin";
 static const std::string JSON_READER_PINS = "readerPins";
 static const std::string JSON_VALVE_PINS = "valvePins";
 static const std::string JSON_THRESHOLDS = "thresholds";
+
+static const std::string PUMP_ACTIVE = "active";
+static const std::string PUMP_INACTIVE = "inactive";
 
 #ifdef PLANT_MASTER
 static const uint32_t CYCLE_TIME_MS = 200;

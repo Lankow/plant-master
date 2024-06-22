@@ -7,11 +7,12 @@
 
 #include "WaterPumpController.hpp"
 
-WaterPumpController::WaterPumpController(const uint8_t pin) : m_operatedPin(pin){};
+WaterPumpController::WaterPumpController(std::shared_ptr<Configurator> configurator) : m_operatedPin(configurator->getWaterPumpPin()){};
 
 void WaterPumpController::init()
 {
     pinMode(m_operatedPin, OUTPUT);
+    turnOff();
 }
 
 void WaterPumpController::turnOn()

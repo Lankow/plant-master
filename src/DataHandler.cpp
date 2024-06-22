@@ -56,5 +56,17 @@ void DataHandler::handleData(const std::string &topic, const std::string &payloa
             Serial.println(payload.c_str());
         }
     }
+#else
+    if (topic == MQTT_PUMP_ACTIVE)
+    {
+        if (payload == PUMP_ACTIVE)
+        {
+            Serial.println("Activate pump.");
+        }
+        else
+        {
+            Serial.println("Deactivate pump.");
+        }
+    }
 #endif
 }

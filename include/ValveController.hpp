@@ -8,18 +8,19 @@
 #define VALVE_CONTROLLER_HPP
 
 #include <Arduino.h>
+#include <memory>
+#include "Configurator.hpp"
 
 class ValveController
 {
 public:
-    ValveController(const uint8_t pin);
+    ValveController(std::shared_ptr<Configurator> configurator);
 
     void turnOn();
     void turnOff();
-    void toggle();
 
 private:
-    uint8_t m_operatedPin;
+    std::shared_ptr<Configurator> m_configurator;
 };
 
 #endif // VALVE_CONTROLLER_HPP

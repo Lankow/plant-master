@@ -74,7 +74,7 @@ void MQTTManager::onMqttConnect(bool sessionPresent)
         m_client.subscribe(topic.c_str(), 2);
     }
 #else
-    m_client.subscribe(MQTT_PLANT_THRESHOLD.c_str(), 2);
+    m_client.subscribe(MQTT_PUMP_ACTIVE.c_str(), 2);
 #endif
 }
 
