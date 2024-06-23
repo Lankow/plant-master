@@ -1,5 +1,5 @@
 /*
- *   PlantHumidityReader.hpp
+ *   PlantHumidityHandler.hpp
  *   ----------------------
  *   Created on: 2024/05/28
  *   Author: Lankow
@@ -12,12 +12,13 @@
 #include "MQTTManager.hpp"
 #include "Configurator.hpp"
 
-class PlantHumidityReader
+class PlantHumidityHandler
 {
 public:
-    PlantHumidityReader(std::shared_ptr<Configurator> configurator, std::shared_ptr<MQTTManager> mqttManager);
+    PlantHumidityHandler(std::shared_ptr<Configurator> configurator, std::shared_ptr<MQTTManager> mqttManager);
 
     void cyclic();
+    void openValve(uint16_t readerPin);
 
 private:
     std::shared_ptr<MQTTManager> m_mqttManager;

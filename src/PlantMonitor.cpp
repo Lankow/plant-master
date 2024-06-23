@@ -13,8 +13,7 @@ PlantMonitor::PlantMonitor(std::shared_ptr<Configurator> configurator)
       m_dataHandler(std::make_shared<DataHandler>()),
       m_mqttManager(std::make_shared<MQTTManager>(m_dataHandler)),
       m_dhtReader(configurator, m_mqttManager),
-      m_plantHumidityReader(configurator, m_mqttManager),
-      m_valveController(configurator),
+      m_plantHumidityHandler(configurator, m_mqttManager),
       m_waterPumpController(configurator){};
 
 void PlantMonitor::init()
@@ -35,6 +34,6 @@ void PlantMonitor::cyclic()
     {
         m_mqttManager->cyclic();
         m_dhtReader.cyclic();
-        m_plantHumidityReader.cyclic();
+        m_plantHumidityHandler.cyclic();
     }
 };

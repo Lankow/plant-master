@@ -1,22 +1,26 @@
 /*
- *   PlantHumidityReader.cpp
+ *   PlantHumidityHandler.cpp
  *   ----------------------
  *   Created on: 2024/05/28
  *   Author: Lankow
  */
-#include "PlantHumidityReader.hpp"
+#include "PlantHumidityHandler.hpp"
 #include "Constants.hpp"
 
-PlantHumidityReader::PlantHumidityReader(std::shared_ptr<Configurator> configurator, std::shared_ptr<MQTTManager> mqttManager)
+PlantHumidityHandler::PlantHumidityHandler(std::shared_ptr<Configurator> configurator, std::shared_ptr<MQTTManager> mqttManager)
     : m_configurator(configurator),
       m_mqttManager(mqttManager){};
 
-void PlantHumidityReader::cyclic()
+void PlantHumidityHandler::cyclic()
 {
     readHumidity();
 }
 
-void PlantHumidityReader::readHumidity()
+void PlantHumidityHandler::openValve(uint16_t readerPin)
+{
+}
+
+void PlantHumidityHandler::readHumidity()
 {
     for (int pin : m_configurator->getReaderPins())
     {

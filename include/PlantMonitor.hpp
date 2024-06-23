@@ -9,10 +9,9 @@
 
 #include <Arduino.h>
 #include <memory>
-#include "PlantHumidityReader.hpp"
+#include "PlantHumidityHandler.hpp"
 #include "DHTReader.hpp"
 #include "WaterPumpController.hpp"
-#include "ValveController.hpp"
 #include "WiFiInitializer.hpp"
 #include "MQTTManager.hpp"
 #include "DataHandler.hpp"
@@ -31,10 +30,9 @@ private:
     std::shared_ptr<Configurator> m_configurator;
     std::shared_ptr<DataHandler> m_dataHandler;
     WiFiInitializer m_wiFiInitializer;
-    PlantHumidityReader m_plantHumidityReader;
+    PlantHumidityHandler m_plantHumidityHandler;
     DHTReader m_dhtReader;
     WaterPumpController m_waterPumpController;
-    ValveController m_valveController;
     bool m_isInitialized;
 };
 
