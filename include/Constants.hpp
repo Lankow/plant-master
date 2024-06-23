@@ -21,6 +21,8 @@ static const uint8_t MAX_HUMIDITY_SENSORS_AMOUNT = 4;
 static const uint16_t DEFAULT_HUMIDITY = ANALOG_PIN_MAX;
 static const uint16_t DEFAULT_HUMIDITY_THRESHOLD = ANALOG_PIN_MAX;
 
+static const uint16_t DEFAULT_ACTIVE_READER_PIN = 0;
+
 static const float DEFAULT_ROOM_TEMPERATURE = 0;
 static const float DEFAULT_ROOM_HUMIDITY = 0;
 

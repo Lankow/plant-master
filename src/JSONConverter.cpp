@@ -9,6 +9,7 @@
 
 JSONConverter::JSONConverter(std::shared_ptr<DataStorage> dataStorage) : m_dataStorage(dataStorage){};
 
+#ifdef PLANT_MASTER
 std::string JSONConverter::serializeDataStorage()
 {
     DynamicJsonDocument doc(1024);
@@ -82,3 +83,4 @@ uint16_t JSONConverter::deserializeByKey(uint8_t *data, size_t len, const std::s
         return 0;
     }
 }
+#endif

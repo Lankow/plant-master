@@ -7,11 +7,7 @@
 #include "DataHandler.hpp"
 #include "StringParser.hpp"
 
-#ifdef PLANT_MASTER
 DataHandler::DataHandler(std::shared_ptr<DataStorage> dataStorage) : m_dataStorage(dataStorage){};
-#else
-DataHandler::DataHandler(){};
-#endif
 
 void DataHandler::handleData(const std::string &topic, const std::string &payload)
 {
@@ -62,10 +58,12 @@ void DataHandler::handleData(const std::string &topic, const std::string &payloa
         if (payload == PUMP_ACTIVE)
         {
             Serial.println("Activate pump.");
+            m_dataStorage->setIsWaterPumpActive(true);
         }
         else
         {
             Serial.println("Deactivate pump.");
+            m_dataStorage->setIsWaterPumpActive(false);
         }
     }
 #endif

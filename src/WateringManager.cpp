@@ -18,6 +18,7 @@ void WateringManager::cyclic()
 
 void WateringManager::checkHumidity()
 {
+#ifdef PLANT_MASTER
     const std::vector<PlantHumidityData> plantsHumidityData = m_dataStorage->getPlantsHumidityData();
 
     for (int i = 0; i < plantsHumidityData.size(); i++)
@@ -32,4 +33,5 @@ void WateringManager::checkHumidity()
     }
 
     m_mqttManager->publish(MQTT_PUMP_ACTIVE, PUMP_INACTIVE, 0, false);
+#endif
 }
