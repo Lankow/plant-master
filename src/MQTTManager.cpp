@@ -67,14 +67,14 @@ void MQTTManager::onMqttConnect(bool sessionPresent)
 #ifdef PLANT_MASTER
     m_client.subscribe(MQTT_ROOM_HUMIDITY.c_str(), 2);
     m_client.subscribe(MQTT_ROOM_TEMPERATURE.c_str(), 2);
-
     for (int pin : m_configurator->getReaderPins())
     {
         std::string topic = MQTT_PLANT_HUMIDITY + "/" + std::to_string(pin);
         m_client.subscribe(topic.c_str(), 2);
     }
 #else
-    m_client.subscribe(MQTT_PUMP_ACTIVE.c_str(), 2);
+    m_client.subscribe(MQTT_WATER_ACTIVE.c_str(), 2);
+    m_client.subscribe(MQTT_WATER_PIN.c_str(), 2);
 #endif
 }
 

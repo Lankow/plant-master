@@ -44,7 +44,8 @@ static const IPAddress SECONDARY_DNS(8, 8, 4, 4);
 static const std::string MQTT_PLANT_HUMIDITY = "plant/humidity";
 static const std::string MQTT_ROOM_TEMPERATURE = "room/temperature";
 static const std::string MQTT_ROOM_HUMIDITY = "room/humidity";
-static const std::string MQTT_PUMP_ACTIVE = "pump/active";
+static const std::string MQTT_WATER_ACTIVE = "water/active";
+static const std::string MQTT_WATER_PIN = "water/pin";
 
 static const std::string JSON_VERSION = "version";
 static const std::string JSON_DHT_PIN = "dhtPin";

@@ -7,12 +7,28 @@
 
 #include "WaterPumpController.hpp"
 
-WaterPumpController::WaterPumpController(std::shared_ptr<Configurator> configurator) : m_operatedPin(configurator->getWaterPumpPin()){};
+WaterPumpController::WaterPumpController(std::shared_ptr<Configurator> configurator, std::shared_ptr<DataStorage> dataStorage)
+    : m_operatedPin(configurator->getWaterPumpPin()),
+      m_dataStorage(dataStorage){};
 
 void WaterPumpController::init()
 {
     pinMode(m_operatedPin, OUTPUT);
     turnOff();
+}
+
+void WaterPumpController::cyclic()
+{
+#ifndef PLANT_MASTER
+    if (m_dataStorage->getIsWaterPumpActive())
+    {
+        turnOn();
+    }
+    else
+    {
+        turnOff();
+    }
+#endif
 }
 
 void WaterPumpController::turnOn()
