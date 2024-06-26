@@ -27,7 +27,7 @@ void MQTTManager::init()
     {
 #ifdef PLANT_MASTER
         Serial.println("Initializing MQTT Broker...");
-        m_broker.init(MQTT_SERVER_PORT);
+        m_broker.init(Network::Ports::MQTT_SERVER);
 #endif
         Serial.println("Initializing MQTT...");
 
@@ -43,7 +43,7 @@ void MQTTManager::init()
         m_client.onMessage([this](char *topic, char *payload, AsyncMqttClientMessageProperties properties, size_t len, size_t index, size_t total)
                            { this->onMqttMessage(topic, payload, properties, len, index, total); });
 
-        m_client.setServer(MQTT_SERVER_IP, MQTT_SERVER_PORT);
+        m_client.setServer(Network::IP::MQTT_SERVER, Network::Ports::MQTT_SERVER);
     }
 }
 
@@ -65,16 +65,16 @@ void MQTTManager::onMqttConnect(bool sessionPresent)
 {
     Serial.println("Connected to MQTT.");
 #ifdef PLANT_MASTER
-    m_client.subscribe(MQTT_ROOM_HUMIDITY.c_str(), 2);
-    m_client.subscribe(MQTT_ROOM_TEMPERATURE.c_str(), 2);
+    m_client.subscribe(MQTT::ROOM_HUMIDITY.c_str(), 2);
+    m_client.subscribe(MQTT::ROOM_TEMPERATURE.c_str(), 2);
     for (int pin : m_configurator->getReaderPins())
     {
-        std::string topic = MQTT_PLANT_HUMIDITY + "/" + std::to_string(pin);
+        std::string topic = MQTT::PLANT_HUMIDITY + "/" + std::to_string(pin);
         m_client.subscribe(topic.c_str(), 2);
     }
 #else
-    m_client.subscribe(MQTT_WATER_ACTIVE.c_str(), 2);
-    m_client.subscribe(MQTT_WATER_PIN.c_str(), 2);
+    m_client.subscribe(MQTT::WATER_ACTIVE.c_str(), 2);
+    m_client.subscribe(MQTT::WATER_PIN.c_str(), 2);
 #endif
 }
 

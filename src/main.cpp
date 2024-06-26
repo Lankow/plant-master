@@ -22,5 +22,5 @@ void setup()
 void loop()
 {
     plantMaster->cyclic();
-    delay(CYCLE_TIME_MS);
+    delay(Config::CYCLE_TIME_MS);
 }

@@ -45,6 +45,6 @@ void PlantHumidityHandler::readHumidity()
     {
         uint16_t humidity = analogRead(pin);
         Serial.println(humidity);
-        m_mqttManager->publish(MQTT_PLANT_HUMIDITY + "/" + std::to_string(pin), std::to_string(humidity), 0, false);
+        m_mqttManager->publish(MQTT::PLANT_HUMIDITY + "/" + std::to_string(pin), std::to_string(humidity), 0, false);
     }
 }

@@ -18,7 +18,7 @@ DataStorage::DataStorage(std::shared_ptr<Configurator> configurator) : m_configu
     }
 };
 #else
-DataStorage::DataStorage() : m_isWaterPumpActive(false), m_activeReaderPin(DEFAULT_ACTIVE_READER_PIN){};
+DataStorage::DataStorage() : m_isWaterPumpActive(false), m_activeReaderPin(HumiditySensor::DEFAULT_ACTIVE_PIN){};
 #endif
 
 #ifdef PLANT_MASTER

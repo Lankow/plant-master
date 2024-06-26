@@ -12,7 +12,7 @@ DataHandler::DataHandler(std::shared_ptr<DataStorage> dataStorage) : m_dataStora
 void DataHandler::handleData(const std::string &topic, const std::string &payload)
 {
 #ifdef PLANT_MASTER
-    if (topic.find(MQTT_PLANT_HUMIDITY) != std::string::npos)
+    if (topic.find(MQTT::PLANT_HUMIDITY) != std::string::npos)
     {
         int pin, plantHumidity;
 
@@ -24,7 +24,7 @@ void DataHandler::handleData(const std::string &topic, const std::string &payloa
             m_dataStorage->setPlantHumidity(pin, plantHumidity);
         }
     }
-    else if (topic == MQTT_ROOM_HUMIDITY)
+    else if (topic == MQTT::ROOM_HUMIDITY)
     {
         float roomHumidity;
         if (StringParser::parseStringToFloat(payload, roomHumidity))
@@ -38,7 +38,7 @@ void DataHandler::handleData(const std::string &topic, const std::string &payloa
             Serial.println(payload.c_str());
         }
     }
-    else if (topic == MQTT_ROOM_TEMPERATURE)
+    else if (topic == MQTT::ROOM_TEMPERATURE)
     {
         float roomTemperature;
         if (StringParser::parseStringToFloat(payload, roomTemperature))
@@ -53,9 +53,9 @@ void DataHandler::handleData(const std::string &topic, const std::string &payloa
         }
     }
 #else
-    if (topic == MQTT_WATER_ACTIVE)
+    if (topic == MQTT::WATER_ACTIVE)
     {
-        if (payload == PUMP_ACTIVE)
+        if (payload == PumpState::ACTIVE)
         {
             Serial.println("Activate pump.");
             m_dataStorage->setIsWaterPumpActive(true);
@@ -66,7 +66,7 @@ void DataHandler::handleData(const std::string &topic, const std::string &payloa
             m_dataStorage->setIsWaterPumpActive(false);
         }
     }
-    else if (topic == MQTT_WATER_PIN)
+    else if (topic == MQTT::WATER_PIN)
     {
         int pin;
         if (StringParser::parseStringToInt(payload, pin))

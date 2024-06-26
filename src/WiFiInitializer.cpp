@@ -8,7 +8,7 @@
 #include "WiFiInitializer.hpp"
 #include "Constants.hpp"
 
-WiFiInitializer::WiFiInitializer() : m_preferences(), m_server(ASYNC_SERVER_PORT){};
+WiFiInitializer::WiFiInitializer() : m_preferences(), m_server(Network::Ports::ASYNC_SERVER){};
 
 bool WiFiInitializer::init()
 {
@@ -55,7 +55,7 @@ bool WiFiInitializer::connectToWiFi()
     m_preferences.end();
 
 #ifdef PLANT_MASTER
-    if (!WiFi.config(LOCAL_IP, GATEWAY, SUBNET, PRIMARY_DNS, SECONDARY_DNS))
+    if (!WiFi.config(Network::IP::LOCAL, Network::IP::GATEWAY, Network::IP::SUBNET, Network::IP::PRIMARY_DNS, Network::IP::SECONDARY_DNS))
     {
         Serial.println("STA Failed to configure");
         return false;
@@ -88,7 +88,7 @@ void WiFiInitializer::clearWifiCredentials()
 
 void WiFiInitializer::setupAccessPoint()
 {
-    WiFi.softAP(CONFIG_PAGE_SSID.c_str(), CONFIG_PAGE_PASSWORD.c_str());
+    WiFi.softAP(Config::PAGE_SSID.c_str(), Config::PAGE_PASSWORD.c_str());
     m_apIP = WiFi.softAPIP();
 
     m_server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)

@@ -8,7 +8,7 @@
 #include "Constants.hpp"
 
 ServerManager::ServerManager(std::shared_ptr<DataStorage> dataStorage)
-    : m_server(ASYNC_SERVER_PORT),
+    : m_server(Network::Ports::ASYNC_SERVER),
       m_websocket("/ws"),
       m_jsonConverter(dataStorage)
 {

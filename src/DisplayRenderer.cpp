@@ -17,7 +17,7 @@ void DisplayRenderer::drawInitialScreen()
     m_display.drawString(35, 30, "by Lankow");
     m_display.display();
 
-    delay(INITIAL_SCREEN_DURATION);
+    delay(Screen::INITIAL_SCREEN_DURATION);
 }
 
 void DisplayRenderer::drawConfigScreen(std::string ssid, std::string password)

@@ -10,7 +10,7 @@
 PlantHumidityData::PlantHumidityData(uint8_t pin, uint16_t threshold)
     : m_assignedPin(pin),
       m_humidityThreshold(threshold),
-      m_currentHumidity(DEFAULT_HUMIDITY){};
+      m_currentHumidity(HumiditySensor::DEFAULT_HUMIDITY){};
 
 uint8_t PlantHumidityData::getAssignedPin() const
 {

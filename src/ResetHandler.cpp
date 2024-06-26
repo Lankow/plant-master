@@ -9,8 +9,8 @@
 #include "Constants.hpp"
 
 ResetHandler::ResetHandler()
-    : m_pressedCounter(RESET_DEFAULT_TIME),
-      m_resetButton(RESET_BUTTON_PIN),
+    : m_pressedCounter(ResetButton::DEFAULT_TIME),
+      m_resetButton(ResetButton::PIN),
       m_resetButtonPressed(false){};
 
 void ResetHandler::init()
@@ -20,7 +20,7 @@ void ResetHandler::init()
 
 void ResetHandler::cyclic()
 {
-    if (m_pressedCounter > RESET_THRESHOLD_TIME_MS)
+    if (m_pressedCounter > ResetButton::THRESHOLD_TIME_MS)
     {
         Serial.println("Performing reset for target..");
         // performReset();
@@ -40,11 +40,11 @@ void ResetHandler::cyclic()
 
     if (m_resetButtonPressed)
     {
-        m_pressedCounter += CYCLE_TIME_MS;
+        m_pressedCounter += Config::CYCLE_TIME_MS;
     }
     else
     {
-        m_pressedCounter = RESET_DEFAULT_TIME;
+        m_pressedCounter = ResetButton::DEFAULT_TIME;
     }
 }
 

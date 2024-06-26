@@ -41,8 +41,8 @@ private:
 #ifdef PLANT_MASTER
     std::shared_ptr<Configurator> m_configurator;
     std::vector<PlantHumidityData> m_plantsHumidityData;
-    float m_roomTemperature = DEFAULT_ROOM_TEMPERATURE;
-    float m_roomHumidity = DEFAULT_ROOM_HUMIDITY;
+    float m_roomTemperature = Room::DEFAULT_TEMPERATURE;
+    float m_roomHumidity = Room::DEFAULT_HUMIDITY;
 #else
     bool m_isWaterPumpActive;
     uint8_t m_activeReaderPin;
