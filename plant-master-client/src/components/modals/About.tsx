@@ -1,8 +1,8 @@
-import React from "react"
-import { DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Link } from "@mui/material"
+import React from "react";
+import { DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Link } from "@mui/material";
 
 interface AboutContentProps {
-  handleCloseModal: () => void
+  handleCloseModal: () => void;
 }
 
 const About: React.FC<AboutContentProps> = ({ handleCloseModal }) => {
@@ -12,7 +12,7 @@ const About: React.FC<AboutContentProps> = ({ handleCloseModal }) => {
       <DialogContent>
         <DialogContentText>
           Visit my{" "}
-          <Link href="https://github.com/Lankow/plant-master" target="_blank">
+          <Link href="https://github.com/Lankow/plant-master" target="_blank" rel="noopener">
             Github
           </Link>
         </DialogContentText>
@@ -23,7 +23,7 @@ const About: React.FC<AboutContentProps> = ({ handleCloseModal }) => {
         </Button>
       </DialogActions>
     </>
-  )
-}
+  );
+};
 
-export default About
+export default About;
