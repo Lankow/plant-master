@@ -5,12 +5,14 @@ import TopBar from "./components/TopBar";
 import Modal from "./components/Modal";
 import HumidityPanel from "./components/panels/HumidityPanel";
 import useWebSocket from "./hooks/useWebSocket";
+import useDemoData from "./hooks/useDemoData";
 
 const initialThreshold = 0;
 const initialPin = 0;
 
 function App() {
-  const { sensors, roomTemperature, roomHumidity, sendUpdate } = useWebSocket();
+  const isDemo = false; // TODO: Handle as ENV Variable
+  const { sensors, roomTemperature, roomHumidity, sendUpdate } = isDemo ? useDemoData() : useWebSocket();
   const [editedThreshold, setEditedThreshold] = useState(initialThreshold);
   const [editedPin, setEditedPin] = useState(initialPin);
   const [openedModal, setOpenedModal] = useState("");
