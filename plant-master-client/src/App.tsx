@@ -11,7 +11,7 @@ const initialThreshold = 0;
 const initialPin = 0;
 
 function App() {
-  const isDemo = false; // TODO: Handle as ENV Variable
+  const isDemo = import.meta.env.VITE_DEMO === "true";
   const { sensors, roomTemperature, roomHumidity, sendUpdate } = isDemo ? useDemoData() : useWebSocket();
   const [editedThreshold, setEditedThreshold] = useState(initialThreshold);
   const [editedPin, setEditedPin] = useState(initialPin);
