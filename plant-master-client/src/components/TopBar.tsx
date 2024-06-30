@@ -5,9 +5,11 @@ interface TopBarProps {
   handleOpenModal: (modal: string) => void;
   roomTemperature: number;
   roomHumidity: number;
+  waterPumpActive: boolean;
+  activeReaderPin: number;
 }
 
-const TopBar: React.FC<TopBarProps> = ({ handleOpenModal, roomTemperature, roomHumidity }) => {
+const TopBar: React.FC<TopBarProps> = ({ handleOpenModal, roomTemperature, roomHumidity, waterPumpActive, activeReaderPin }) => {
   return (
     <AppBar component="nav" position="static">
       <Container maxWidth="xl">
@@ -21,6 +23,12 @@ const TopBar: React.FC<TopBarProps> = ({ handleOpenModal, roomTemperature, roomH
           </Typography>
           <Typography sx={{ mr: 2 }}>
             Room: {roomTemperature} °C / {roomHumidity} %
+          </Typography>
+          <Typography sx={{ mr: 2 }}>
+            Water Pump: {waterPumpActive ? "Active" : "Inactive"}
+          </Typography>
+          <Typography sx={{ mr: 2 }}>
+            Active Reader Pin: {activeReaderPin}
           </Typography>
           <Box sx={{ display: { sm: "block" } }}>
             <Button sx={{ color: "#fff" }} onClick={() => handleOpenModal("About")}>

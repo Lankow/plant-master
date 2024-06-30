@@ -7,7 +7,10 @@
 #include "DataStorage.hpp"
 
 #ifdef PLANT_MASTER
-DataStorage::DataStorage(std::shared_ptr<Configurator> configurator) : m_configurator(configurator)
+DataStorage::DataStorage(std::shared_ptr<Configurator> configurator)
+    : m_configurator(configurator),
+      m_isWaterPumpActive(false),
+      m_activeReaderPin(HumiditySensor::DEFAULT_ACTIVE_PIN)
 {
     std::vector<int> pins = configurator->getReaderPins();
     std::vector<int> thresholds = configurator->getThresholds();
@@ -69,7 +72,8 @@ void DataStorage::setHumidityThreshold(const uint8_t pin, const uint16_t thresho
         }
     }
 };
-#else
+#endif
+
 bool DataStorage::getIsWaterPumpActive() const
 {
     return m_isWaterPumpActive;
@@ -89,4 +93,3 @@ void DataStorage::setActiveReaderPin(const uint8_t activeReaderPin)
 {
     m_activeReaderPin = activeReaderPin;
 }
-#endif

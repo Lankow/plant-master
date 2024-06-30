@@ -15,6 +15,8 @@ std::string JSONConverter::serializeDataStorage()
     DynamicJsonDocument doc(1024);
     doc["roomHumidity"] = m_dataStorage->getRoomHumidity();
     doc["roomTemperature"] = m_dataStorage->getRoomTemperature();
+    doc["waterPumpActive"] = m_dataStorage->getIsWaterPumpActive();
+    doc["activeReaderPin"] = m_dataStorage->getActiveReaderPin();
     doc["plantsHumidity"] = serializePlantsHumidity(m_dataStorage->getPlantsHumidityData());
 
     std::ostringstream jsonOss;

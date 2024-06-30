@@ -26,12 +26,15 @@ void WateringManager::checkHumidity()
         if (plantsHumidityData[i].getCurrentHumidity() < plantsHumidityData[i].getHumidityThreshold())
         {
             Serial.println("Watering needed");
+            m_dataStorage->setIsWaterPumpActive(true);
             m_mqttManager->publish(MQTT::WATER_ACTIVE, PumpState::ACTIVE, 0, false);
             m_mqttManager->publish(MQTT::WATER_PIN, std::to_string(plantsHumidityData[i].getAssignedPin()), 0, false);
-
+            m_dataStorage->setActiveReaderPin(plantsHumidityData[i].getAssignedPin());
             return;
         }
     }
     m_mqttManager->publish(MQTT::WATER_ACTIVE, PumpState::INACTIVE, 0, false);
+    m_dataStorage->setIsWaterPumpActive(false);
+    m_dataStorage->setActiveReaderPin(HumiditySensor::DEFAULT_ACTIVE_PIN);
 #endif
 }

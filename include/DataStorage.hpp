@@ -28,7 +28,7 @@ public:
     void setRoomHumidity(const float roomHumidity);
     void setPlantHumidity(const uint8_t pin, const uint16_t humidity);
     void setHumidityThreshold(const uint8_t pin, const uint16_t threshold);
-#else
+#endif
     DataStorage();
 
     bool getIsWaterPumpActive() const;
@@ -36,17 +36,16 @@ public:
 
     void setIsWaterPumpActive(const bool isWaterPumpActive);
     void setActiveReaderPin(const uint8_t activeReaderPin);
-#endif
+
 private:
 #ifdef PLANT_MASTER
     std::shared_ptr<Configurator> m_configurator;
     std::vector<PlantHumidityData> m_plantsHumidityData;
     float m_roomTemperature = Room::DEFAULT_TEMPERATURE;
     float m_roomHumidity = Room::DEFAULT_HUMIDITY;
-#else
+#endif
     bool m_isWaterPumpActive;
     uint8_t m_activeReaderPin;
-#endif
 };
 
 #endif // DATA_STORAGE_HPP

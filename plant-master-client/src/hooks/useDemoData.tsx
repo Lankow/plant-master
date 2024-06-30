@@ -9,21 +9,43 @@ interface Sensor {
 
 const generateRandomNumber = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 
+const generateUniquePins = (count: number, min: number, max: number) => {
+  const pins = new Set<number>();
+  while (pins.size < count) {
+    pins.add(generateRandomNumber(min, max));
+  }
+  return Array.from(pins);
+};
+
 const useDemoData = () => {
   const [sensors, setSensors] = useState<Array<Sensor>>([]);
   const [roomTemperature, setRoomTemperature] = useState<number>(0.0);
   const [roomHumidity, setRoomHumidity] = useState<number>(0.0);
+  const [waterPumpActive, setWaterPumpActive] = useState<boolean>(false);
+  const [activeReaderPin, setActiveReaderPin] = useState<number>(0);
 
   const sensorsRef = useRef(sensors);
   sensorsRef.current = sensors;
 
   const updateSensorHumidity = () => {
+    let pumpActive = false;
+    let activePin = 0;
+
     setSensors(sensorsRef.current.map(sensor => {
       let newHumidity = sensor.humidity + (Math.random() < 0.5 ? -20 : 20);
       if (newHumidity < 100) newHumidity = 100;
       if (newHumidity > 4000) newHumidity = 4000;
+
+      if (newHumidity < sensor.threshold) {
+        pumpActive = true;
+        activePin = sensor.pin;
+      }
+
       return { ...sensor, humidity: newHumidity };
     }));
+
+    setWaterPumpActive(pumpActive);
+    setActiveReaderPin(activePin);
   };
 
   const updateRoomConditions = () => {
@@ -43,9 +65,10 @@ const useDemoData = () => {
   };
 
   useEffect(() => {
-    const initialSensors = Array.from({ length: 5 }, (_, i) => ({
+    const initialPins = generateUniquePins(5, 5, 30);
+    const initialSensors = initialPins.map((pin, i) => ({
       id: i,
-      pin: i,
+      pin,
       humidity: generateRandomNumber(100, 4000),
       threshold: generateRandomNumber(100, 4000),
     }));
@@ -69,6 +92,8 @@ const useDemoData = () => {
     sensors,
     roomTemperature,
     roomHumidity,
+    waterPumpActive,
+    activeReaderPin,
     sendUpdate,
   };
 };

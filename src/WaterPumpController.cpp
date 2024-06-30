@@ -19,7 +19,6 @@ void WaterPumpController::init()
 
 void WaterPumpController::cyclic()
 {
-#ifndef PLANT_MASTER
     if (m_dataStorage->getIsWaterPumpActive())
     {
         turnOn();
@@ -28,7 +27,6 @@ void WaterPumpController::cyclic()
     {
         turnOff();
     }
-#endif
 }
 
 void WaterPumpController::turnOn()

@@ -19,6 +19,8 @@ const useWebSocket = () => {
   const [sensors, setSensors] = useState<Array<Sensor>>([]);
   const [roomTemperature, setRoomTemperature] = useState<number>(0.0);
   const [roomHumidity, setRoomHumidity] = useState<number>(0.0);
+  const [waterPumpActive, setWaterPumpActive] = useState<boolean>(false);
+  const [activeReaderPin, setActiveReaderPin] = useState<number>(0);
 
   const websocket = useRef<w3cwebsocket | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -27,6 +29,8 @@ const useWebSocket = () => {
     setSensors([]);
     setRoomHumidity(0.0);
     setRoomTemperature(0.0);
+    setWaterPumpActive(false);
+    setActiveReaderPin(0);
   };
 
   const resetTimeout = () => {
@@ -51,9 +55,14 @@ const useWebSocket = () => {
       if (dataFromServer.roomTemperature) {
         setRoomTemperature(dataFromServer.roomTemperature);
       }
+      if (dataFromServer.waterPumpActive !== undefined) {
+        setWaterPumpActive(dataFromServer.waterPumpActive);
+      }
+      if (dataFromServer.activeReaderPin !== undefined) {
+        setActiveReaderPin(dataFromServer.activeReaderPin);
+      }
     };
 
-    // Set the initial timeout
     resetTimeout();
 
     return () => {
@@ -73,7 +82,7 @@ const useWebSocket = () => {
     websocket.current?.send(JSON.stringify(updatedData));
   }, []);
 
-  return { sensors, roomTemperature, roomHumidity, sendUpdate };
+  return { sensors, roomTemperature, roomHumidity, waterPumpActive, activeReaderPin, sendUpdate };
 };
 
 export default useWebSocket;

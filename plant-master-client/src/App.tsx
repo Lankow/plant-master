@@ -12,7 +12,7 @@ const initialPin = 0;
 
 function App() {
   const isDemo = import.meta.env.VITE_DEMO === "true";
-  const { sensors, roomTemperature, roomHumidity, sendUpdate } = isDemo ? useDemoData() : useWebSocket();
+  const { sensors, roomTemperature, roomHumidity, waterPumpActive, activeReaderPin, sendUpdate } = isDemo ? useDemoData() : useWebSocket();
   const [editedThreshold, setEditedThreshold] = useState(initialThreshold);
   const [editedPin, setEditedPin] = useState(initialPin);
   const [openedModal, setOpenedModal] = useState("");
@@ -36,7 +36,13 @@ function App() {
   return (
     <Box id="root" sx={{ background: "#8ebeed", height: "100%" }}>
       <CssBaseline />
-      <TopBar handleOpenModal={handleOpenModal} roomTemperature={roomTemperature} roomHumidity={roomHumidity} />
+      <TopBar 
+        handleOpenModal={handleOpenModal} 
+        roomTemperature={roomTemperature} 
+        roomHumidity={roomHumidity} 
+        waterPumpActive={waterPumpActive} 
+        activeReaderPin={activeReaderPin} 
+      />
       <Container sx={{ p: 2, minHeight: "85vh" }}>
         {sensors.length > 0 ? (
           <Grid container spacing={1} rowSpacing={0}>
