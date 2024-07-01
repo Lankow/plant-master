@@ -10,7 +10,7 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "VITE_APP_BASE_PATH=/plant-master/ npm run build && gh-pages -d ../data"
+    "deploy": "cross-env VITE_APP_BASE_PATH=/plant-master/ npm run build && gh-pages -d ../data"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",
@@ -28,6 +28,7 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react-swc": "^3.0.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
