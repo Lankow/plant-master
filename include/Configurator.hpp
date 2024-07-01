@@ -17,7 +17,7 @@ class Configurator
 public:
     Configurator();
 
-    void init();
+    bool init();
 
     std::vector<int> getReaderPins() const;
     std::vector<int> getThresholds() const;
@@ -27,7 +27,7 @@ public:
 
 private:
     bool initSPIFFS();
-    void readConfigFile();
+    bool readConfigFile();
     int getIntValue(const String &key);
     std::vector<int> getIntArray(const String &key);
     void writeConfigFile();

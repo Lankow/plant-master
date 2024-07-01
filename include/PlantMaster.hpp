@@ -24,9 +24,9 @@
 class PlantMaster
 {
 public:
-    PlantMaster(std::shared_ptr<Configurator> configurator);
+    explicit PlantMaster(std::shared_ptr<Configurator> configurator);
 
-    void init();
+    bool init();
     void cyclic();
 
 private:
@@ -41,7 +41,6 @@ private:
 #ifdef PLANT_MASTER
     ServerManager m_serverManager;
     WateringManager m_wateringManager;
-
 #else
     PlantHumidityHandler m_plantHumidityHandler;
     WaterPumpController m_waterPumpController;

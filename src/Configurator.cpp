@@ -7,145 +7,105 @@
 #include "Configurator.hpp"
 #include "Constants.hpp"
 
-Configurator::Configurator(){};
+Configurator::Configurator() : m_dhtPin(0), m_waterPumpPin(0) {}
 
-void Configurator::init()
+bool Configurator::init()
 {
     if (!initSPIFFS())
     {
-        Serial.println("An error has occurred while mounting SPIFFS");
-        return;
+        Serial.println("An error occurred while mounting SPIFFS");
+        return false;
     }
     Serial.println("SPIFFS mounted successfully");
 
     if (!SPIFFS.exists(Config::PATH.c_str()))
     {
         Serial.println("Config file does not exist. Please rebuild project.");
-        return;
+        return false;
     }
 
-    readConfigFile();
+    return readConfigFile();
 }
 
-std::vector<int> Configurator::getReaderPins() const
-{
-    return m_readerPins;
-}
-
-std::vector<int> Configurator::getThresholds() const
-{
-    return m_thresholds;
-}
-
-int Configurator::getDhtPin() const
-{
-    return m_dhtPin;
-}
-
-int Configurator::getWaterPumpPin() const
-{
-    return m_waterPumpPin;
-}
+std::vector<int> Configurator::getReaderPins() const { return m_readerPins; }
+std::vector<int> Configurator::getThresholds() const { return m_thresholds; }
+int Configurator::getDhtPin() const { return m_dhtPin; }
+int Configurator::getWaterPumpPin() const { return m_waterPumpPin; }
 
 bool Configurator::initSPIFFS()
 {
-    if (!SPIFFS.begin(true))
-    {
-        return false;
-    }
-    return true;
+    return SPIFFS.begin(true);
 }
 
-void Configurator::readConfigFile()
+bool Configurator::readConfigFile()
 {
     File file = SPIFFS.open(Config::PATH.c_str());
     if (!file)
     {
-        Serial.println("Failed to open Config file");
-        return;
+        Serial.println("Failed to open config file");
+        return false;
     }
 
     DeserializationError error = deserializeJson(m_jsonDoc, file);
+    file.close();
+
     if (error)
     {
         Serial.print("Failed to read file: ");
         Serial.println(error.c_str());
+        return false;
     }
-    else
-    {
-        Serial.println("Config file loaded successfully");
-        m_readerPins = getIntArray(JSON::READER_PINS.c_str());
+
+    Serial.println("Config file loaded successfully");
+    m_readerPins = getIntArray(JSON::READER_PINS.c_str());
 
 #ifdef PLANT_MASTER
-        m_thresholds = getIntArray(JSON::THRESHOLDS.c_str());
+    m_thresholds = getIntArray(JSON::THRESHOLDS.c_str());
 #else
-        m_dhtPin = getIntValue(JSON::DHT_PIN.c_str());
-        Serial.println("DHT PIN:");
-        Serial.println(m_dhtPin);
-        m_waterPumpPin = getIntValue(JSON::WATER_PUMP_PIN.c_str());
-        Serial.println("WATER PUMP PIN:");
-        Serial.println(m_waterPumpPin);
+    m_dhtPin = getIntValue(JSON::DHT_PIN.c_str());
+    Serial.println("DHT PIN:");
+    Serial.println(m_dhtPin);
+    m_waterPumpPin = getIntValue(JSON::WATER_PUMP_PIN.c_str());
+    Serial.println("WATER PUMP PIN:");
+    Serial.println(m_waterPumpPin);
 #endif
-    }
-    file.close();
+
+    return true;
 }
 
 int Configurator::getIntValue(const String &key)
 {
-    if (m_jsonDoc.containsKey(key))
+    if (m_jsonDoc.containsKey(key) && m_jsonDoc[key].is<int>())
     {
-        if (m_jsonDoc[key].is<int>())
-        {
-            return m_jsonDoc[key].as<int>();
-        }
-        else
-        {
-            Serial.print("Value for key ");
-            Serial.print(key);
-            Serial.println(" is not an integer.");
-            return 0;
-        }
+        return m_jsonDoc[key].as<int>();
     }
-    else
-    {
-        Serial.print("Key not found: ");
-        Serial.println(key);
-        return 0;
-    }
+    Serial.print("Invalid or missing key: ");
+    Serial.println(key);
+    return 0;
 }
 
 std::vector<int> Configurator::getIntArray(const String &key)
 {
     std::vector<int> result;
-    if (m_jsonDoc.containsKey(key))
+    if (m_jsonDoc.containsKey(key) && m_jsonDoc[key].is<JsonArray>())
     {
-        if (m_jsonDoc[key].is<JsonArray>())
+        JsonArray array = m_jsonDoc[key].as<JsonArray>();
+        for (JsonVariant value : array)
         {
-            JsonArray array = m_jsonDoc[key].as<JsonArray>();
-            for (JsonVariant value : array)
+            if (value.is<int>())
             {
-                if (value.is<int>())
-                {
-                    result.push_back(value.as<int>());
-                }
-                else
-                {
-                    Serial.print("Value in array for key ");
-                    Serial.print(key);
-                    Serial.println(" is not an integer.");
-                }
+                result.push_back(value.as<int>());
             }
-        }
-        else
-        {
-            Serial.print("Value for key ");
-            Serial.print(key);
-            Serial.println(" is not an array.");
+            else
+            {
+                Serial.print("Invalid value in array for key: ");
+                Serial.println(key);
+            }
         }
     }
     else
     {
-        Serial.print("Key not found: ");
+        Serial.print("Invalid or missing key: ");
         Serial.println(key);
     }
     return result;
@@ -174,13 +134,13 @@ void Configurator::writeConfigFile()
     File file = SPIFFS.open(Config::PATH.c_str(), FILE_WRITE);
     if (!file)
     {
-        Serial.println("Failed to open Config file for writing");
+        Serial.println("Failed to open config file for writing");
         return;
     }
 
     if (serializeJson(m_jsonDoc, file) == 0)
     {
-        Serial.println("Failed to write to Config file");
+        Serial.println("Failed to write to config file");
     }
     else
     {

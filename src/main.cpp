@@ -7,20 +7,39 @@
 std::shared_ptr<Configurator> configurator;
 std::shared_ptr<PlantMaster> plantMaster;
 
-void setup()
+void initializeSystem()
 {
     Serial.begin(115200);
 
     // Initialize the configurator
     configurator = std::make_shared<Configurator>();
-    configurator->init();
+    if (!configurator->init())
+    {
+        Serial.println("Failed to initialize Configurator");
+        return;
+    }
 
+    // Initialize the PlantMaster
     plantMaster = std::make_shared<PlantMaster>(configurator);
-    plantMaster->init();
+    if (!plantMaster->init())
+    {
+        Serial.println("Failed to initialize PlantMaster");
+        return;
+    }
+
+    Serial.println("System initialized successfully");
+}
+
+void setup()
+{
+    initializeSystem();
 }
 
 void loop()
 {
-    plantMaster->cyclic();
+    if (plantMaster)
+    {
+        plantMaster->cyclic();
+    }
     delay(Config::CYCLE_TIME_MS);
 }
