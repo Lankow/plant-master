@@ -18,31 +18,31 @@ class DataStorage
 {
 public:
 #ifdef PLANT_MASTER
-    DataStorage(std::shared_ptr<Configurator> configurator);
+    explicit DataStorage(std::shared_ptr<Configurator> configurator);
 
-    const std::vector<PlantHumidityData> &getPlantsHumidityData() const;
+    const std::vector<PlantHumidityData>& getPlantsHumidityData() const;
     float getRoomTemperature() const;
     float getRoomHumidity() const;
 
-    void setRoomTemperature(const float roomTemperature);
-    void setRoomHumidity(const float roomHumidity);
-    void setPlantHumidity(const uint8_t pin, const uint16_t humidity);
-    void setHumidityThreshold(const uint8_t pin, const uint16_t threshold);
+    void setRoomTemperature(float roomTemperature);
+    void setRoomHumidity(float roomHumidity);
+    void setPlantHumidity(uint8_t pin, uint16_t humidity);
+    void setHumidityThreshold(uint8_t pin, uint16_t threshold);
 #endif
     DataStorage();
 
-    bool getIsWaterPumpActive() const;
+    bool isWaterPumpActive() const;
     uint8_t getActiveReaderPin() const;
 
-    void setIsWaterPumpActive(const bool isWaterPumpActive);
-    void setActiveReaderPin(const uint8_t activeReaderPin);
+    void setWaterPumpActive(bool isWaterPumpActive);
+    void setActiveReaderPin(uint8_t activeReaderPin);
 
 private:
 #ifdef PLANT_MASTER
     std::shared_ptr<Configurator> m_configurator;
     std::vector<PlantHumidityData> m_plantsHumidityData;
-    float m_roomTemperature = Room::DEFAULT_TEMPERATURE;
-    float m_roomHumidity = Room::DEFAULT_HUMIDITY;
+    float m_roomTemperature;
+    float m_roomHumidity;
 #endif
     bool m_isWaterPumpActive;
     uint8_t m_activeReaderPin;

@@ -10,14 +10,14 @@
 PlantHumidityHandler::PlantHumidityHandler(std::shared_ptr<Configurator> configurator, std::shared_ptr<MQTTManager> mqttManager, std::shared_ptr<DataStorage> dataStorage)
     : m_configurator(configurator),
       m_mqttManager(mqttManager),
-      m_dataStorage(dataStorage){};
+      m_dataStorage(dataStorage) {}
 
 void PlantHumidityHandler::cyclic()
 {
     readHumidity();
 
 #ifndef PLANT_MASTER
-    if (m_dataStorage->getIsWaterPumpActive())
+    if (m_dataStorage->isWaterPumpActive())
     {
         openValve(m_dataStorage->getActiveReaderPin());
     }
@@ -28,17 +28,6 @@ void PlantHumidityHandler::cyclic()
 #endif
 }
 
-void PlantHumidityHandler::openValve(uint16_t readerPin)
-{
-    Serial.println("Opening valve:");
-    Serial.println(readerPin);
-}
-
-void PlantHumidityHandler::closeValves()
-{
-    Serial.println("Closing valves.");
-}
-
 void PlantHumidityHandler::readHumidity()
 {
     for (int pin : m_configurator->getReaderPins())
@@ -47,4 +36,15 @@ void PlantHumidityHandler::readHumidity()
         Serial.println(humidity);
         m_mqttManager->publish(MQTT::PLANT_HUMIDITY + "/" + std::to_string(pin), std::to_string(humidity), 0, false);
     }
+}
+
+void PlantHumidityHandler::openValve(uint16_t readerPin)
+{
+    Serial.print("Opening valve: ");
+    Serial.println(readerPin);
+}
+
+void PlantHumidityHandler::closeValves()
+{
+    Serial.println("Closing valves.");
 }

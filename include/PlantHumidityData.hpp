@@ -18,9 +18,9 @@ public:
     uint16_t getCurrentHumidity() const;
     uint16_t getHumidityThreshold() const;
 
-    void setAssignedPin(const uint8_t pin);
-    void setCurrentHumidity(const uint16_t humidity);
-    void setHumidityThreshold(const uint16_t theshold);
+    void setAssignedPin(uint8_t pin);
+    void setCurrentHumidity(uint16_t humidity);
+    void setHumidityThreshold(uint16_t threshold);
 
 private:
     uint8_t m_assignedPin;

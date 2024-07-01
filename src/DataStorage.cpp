@@ -10,18 +10,22 @@
 DataStorage::DataStorage(std::shared_ptr<Configurator> configurator)
     : m_configurator(configurator),
       m_isWaterPumpActive(false),
-      m_activeReaderPin(HumiditySensor::DEFAULT_ACTIVE_PIN)
+      m_activeReaderPin(HumiditySensor::DEFAULT_ACTIVE_PIN),
+      m_roomTemperature(Room::DEFAULT_TEMPERATURE),
+      m_roomHumidity(Room::DEFAULT_HUMIDITY)
 {
-    std::vector<int> pins = configurator->getReaderPins();
-    std::vector<int> thresholds = configurator->getThresholds();
+    auto pins = configurator->getReaderPins();
+    auto thresholds = configurator->getThresholds();
 
-    for (int i = 0; i < pins.size(); i++)
+    for (size_t i = 0; i < pins.size(); ++i)
     {
-        m_plantsHumidityData.push_back(PlantHumidityData(pins[i], thresholds[i]));
+        m_plantsHumidityData.emplace_back(pins[i], thresholds[i]);
     }
-};
+}
 #else
-DataStorage::DataStorage() : m_isWaterPumpActive(false), m_activeReaderPin(HumiditySensor::DEFAULT_ACTIVE_PIN){};
+DataStorage::DataStorage()
+    : m_isWaterPumpActive(false),
+      m_activeReaderPin(HumiditySensor::DEFAULT_ACTIVE_PIN) {}
 #endif
 
 #ifdef PLANT_MASTER
@@ -40,41 +44,43 @@ const std::vector<PlantHumidityData> &DataStorage::getPlantsHumidityData() const
     return m_plantsHumidityData;
 }
 
-void DataStorage::setRoomTemperature(const float roomTemperature)
+void DataStorage::setRoomTemperature(float roomTemperature)
 {
     m_roomTemperature = roomTemperature;
 }
 
-void DataStorage::setRoomHumidity(const float roomHumidity)
+void DataStorage::setRoomHumidity(float roomHumidity)
 {
     m_roomHumidity = roomHumidity;
 }
 
-void DataStorage::setPlantHumidity(const uint8_t pin, const uint16_t humidity)
+void DataStorage::setPlantHumidity(uint8_t pin, uint16_t humidity)
 {
-    for (int i = 0; i < m_plantsHumidityData.size(); i++)
+    for (auto &plant : m_plantsHumidityData)
     {
-        if (m_plantsHumidityData[i].getAssignedPin() == pin)
+        if (plant.getAssignedPin() == pin)
         {
-            m_plantsHumidityData[i].setCurrentHumidity(humidity);
+            plant.setCurrentHumidity(humidity);
+            break;
         }
     }
-};
+}
 
-void DataStorage::setHumidityThreshold(const uint8_t pin, const uint16_t threshold)
+void DataStorage::setHumidityThreshold(uint8_t pin, uint16_t threshold)
 {
-    for (int i = 0; i < m_plantsHumidityData.size(); i++)
+    for (size_t i = 0; i < m_plantsHumidityData.size(); ++i)
     {
         if (m_plantsHumidityData[i].getAssignedPin() == pin)
         {
             m_plantsHumidityData[i].setHumidityThreshold(threshold);
             m_configurator->updateThreshold(i, threshold);
+            break;
         }
     }
-};
+}
 #endif
 
-bool DataStorage::getIsWaterPumpActive() const
+bool DataStorage::isWaterPumpActive() const
 {
     return m_isWaterPumpActive;
 }
@@ -84,12 +90,12 @@ uint8_t DataStorage::getActiveReaderPin() const
     return m_activeReaderPin;
 }
 
-void DataStorage::setIsWaterPumpActive(const bool isWaterPumpActive)
+void DataStorage::setWaterPumpActive(bool isWaterPumpActive)
 {
     m_isWaterPumpActive = isWaterPumpActive;
 }
 
-void DataStorage::setActiveReaderPin(const uint8_t activeReaderPin)
+void DataStorage::setActiveReaderPin(uint8_t activeReaderPin)
 {
     m_activeReaderPin = activeReaderPin;
 }
