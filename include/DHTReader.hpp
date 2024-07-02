@@ -22,11 +22,11 @@ public:
     void cyclic();
 
 private:
-    std::shared_ptr<MQTTManager> m_mqttManager;
-    DHT m_dht;
-
     void readRoomTemperature();
     void readRoomHumidity();
+
+    std::shared_ptr<MQTTManager> m_mqttManager;
+    DHT m_dht;
 };
 
 #endif // DHT_READER_HPP

@@ -5,37 +5,47 @@
  *   Author: Lankow
  */
 #include "DisplayRenderer.hpp"
-#include "Constants.hpp"
 
-DisplayRenderer::DisplayRenderer() : m_display(0x03, SDA, SCL){};
+DisplayRenderer::DisplayRenderer()
+    : m_display(I2C_ADDRESS, SDA, SCL)
+{
+    initializeDisplay();
+}
+
+void DisplayRenderer::initializeDisplay()
+{
+    m_display.init();
+    m_display.clear();
+    m_display.display();
+}
 
 void DisplayRenderer::drawInitialScreen()
 {
     m_display.clear();
-    m_display.drawString(30, 10, "Plant-Master");
-    m_display.drawHorizontalLine(10, 26, 100);
-    m_display.drawString(35, 30, "by Lankow");
+    m_display.drawString(TEXT_X_POS, TEXT_Y_POS_INITIAL, "Plant-Master");
+    m_display.drawHorizontalLine(TEXT_X_POS, LINE_Y_POS_INITIAL, LINE_LENGTH);
+    m_display.drawString(TEXT_X_POS + 25, TEXT_Y_POS_INITIAL + 20, "by XXX");
     m_display.display();
 
     delay(Screen::INITIAL_SCREEN_DURATION);
 }
 
-void DisplayRenderer::drawConfigScreen(std::string ssid, std::string password)
+void DisplayRenderer::drawConfigScreen(const std::string &ssid, const std::string &password)
 {
     m_display.clear();
-    m_display.drawString(10, 0, "Config SSID:");
-    m_display.drawString(10, 10, ssid.c_str());
-    m_display.drawHorizontalLine(10, 24, 100);
-    m_display.drawString(10, 25, "Config PASSWORD:");
-    m_display.drawString(10, 35, password.c_str());
+    m_display.drawString(TEXT_X_POS, 0, "Config SSID:");
+    m_display.drawString(TEXT_X_POS, TEXT_Y_POS_INITIAL, ssid.c_str());
+    m_display.drawHorizontalLine(TEXT_X_POS, 24, LINE_LENGTH);
+    m_display.drawString(TEXT_X_POS, 25, "Config PASSWORD:");
+    m_display.drawString(TEXT_X_POS, 35, password.c_str());
     m_display.display();
 }
 
-void DisplayRenderer::drawConnectedScreen(std::string ip)
+void DisplayRenderer::drawConnectedScreen(const std::string &ip)
 {
     m_display.clear();
-    m_display.drawString(10, 0, "Plant-Master Server:");
-    m_display.drawHorizontalLine(10, 10, 100);
-    m_display.drawString(10, 12, ip.c_str());
+    m_display.drawString(TEXT_X_POS, 0, "Plant-Master Server:");
+    m_display.drawHorizontalLine(TEXT_X_POS, LINE_Y_POS_CONNECTED, LINE_LENGTH);
+    m_display.drawString(TEXT_X_POS, TEXT_Y_POS_CONNECTED, ip.c_str());
     m_display.display();
 }

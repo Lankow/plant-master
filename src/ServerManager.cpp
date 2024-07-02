@@ -1,3 +1,9 @@
+/*
+ *   ServerManager.cpp
+ *   ----------------------
+ *   Created on: 2024/05/27
+ *   Author: Lankow
+ */
 #include <Arduino.h>
 #include <SPIFFS.h>
 #include <WiFi.h>
@@ -30,9 +36,9 @@ void ServerManager::init()
 void ServerManager::cyclic()
 {
   std::string message = m_jsonConverter.serializeDataStorage();
-
   m_websocket.textAll(message.c_str());
 }
+
 void ServerManager::initServer()
 {
   m_websocket.onEvent([this](AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len)
@@ -72,8 +78,9 @@ void ServerManager::onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client
     m_jsonConverter.handleWsEventData(data, len);
     break;
   case WS_EVT_PONG:
+    break;
   case WS_EVT_ERROR:
-    // Handle pong and error events if needed
+    Serial.printf("WebSocket client #%u error\n", client->id());
     break;
   }
 }

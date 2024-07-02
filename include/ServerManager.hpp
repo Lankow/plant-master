@@ -12,6 +12,7 @@
 #include <memory>
 #include "DisplayRenderer.hpp"
 #include "JSONConverter.hpp"
+#include "DataStorage.hpp"
 
 class ServerManager
 {

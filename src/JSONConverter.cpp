@@ -7,36 +7,39 @@
 #include "JSONConverter.hpp"
 #include <sstream>
 
-JSONConverter::JSONConverter(std::shared_ptr<DataStorage> dataStorage) : m_dataStorage(dataStorage){};
+JSONConverter::JSONConverter(std::shared_ptr<DataStorage> dataStorage)
+    : m_dataStorage(dataStorage)
+{
+    // Initialization if needed
+}
 
 #ifdef PLANT_MASTER
-std::string JSONConverter::serializeDataStorage()
+std::string JSONConverter::serializeDataStorage() const
 {
     DynamicJsonDocument doc(1024);
     doc["roomHumidity"] = m_dataStorage->getRoomHumidity();
     doc["roomTemperature"] = m_dataStorage->getRoomTemperature();
-    doc["waterPumpActive"] = m_dataStorage->getIsWaterPumpActive();
+    doc["waterPumpActive"] = m_dataStorage->isWaterPumpActive();
     doc["activeReaderPin"] = m_dataStorage->getActiveReaderPin();
-    doc["plantsHumidity"] = serializePlantsHumidity(m_dataStorage->getPlantsHumidityData());
+    doc["plantsHumidity"] = serializePlantsHumidity(m_dataStorage->getPlantsHumidityData(), doc);
 
     std::ostringstream jsonOss;
     serializeJson(doc, jsonOss);
     return jsonOss.str();
-};
+}
 
-JsonArray JSONConverter::serializePlantsHumidity(const std::vector<PlantHumidityData> &planthumidityData)
+JsonArray JSONConverter::serializePlantsHumidity(const std::vector<PlantHumidityData> &plantHumidityData, DynamicJsonDocument &doc) const
 {
-    DynamicJsonDocument doc(1024);
     JsonArray plantHumidityArray = doc.createNestedArray();
 
-    for (size_t i = 0; i < planthumidityData.size(); i++)
+    for (size_t i = 0; i < plantHumidityData.size(); ++i)
     {
-        serializePlantHumidityData(planthumidityData[i], plantHumidityArray, static_cast<int>(i));
+        serializePlantHumidityData(plantHumidityData[i], plantHumidityArray, static_cast<int>(i));
     }
     return plantHumidityArray;
 }
 
-void JSONConverter::serializePlantHumidityData(const PlantHumidityData &plantHumidityData, JsonArray &plantHumidityArray, const int sensorIndex)
+void JSONConverter::serializePlantHumidityData(const PlantHumidityData &plantHumidityData, JsonArray &plantHumidityArray, int sensorIndex) const
 {
     JsonObject sensorObject = plantHumidityArray.createNestedObject();
     sensorObject["id"] = sensorIndex;
@@ -47,7 +50,7 @@ void JSONConverter::serializePlantHumidityData(const PlantHumidityData &plantHum
 
 void JSONConverter::handleWsEventData(uint8_t *data, size_t len)
 {
-    DeserializationError error = deserializeJson(m_receivedJson, (char *)data, len);
+    DeserializationError error = deserializeJson(m_receivedJson, data, len);
 
     if (error)
     {
@@ -56,32 +59,21 @@ void JSONConverter::handleWsEventData(uint8_t *data, size_t len)
         return;
     }
 
-    uint16_t threshold = deserializeByKey(data, len, "threshold");
-    uint8_t pin = deserializeByKey(data, len, "pin");
+    uint16_t threshold = deserializeByKey("threshold");
+    uint8_t pin = static_cast<uint8_t>(deserializeByKey("pin"));
     m_dataStorage->setHumidityThreshold(pin, threshold);
 }
 
-uint16_t JSONConverter::deserializeByKey(uint8_t *data, size_t len, const std::string &keyName)
+uint16_t JSONConverter::deserializeByKey(const std::string &keyName) const
 {
     if (m_receivedJson.containsKey(keyName))
     {
-        if (m_receivedJson[keyName].is<uint16_t>())
-        {
-            return m_receivedJson[keyName].as<uint16_t>();
-        }
-        else if (m_receivedJson[keyName].is<uint8_t>())
-        {
-            return m_receivedJson[keyName].as<uint8_t>();
-        }
-        else
-        {
-            Serial.println(F("Unexpected data type for the specified key."));
-            return 0;
-        }
+        return m_receivedJson[keyName].as<uint16_t>();
     }
     else
     {
-        Serial.println(F("Key not found in JSON."));
+        Serial.print(F("Key not found in JSON: "));
+        Serial.println(keyName.c_str());
         return 0;
     }
 }

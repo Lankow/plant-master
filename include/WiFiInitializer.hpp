@@ -10,7 +10,6 @@
 #include <ESPAsyncWebServer.h>
 #include <Preferences.h>
 #include <memory>
-#include "DisplayRenderer.hpp"
 
 class WiFiInitializer
 {

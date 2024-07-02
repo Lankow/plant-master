@@ -9,32 +9,34 @@
 
 WateringManager::WateringManager(std::shared_ptr<DataStorage> dataStorage, std::shared_ptr<MQTTManager> mqttManager)
     : m_dataStorage(dataStorage),
-      m_mqttManager(mqttManager){};
+      m_mqttManager(mqttManager)
+{
+}
 
 void WateringManager::cyclic()
 {
     checkHumidity();
-};
+}
 
 void WateringManager::checkHumidity()
 {
 #ifdef PLANT_MASTER
     const std::vector<PlantHumidityData> plantsHumidityData = m_dataStorage->getPlantsHumidityData();
 
-    for (int i = 0; i < plantsHumidityData.size(); i++)
+    for (const auto &plantData : plantsHumidityData)
     {
-        if (plantsHumidityData[i].getCurrentHumidity() < plantsHumidityData[i].getHumidityThreshold())
+        if (plantData.getCurrentHumidity() < plantData.getHumidityThreshold())
         {
             Serial.println("Watering needed");
-            m_dataStorage->setIsWaterPumpActive(true);
+            m_dataStorage->setWaterPumpActive(true);
             m_mqttManager->publish(MQTT::WATER_ACTIVE, PumpState::ACTIVE, 0, false);
-            m_mqttManager->publish(MQTT::WATER_PIN, std::to_string(plantsHumidityData[i].getAssignedPin()), 0, false);
-            m_dataStorage->setActiveReaderPin(plantsHumidityData[i].getAssignedPin());
+            m_mqttManager->publish(MQTT::WATER_PIN, std::to_string(plantData.getAssignedPin()), 0, false);
+            m_dataStorage->setActiveReaderPin(plantData.getAssignedPin());
             return;
         }
     }
     m_mqttManager->publish(MQTT::WATER_ACTIVE, PumpState::INACTIVE, 0, false);
-    m_dataStorage->setIsWaterPumpActive(false);
+    m_dataStorage->setWaterPumpActive(false);
     m_dataStorage->setActiveReaderPin(HumiditySensor::DEFAULT_ACTIVE_PIN);
 #endif
 }

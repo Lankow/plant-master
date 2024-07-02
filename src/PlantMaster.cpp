@@ -11,13 +11,15 @@ PlantMaster::PlantMaster(std::shared_ptr<Configurator> configurator)
       m_wiFiInitializer(),
       m_resetHandler(),
       m_configurator(std::move(configurator)),
+#ifdef PLANT_MASTER
       m_dataStorage(std::make_shared<DataStorage>(m_configurator)),
       m_dataHandler(std::make_shared<DataHandler>(m_dataStorage)),
-#ifdef PLANT_MASTER
       m_serverManager(m_dataStorage),
       m_mqttManager(std::make_shared<MQTTManager>(m_dataHandler, m_configurator)),
       m_wateringManager(m_dataStorage, m_mqttManager)
 #else
+      m_dataStorage(std::make_shared<DataStorage>()),
+      m_dataHandler(std::make_shared<DataHandler>(m_dataStorage)),
       m_mqttManager(std::make_shared<MQTTManager>(m_dataHandler)),
       m_dhtReader(m_configurator, m_mqttManager),
       m_plantHumidityHandler(m_configurator, m_mqttManager, m_dataStorage),

@@ -4,11 +4,10 @@
  *   Created on: 2024/05/26
  *   Author: Lankow
  */
-#include <WiFi.h>
 #include "WiFiInitializer.hpp"
-#include "Constants.hpp"
+#include "Constants.hpp" // Assuming this contains necessary constants
 
-WiFiInitializer::WiFiInitializer() : m_preferences(), m_server(Network::Ports::ASYNC_SERVER){};
+WiFiInitializer::WiFiInitializer() : m_preferences(), m_server(Network::Ports::ASYNC_SERVER) {}
 
 bool WiFiInitializer::init()
 {
@@ -53,14 +52,6 @@ bool WiFiInitializer::connectToWiFi()
     String ssid = m_preferences.getString("ssid");
     String password = m_preferences.getString("password");
     m_preferences.end();
-
-#ifdef PLANT_MASTER
-    if (!WiFi.config(Network::IP::LOCAL, Network::IP::GATEWAY, Network::IP::SUBNET, Network::IP::PRIMARY_DNS, Network::IP::SECONDARY_DNS))
-    {
-        Serial.println("STA Failed to configure");
-        return false;
-    }
-#endif
 
     WiFi.begin(ssid.c_str(), password.c_str());
 
@@ -109,15 +100,19 @@ void WiFiInitializer::setupAccessPoint()
     m_server.on("/save", HTTP_POST, [this](AsyncWebServerRequest *request)
                 {
         String ssid, password;
-        if (request->hasParam("ssid", true)) {
+        if (request->hasParam("ssid", true))
+        {
             ssid = request->getParam("ssid", true)->value();
         }
-        if (request->hasParam("password", true)) {
+        if (request->hasParam("password", true))
+        {
             password = request->getParam("password", true)->value();
         }
 
-        if (!ssid.isEmpty() && !password.isEmpty()) {
-            if (!m_preferences.begin("wifi-config", false)) {
+        if (!ssid.isEmpty() && !password.isEmpty())
+        {
+            if (!m_preferences.begin("wifi-config", false))
+            {
                 Serial.println("Failed to open NVS namespace.");
                 return;
             }
@@ -130,17 +125,23 @@ void WiFiInitializer::setupAccessPoint()
             // Attempt to connect to WiFi
             WiFi.begin(ssid.c_str(), password.c_str());
             int retryCount = 0;
-            while (WiFi.status() != WL_CONNECTED && retryCount < 20) {
+            while (WiFi.status() != WL_CONNECTED && retryCount < 20)
+            {
                 delay(500);
                 retryCount++;
             }
 
-            if (WiFi.status() == WL_CONNECTED) {
+            if (WiFi.status() == WL_CONNECTED)
+            {
                 ESP.restart(); // Restart to apply changes
-            } else {
+            }
+            else
+            {
                 clearWifiCredentials(); // Clear invalid credentials
             }
-        } else {
+        }
+        else
+        {
             request->send(400, "text/plain", "Invalid input");
         } });
 

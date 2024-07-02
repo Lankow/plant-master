@@ -18,16 +18,16 @@ class JSONConverter
 public:
     JSONConverter(std::shared_ptr<DataStorage> dataStorage);
 
-    std::string serializeDataStorage();
+    std::string serializeDataStorage() const;
     void handleWsEventData(uint8_t *data, size_t len);
 
 private:
     std::shared_ptr<DataStorage> m_dataStorage;
     StaticJsonDocument<512> m_receivedJson;
 
-    JsonArray serializePlantsHumidity(const std::vector<PlantHumidityData> &planthumidityData);
-    void serializePlantHumidityData(const PlantHumidityData &plantHumidityData, JsonArray &plantHumidityArray, const int sensorIndex);
-    uint16_t deserializeByKey(uint8_t *data, size_t len, const std::string &keyName);
+    JsonArray serializePlantsHumidity(const std::vector<PlantHumidityData> &plantHumidityData, DynamicJsonDocument &doc) const;
+    void serializePlantHumidityData(const PlantHumidityData &plantHumidityData, JsonArray &plantHumidityArray, int sensorIndex) const;
+    uint16_t deserializeByKey(const std::string &keyName) const;
 };
 
 #endif // JSON_CONVERTER_HPP

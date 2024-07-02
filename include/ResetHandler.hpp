@@ -6,6 +6,7 @@
  */
 #ifndef RESET_HANDLER_HPP
 #define RESET_HANDLER_HPP
+
 #include <Arduino.h>
 #include <Button.h>
 
@@ -24,4 +25,5 @@ private:
 
     void performReset();
 };
+
 #endif // RESET_HANDLER_HPP

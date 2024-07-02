@@ -6,6 +6,7 @@
  */
 #include "StringParser.hpp"
 #include <stdexcept>
+#include <cctype>
 
 bool StringParser::parseStringToInt(const std::string &str, int &result)
 {

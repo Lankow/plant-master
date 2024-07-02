@@ -29,6 +29,7 @@ private:
     std::shared_ptr<DataHandler> m_dataHandler;
     std::shared_ptr<Configurator> m_configurator;
     AsyncMqttClient m_client;
+
 #ifdef PLANT_MASTER
     sMQTTBroker m_broker;
 #endif

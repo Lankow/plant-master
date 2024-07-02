@@ -9,7 +9,7 @@
 
 WaterPumpController::WaterPumpController(std::shared_ptr<Configurator> configurator, std::shared_ptr<DataStorage> dataStorage)
     : m_operatedPin(configurator->getWaterPumpPin()),
-      m_dataStorage(dataStorage){};
+      m_dataStorage(dataStorage) {}
 
 void WaterPumpController::init()
 {
@@ -19,7 +19,7 @@ void WaterPumpController::init()
 
 void WaterPumpController::cyclic()
 {
-    if (m_dataStorage->getIsWaterPumpActive())
+    if (m_dataStorage->isWaterPumpActive())
     {
         turnOn();
     }
@@ -32,9 +32,9 @@ void WaterPumpController::cyclic()
 void WaterPumpController::turnOn()
 {
     digitalWrite(m_operatedPin, HIGH);
-};
+}
 
 void WaterPumpController::turnOff()
 {
     digitalWrite(m_operatedPin, LOW);
-};
+}

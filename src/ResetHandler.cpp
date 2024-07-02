@@ -11,7 +11,7 @@
 ResetHandler::ResetHandler()
     : m_pressedCounter(ResetButton::DEFAULT_TIME),
       m_resetButton(ResetButton::PIN),
-      m_resetButtonPressed(false){};
+      m_resetButtonPressed(false) {}
 
 void ResetHandler::init()
 {
@@ -20,10 +20,10 @@ void ResetHandler::init()
 
 void ResetHandler::cyclic()
 {
-    if (m_pressedCounter > ResetButton::THRESHOLD_TIME_MS)
+    if (m_resetButtonPressed && m_pressedCounter > ResetButton::THRESHOLD_TIME_MS)
     {
         Serial.println("Performing reset for target..");
-        // performReset();
+        performReset();
     }
 
     if (m_resetButton.pressed())
@@ -36,15 +36,12 @@ void ResetHandler::cyclic()
     {
         Serial.println("Reset button released...");
         m_resetButtonPressed = false;
+        m_pressedCounter = ResetButton::DEFAULT_TIME; // Reset counter on button release
     }
 
     if (m_resetButtonPressed)
     {
         m_pressedCounter += Config::CYCLE_TIME_MS;
-    }
-    else
-    {
-        m_pressedCounter = ResetButton::DEFAULT_TIME;
     }
 }
 

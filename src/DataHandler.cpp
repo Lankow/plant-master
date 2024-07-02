@@ -58,12 +58,12 @@ void DataHandler::handleData(const std::string &topic, const std::string &payloa
         if (payload == PumpState::ACTIVE)
         {
             Serial.println("Activate pump.");
-            m_dataStorage->setIsWaterPumpActive(true);
+            m_dataStorage->setWaterPumpActive(true);
         }
         else
         {
             Serial.println("Deactivate pump.");
-            m_dataStorage->setIsWaterPumpActive(false);
+            m_dataStorage->setWaterPumpActive(false);
         }
     }
     else if (topic == MQTT::WATER_PIN)
