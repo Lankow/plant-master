@@ -4,8 +4,8 @@
  *   Created on: 2024/05/30
  *   Author: Lankow
  */
-#include "PlantHumidityData.hpp"
-#include "Constants.hpp"
+#include "data/PlantHumidityData.hpp"
+#include "config/Constants.hpp"
 
 PlantHumidityData::PlantHumidityData(uint8_t pin, uint16_t threshold)
     : m_assignedPin(pin),

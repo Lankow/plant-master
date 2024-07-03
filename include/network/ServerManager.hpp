@@ -10,9 +10,9 @@
 #include <ESPAsyncWebServer.h>
 #include <AsyncTCP.h>
 #include <memory>
-#include "DisplayRenderer.hpp"
-#include "JSONConverter.hpp"
-#include "DataStorage.hpp"
+#include "utilities/DisplayRenderer.hpp"
+#include "utilities/JSONConverter.hpp"
+#include "data/DataStorage.hpp"
 
 class ServerManager
 {

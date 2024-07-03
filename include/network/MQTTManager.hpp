@@ -10,10 +10,10 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <AsyncMqttClient.h>
-#include "Constants.hpp"
 #include "sMQTTBroker.h"
-#include "DataHandler.hpp"
-#include "Configurator.hpp"
+#include "config/Constants.hpp"
+#include "config/Configurator.hpp"
+#include "data/DataHandler.hpp"
 
 class MQTTManager
 {

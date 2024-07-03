@@ -4,7 +4,7 @@
  *   Created on: 2024/05/30
  *   Author: Lankow
  */
-#include "DataStorage.hpp"
+#include "data/DataStorage.hpp"
 
 #ifdef PLANT_MASTER
 DataStorage::DataStorage(std::shared_ptr<Configurator> configurator)

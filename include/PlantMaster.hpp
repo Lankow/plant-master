@@ -9,17 +9,17 @@
 
 #include <Arduino.h>
 #include <memory>
-#include "WiFiInitializer.hpp"
-#include "ServerManager.hpp"
-#include "MQTTManager.hpp"
-#include "WateringManager.hpp"
-#include "DataStorage.hpp"
-#include "DataHandler.hpp"
-#include "Configurator.hpp"
-#include "PlantHumidityHandler.hpp"
-#include "DHTReader.hpp"
-#include "WaterPumpController.hpp"
-#include "ResetHandler.hpp"
+#include "network/WiFiInitializer.hpp"
+#include "network/ServerManager.hpp"
+#include "network/MQTTManager.hpp"
+#include "core/WateringManager.hpp"
+#include "data/DataStorage.hpp"
+#include "data/DataHandler.hpp"
+#include "config/Configurator.hpp"
+#include "core/PlantHumidityHandler.hpp"
+#include "core/DHTReader.hpp"
+#include "core/WaterPumpController.hpp"
+#include "core/ResetHandler.hpp"
 
 class PlantMaster
 {

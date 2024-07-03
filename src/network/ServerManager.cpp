@@ -10,8 +10,8 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <AsyncWebSocket.h>
-#include "ServerManager.hpp"
-#include "Constants.hpp"
+#include "network/ServerManager.hpp"
+#include "config/Constants.hpp"
 
 ServerManager::ServerManager(std::shared_ptr<DataStorage> dataStorage)
     : m_server(Network::Ports::ASYNC_SERVER),

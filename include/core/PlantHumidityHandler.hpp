@@ -9,9 +9,9 @@
 
 #include <Arduino.h>
 #include <memory>
-#include "MQTTManager.hpp"
-#include "Configurator.hpp"
-#include "DataStorage.hpp"
+#include "network/MQTTManager.hpp"
+#include "config/Configurator.hpp"
+#include "data/DataStorage.hpp"
 
 class PlantHumidityHandler
 {

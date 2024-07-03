@@ -4,7 +4,7 @@
  *   Created on: 2024/05/26
  *   Author: Lankow
  */
-#include "DisplayRenderer.hpp"
+#include "utilities/DisplayRenderer.hpp"
 
 DisplayRenderer::DisplayRenderer()
     : m_display(I2C_ADDRESS, SDA, SCL)

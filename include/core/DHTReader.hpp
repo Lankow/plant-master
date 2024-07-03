@@ -10,8 +10,8 @@
 #include <Arduino.h>
 #include <DHT.h>
 #include <memory>
-#include "MQTTManager.hpp"
-#include "Configurator.hpp"
+#include "network/MQTTManager.hpp"
+#include "config/Configurator.hpp"
 
 class DHTReader
 {

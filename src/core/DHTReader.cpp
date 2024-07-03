@@ -4,7 +4,7 @@
  *   Created on: 2024/05/28
  *   Author: Lankow
  */
-#include "DHTReader.hpp"
+#include "core/DHTReader.hpp"
 
 DHTReader::DHTReader(std::shared_ptr<Configurator> configurator, std::shared_ptr<MQTTManager> mqttManager)
     : m_dht(configurator->getDhtPin(), DHT11),

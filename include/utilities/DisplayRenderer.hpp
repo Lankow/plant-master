@@ -9,7 +9,7 @@
 
 #include <Wire.h>
 #include <SSD1306Wire.h>
-#include "Constants.hpp"
+#include "config/Constants.hpp"
 
 class DisplayRenderer
 {

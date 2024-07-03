@@ -5,8 +5,8 @@
  *   Author: Lankow
  */
 #include <Preferences.h>
-#include "ResetHandler.hpp"
-#include "Constants.hpp"
+#include "core/ResetHandler.hpp"
+#include "config/Constants.hpp"
 
 ResetHandler::ResetHandler()
     : m_pressedCounter(ResetButton::DEFAULT_TIME),

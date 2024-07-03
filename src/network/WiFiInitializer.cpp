@@ -4,8 +4,8 @@
  *   Created on: 2024/05/26
  *   Author: Lankow
  */
-#include "WiFiInitializer.hpp"
-#include "Constants.hpp" // Assuming this contains necessary constants
+#include "network/WiFiInitializer.hpp"
+#include "config/Constants.hpp"
 
 WiFiInitializer::WiFiInitializer() : m_preferences(), m_server(Network::Ports::ASYNC_SERVER) {}
 
@@ -122,7 +122,6 @@ void WiFiInitializer::setupAccessPoint()
 
             request->send(200, "text/plain", "Credentials saved. Rebooting...");
 
-            // Attempt to connect to WiFi
             WiFi.begin(ssid.c_str(), password.c_str());
             int retryCount = 0;
             while (WiFi.status() != WL_CONNECTED && retryCount < 20)
@@ -133,11 +132,11 @@ void WiFiInitializer::setupAccessPoint()
 
             if (WiFi.status() == WL_CONNECTED)
             {
-                ESP.restart(); // Restart to apply changes
+                ESP.restart();
             }
             else
             {
-                clearWifiCredentials(); // Clear invalid credentials
+                clearWifiCredentials();
             }
         }
         else

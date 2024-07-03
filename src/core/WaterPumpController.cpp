@@ -5,7 +5,7 @@
  *   Author: Lankow
  */
 
-#include "WaterPumpController.hpp"
+#include "core/WaterPumpController.hpp"
 
 WaterPumpController::WaterPumpController(std::shared_ptr<Configurator> configurator, std::shared_ptr<DataStorage> dataStorage)
     : m_operatedPin(configurator->getWaterPumpPin()),

@@ -10,9 +10,9 @@
 #include <Arduino.h>
 #include <vector>
 #include <memory>
-#include "PlantHumidityData.hpp"
-#include "Configurator.hpp"
-#include "Constants.hpp"
+#include "data/PlantHumidityData.hpp"
+#include "config/Configurator.hpp"
+#include "config/Constants.hpp"
 
 class DataStorage
 {
@@ -20,7 +20,7 @@ public:
 #ifdef PLANT_MASTER
     explicit DataStorage(std::shared_ptr<Configurator> configurator);
 
-    const std::vector<PlantHumidityData>& getPlantsHumidityData() const;
+    const std::vector<PlantHumidityData> &getPlantsHumidityData() const;
     float getRoomTemperature() const;
     float getRoomHumidity() const;
 

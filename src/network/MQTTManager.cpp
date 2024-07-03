@@ -4,7 +4,7 @@
  *   Created on: 2024/06/04
  *   Author: Lankow
  */
-#include "MQTTManager.hpp"
+#include "network/MQTTManager.hpp"
 
 #ifdef PLANT_MASTER
 MQTTManager::MQTTManager(std::shared_ptr<DataHandler> dataHandler, std::shared_ptr<Configurator> configurator)

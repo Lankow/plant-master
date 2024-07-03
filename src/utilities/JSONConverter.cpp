@@ -4,7 +4,7 @@
  *   Created on: 2024/05/31
  *   Author: Lankow
  */
-#include "JSONConverter.hpp"
+#include "utilities/JSONConverter.hpp"
 #include <sstream>
 
 JSONConverter::JSONConverter(std::shared_ptr<DataStorage> dataStorage)

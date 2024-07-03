@@ -9,8 +9,8 @@
 
 #include <Arduino.h>
 #include <memory>
-#include "Configurator.hpp"
-#include "DataStorage.hpp"
+#include "config/Configurator.hpp"
+#include "data/DataStorage.hpp"
 
 class WaterPumpController
 {

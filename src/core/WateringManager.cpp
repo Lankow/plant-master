@@ -4,8 +4,8 @@
  *   Created on: 2024/06/12
  *   Author: Lankow
  */
-#include "WateringManager.hpp"
-#include "PlantHumidityData.hpp"
+#include "core/WateringManager.hpp"
+#include "data/PlantHumidityData.hpp"
 
 WateringManager::WateringManager(std::shared_ptr<DataStorage> dataStorage, std::shared_ptr<MQTTManager> mqttManager)
     : m_dataStorage(dataStorage),

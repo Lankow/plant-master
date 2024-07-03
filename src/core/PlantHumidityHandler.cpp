@@ -4,8 +4,8 @@
  *   Created on: 2024/05/28
  *   Author: Lankow
  */
-#include "PlantHumidityHandler.hpp"
-#include "Constants.hpp"
+#include "core/PlantHumidityHandler.hpp"
+#include "config/Constants.hpp"
 
 PlantHumidityHandler::PlantHumidityHandler(std::shared_ptr<Configurator> configurator, std::shared_ptr<MQTTManager> mqttManager, std::shared_ptr<DataStorage> dataStorage)
     : m_configurator(configurator),

@@ -4,7 +4,7 @@
  *   Created on: 2024/06/07
  *   Author: Lankow
  */
-#include "StringParser.hpp"
+#include "utilities/StringParser.hpp"
 #include <stdexcept>
 #include <cctype>
 

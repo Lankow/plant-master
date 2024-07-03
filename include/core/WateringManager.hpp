@@ -9,8 +9,8 @@
 
 #include <Arduino.h>
 #include <memory>
-#include "DataStorage.hpp"
-#include "MQTTManager.hpp"
+#include "data/DataStorage.hpp"
+#include "network/MQTTManager.hpp"
 
 class WateringManager
 {

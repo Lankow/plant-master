@@ -4,8 +4,8 @@
  *   Created on: 2024/06/07
  *   Author: Lankow
  */
-#include "DataHandler.hpp"
-#include "StringParser.hpp"
+#include "data/DataHandler.hpp"
+#include "utilities/StringParser.hpp"
 
 DataHandler::DataHandler(std::shared_ptr<DataStorage> dataStorage) : m_dataStorage(dataStorage){};
 

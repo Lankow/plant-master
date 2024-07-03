@@ -10,8 +10,8 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include <memory>
-#include "DataStorage.hpp"
-#include "PlantHumidityData.hpp"
+#include "data/DataStorage.hpp"
+#include "data/PlantHumidityData.hpp"
 
 class JSONConverter
 {

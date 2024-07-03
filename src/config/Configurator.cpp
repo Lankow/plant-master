@@ -4,8 +4,8 @@
  *   Created on: 2024/06/10
  *   Author: Lankow
  */
-#include "Configurator.hpp"
-#include "Constants.hpp"
+#include "config/Configurator.hpp"
+#include "config/Constants.hpp"
 
 Configurator::Configurator() : m_dhtPin(0), m_waterPumpPin(0) {}
 

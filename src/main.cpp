@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include <memory>
-#include "Configurator.hpp"
+#include "config/Configurator.hpp"
+#include "config/Constants.hpp"
 #include "PlantMaster.hpp"
-#include "Constants.hpp"
 
 std::shared_ptr<Configurator> configurator;
 std::shared_ptr<PlantMaster> plantMaster;
