@@ -1,27 +1,36 @@
-# React + TypeScript + Vite
+# Plant Master - Client Web App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+This project is designed to monitor and control plant irrigation using an ESP32 microcontroller. The system includes a React TypeScript application stored in the SPIFFS (SPI Flash File System) of the ESP32, which serves as a user interface accessible via a web browser.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+When the ESP32 is connected to the same WiFi network as your device, you can access the web interface at [http://192.168.1.184/](http://192.168.1.184/). This interface provides real-time information about the current humidity levels of your plants, set thresholds, the pins for the humidity sensors, as well as the room's humidity and temperature.
 
-## Expanding the ESLint configuration
+The web application allows users to:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- View current plant humidity levels.
+- Set and update humidity thresholds for plants.
+- Monitor room humidity and temperature.
+- Identify the pins assigned to each humidity sensor.
 
-- Configure the top-level `parserOptions` property like this:
+The React TypeScript application communicates with the ESP32 using WebSockets, ensuring real-time updates and interaction. This setup allows for efficient and immediate responses to changes in the environment, making sure your plants are always well-monitored and watered as needed.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+## Features
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- **Web Interface**: User-friendly interface built with React TypeScript, accessible on the local network.
+- **Real-time Monitoring**: Live updates of plant humidity levels, room humidity, and temperature.
+- **Threshold Management**: Set and update humidity thresholds for optimal plant care.
+- **Sensor Management**: Information on the pins assigned to each humidity sensor.
+- **WebSocket Communication**: Efficient, real-time communication between the web interface and the ESP32.
+
+## Getting Started
+
+To get started, ensure your ESP32 is connected to your WiFi network. Then, navigate to [http://192.168.1.184/](http://192.168.1.184/) in your web browser to access the control panel. From there, you can monitor and control your plant irrigation system with ease.
+
+## Technical Details
+
+- **Microcontroller**: ESP32
+- **Web Application**: React TypeScript stored in SPIFFS
+- **Communication Protocol**: WebSockets
+
+This system is designed to be simple yet powerful, providing all the tools needed to ensure your plants are properly cared for, with minimal effort required from you.

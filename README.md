@@ -35,3 +35,7 @@ Ensure your `platformio.ini` file includes the necessary configurations:
 1. **Build the project:**
 2. **Upload the firmware to your device:**
 3. **Monitor the serial output:**
+
+## Client Application:
+
+For more details go to [Client Web App](https://github.com/Lankow/plant-master/tree/main/plant-master-client).
