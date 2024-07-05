@@ -1,5 +1,18 @@
-import React from "react";
-import { AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material";
+import React, { useState } from "react";
+import {
+  AppBar,
+  Box,
+  Button,
+  Container,
+  Drawer,
+  IconButton,
+  Toolbar,
+  Typography,
+  List,
+  ListItem,
+  Chip
+} from "@mui/material";
+import Menu from "@mui/icons-material/Menu";
 
 interface TopBarProps {
   handleOpenModal: (modal: string) => void;
@@ -9,34 +22,74 @@ interface TopBarProps {
   activeReaderPin: number;
 }
 
-const TopBar: React.FC<TopBarProps> = ({ handleOpenModal, roomTemperature, roomHumidity, waterPumpActive, activeReaderPin }) => {
+const TopBar: React.FC<TopBarProps> = ({
+  handleOpenModal,
+  roomTemperature,
+  roomHumidity,
+  waterPumpActive,
+  activeReaderPin
+}) => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const toggleDrawer = (open: boolean) => () => {
+    setDrawerOpen(open);
+  };
+
+  const drawerList = () => (
+    <Box sx={{ width: 250 }} onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
+      <List>
+        <ListItem>
+          <Chip label={`Room: ${roomTemperature.toFixed(1)} °C`} sx={{ mb: 1, width: '100%' }} />
+        </ListItem>
+        <ListItem>
+          <Chip label={`Humidity: ${roomHumidity.toFixed(1)} %`} sx={{ mb: 1, width: '100%' }} />
+        </ListItem>
+        <ListItem>
+          <Chip label={`Water Pump: ${waterPumpActive ? "Active" : "Inactive"}`} sx={{ mb: 1, width: '100%' }} />
+        </ListItem>
+        <ListItem>
+          <Chip label={`Active Reader Pin: ${activeReaderPin}`} sx={{ mb: 1, width: '100%' }} />
+        </ListItem>
+        <ListItem>
+          <Button fullWidth onClick={() => handleOpenModal("About")}>
+            About
+          </Button>
+        </ListItem>
+        <ListItem>
+          <Button fullWidth onClick={toggleDrawer(false)}>
+            Close
+          </Button>
+        </ListItem>
+      </List>
+    </Box>
+  );
+
   return (
     <AppBar component="nav" position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { sm: "block" }, textTransform: "uppercase" }}
-          >
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, textTransform: "uppercase" }}>
             Plant-Master
           </Typography>
-          <Typography sx={{ mr: 2 }}>
-            Room: {roomTemperature} °C / {roomHumidity} %
-          </Typography>
-          <Typography sx={{ mr: 2 }}>
-            Water Pump: {waterPumpActive ? "Active" : "Inactive"}
-          </Typography>
-          <Typography sx={{ mr: 2 }}>
-            Active Reader Pin: {activeReaderPin}
-          </Typography>
-          <Box sx={{ display: { sm: "block" } }}>
+          <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}>
+            <Chip label={`Room: ${roomTemperature} °C`} sx={{ mr: 2 }} />
+            <Chip label={`Humidity: ${roomHumidity} %`} sx={{ mr: 2 }} />
+            <Chip label={`Water Pump: ${waterPumpActive ? "Active" : "Inactive"}`} sx={{ mr: 2 }} />
+            <Chip label={`Active Reader Pin: ${activeReaderPin}`} sx={{ mr: 2 }} />
             <Button sx={{ color: "#fff" }} onClick={() => handleOpenModal("About")}>
               About
             </Button>
           </Box>
+          <Box sx={{ display: { xs: "block", md: "none" } }}>
+            <IconButton sx={{ color: "#fff" }} onClick={toggleDrawer(true)}>
+              <Menu />
+            </IconButton>
+          </Box>
         </Toolbar>
       </Container>
+      <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
+        {drawerList()}
+      </Drawer>
     </AppBar>
   );
 };
