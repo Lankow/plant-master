@@ -51,6 +51,7 @@ const About: React.FC<AboutContentProps> = ({ handleCloseModal }) => {
           </Typography>
         </DialogContentText>
       </DialogContent>
+      <Divider flexItem/>
       <DialogActions>
         <Button variant="contained" onClick={handleCloseModal}>
           Close

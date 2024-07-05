@@ -39,7 +39,7 @@ const TopBar: React.FC<TopBarProps> = ({
     <Box sx={{ width: 250 }} onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
       <List>
         <ListItem>
-          <Chip label={`Room: ${roomTemperature.toFixed(1)} °C`} sx={{ mb: 1, width: '100%' }} />
+          <Chip label={`Temperature: ${roomTemperature.toFixed(1)} °C`} sx={{ mb: 1, width: '100%' }} />
         </ListItem>
         <ListItem>
           <Chip label={`Humidity: ${roomHumidity.toFixed(1)} %`} sx={{ mb: 1, width: '100%' }} />
@@ -51,12 +51,12 @@ const TopBar: React.FC<TopBarProps> = ({
           <Chip label={`Active Reader Pin: ${activeReaderPin}`} sx={{ mb: 1, width: '100%' }} />
         </ListItem>
         <ListItem>
-          <Button fullWidth onClick={() => handleOpenModal("About")}>
+          <Button variant="contained" fullWidth onClick={() => handleOpenModal("About")}>
             About
           </Button>
         </ListItem>
         <ListItem>
-          <Button fullWidth onClick={toggleDrawer(false)}>
+          <Button variant="outlined" fullWidth onClick={toggleDrawer(false)}>
             Close
           </Button>
         </ListItem>
@@ -72,10 +72,10 @@ const TopBar: React.FC<TopBarProps> = ({
             Plant-Master
           </Typography>
           <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}>
-            <Chip label={`Room: ${roomTemperature} °C`} sx={{ mr: 2 }} />
-            <Chip label={`Humidity: ${roomHumidity} %`} sx={{ mr: 2 }} />
-            <Chip label={`Water Pump: ${waterPumpActive ? "Active" : "Inactive"}`} sx={{ mr: 2 }} />
-            <Chip label={`Active Reader Pin: ${activeReaderPin}`} sx={{ mr: 2 }} />
+            <Chip label={`Temperature: ${roomTemperature.toFixed(1)} °C`} sx={{ mr: 2, color: 'white' }} />
+            <Chip label={`Humidity: ${roomHumidity.toFixed(1)} %`} sx={{ mr: 2, color: 'white' }} />
+            <Chip label={`Water Pump: ${waterPumpActive ? "Active" : "Inactive"}`} sx={{ mr: 2, color: 'white' }} />
+            <Chip label={`Active Reader Pin: ${activeReaderPin}`} sx={{ mr: 2, color: 'white' }} />
             <Button sx={{ color: "#fff" }} onClick={() => handleOpenModal("About")}>
               About
             </Button>
