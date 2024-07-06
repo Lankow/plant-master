@@ -36,19 +36,19 @@ const TopBar: React.FC<TopBarProps> = ({
   };
 
   const drawerList = () => (
-    <Box sx={{ width: 250 }} onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
+    <Box sx={{ width: 250, height:"100vh", background: "#8ebeed" }} onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
       <List>
         <ListItem>
-          <Chip label={`Temperature: ${roomTemperature.toFixed(1)} °C`} sx={{ mb: 1, width: '100%' }} />
+          <Chip label={`Temperature: ${roomTemperature.toFixed(1)} °C`} sx={{ mb: 1, width: '100%', color: 'white' }} />
         </ListItem>
         <ListItem>
-          <Chip label={`Humidity: ${roomHumidity.toFixed(1)} %`} sx={{ mb: 1, width: '100%' }} />
+          <Chip label={`Humidity: ${roomHumidity.toFixed(1)} %`} sx={{ mb: 1, width: '100%', color: 'white' }} />
         </ListItem>
         <ListItem>
-          <Chip label={`Water Pump: ${waterPumpActive ? "Active" : "Inactive"}`} sx={{ mb: 1, width: '100%' }} />
+          <Chip label={`Water Pump: ${waterPumpActive ? "Active" : "Inactive"}`} sx={{ mb: 1, width: '100%', color: 'white' }} />
         </ListItem>
         <ListItem>
-          <Chip label={`Active Reader Pin: ${activeReaderPin}`} sx={{ mb: 1, width: '100%' }} />
+          <Chip label={`Active Reader Pin: ${activeReaderPin}`} sx={{ mb: 1, width: '100%', color: 'white' }} />
         </ListItem>
         <ListItem>
           <Button variant="contained" fullWidth onClick={() => handleOpenModal("About")}>
@@ -56,7 +56,7 @@ const TopBar: React.FC<TopBarProps> = ({
           </Button>
         </ListItem>
         <ListItem>
-          <Button variant="outlined" fullWidth onClick={toggleDrawer(false)}>
+          <Button variant="contained" fullWidth onClick={toggleDrawer(false)}>
             Close
           </Button>
         </ListItem>
