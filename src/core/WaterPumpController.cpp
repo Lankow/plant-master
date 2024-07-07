@@ -1,8 +1,13 @@
-/*
- *   WaterPumpController.cpp
- *   ----------------------
- *   Created on: 2024/05/29
- *   Author: Lankow
+/**
+ * @file WaterPumpController.cpp
+ * @date   2024-05-29
+ * @author Lankow
+ * @version 1.0
+ *
+ * @brief This file contains the implementation of the WaterPumpController class.
+ *
+ * The WaterPumpController class is responsible for controlling the water pump based on the data
+ * stored in the DataStorage object. It turns the pump on or off based on the state of the water pump.
  */
 
 #include "core/WaterPumpController.hpp"

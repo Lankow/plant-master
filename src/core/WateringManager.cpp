@@ -1,9 +1,15 @@
-/*
- *   WateringManager.cpp
- *   ----------------------
- *   Created on: 2024/06/12
- *   Author: Lankow
+/**
+ * @file WateringManager.cpp
+ * @date   2024-06-12
+ * @author Lankow
+ * @version 1.0
+ *
+ * @brief This file contains the implementation of the WateringManager class.
+ *
+ * The WateringManager class is responsible for managing the watering process by checking
+ * humidity levels and controlling the water pump based on the humidity data.
  */
+
 #include "core/WateringManager.hpp"
 #include "data/PlantHumidityData.hpp"
 

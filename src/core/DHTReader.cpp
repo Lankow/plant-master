@@ -1,9 +1,15 @@
-/*
- *   DHTReader.cpp
- *   ----------------------
- *   Created on: 2024/05/28
- *   Author: Lankow
+/**
+ * @file DHTReader.cpp
+ * @date   2024-05-28
+ * @author Lankow
+ * @version 1.0
+ *
+ * @brief This file contains the implementation of the DHTReader class.
+ *
+ * The DHTReader class is responsible for reading temperature and humidity data from a DHT sensor and
+ * managing the communication with an MQTT server to publish the sensor data.
  */
+
 #include "core/DHTReader.hpp"
 
 DHTReader::DHTReader(std::shared_ptr<Configurator> configurator, std::shared_ptr<MQTTManager> mqttManager)

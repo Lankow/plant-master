@@ -1,9 +1,15 @@
-/*
- *   ResetHandler.cpp
- *   ----------------------
- *   Created on: 2024/06/12
- *   Author: Lankow
+/**
+ * @file ResetHandler.cpp
+ * @date   2024-06-12
+ * @author Lankow
+ * @version 1.0
+ *
+ * @brief This file contains the implementation of the ResetHandler class.
+ *
+ * The ResetHandler class is responsible for handling the reset button press event and performing
+ * a system reset if the button is pressed for a specified duration.
  */
+
 #include <Preferences.h>
 #include "core/ResetHandler.hpp"
 #include "config/Constants.hpp"

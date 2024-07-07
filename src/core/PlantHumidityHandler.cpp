@@ -1,9 +1,15 @@
-/*
- *   PlantHumidityHandler.cpp
- *   ----------------------
- *   Created on: 2024/05/28
- *   Author: Lankow
+/**
+ * @file PlantHumidityHandler.cpp
+ * @date   2024-05-28
+ * @author Lankow
+ * @version 1.0
+ *
+ * @brief This file contains the implementation of the PlantHumidityHandler class.
+ *
+ * The PlantHumidityHandler class is responsible for reading humidity data from plant sensors and
+ * managing the operation of valves based on the humidity readings and configuration settings.
  */
+
 #include "core/PlantHumidityHandler.hpp"
 #include "config/Constants.hpp"
 
