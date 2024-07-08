@@ -1,8 +1,14 @@
-/*
- *   PlantMaster.cpp
- *   ----------------------
- *   Created on: 2024/05/31
- *   Author: Lankow
+/**
+ * @file PlantMaster.cpp
+ * @date   2024-05-31
+ * @author Lankow
+ * @version 1.0
+ *
+ * @brief This file contains the implementation of the PlantMaster class.
+ *
+ * The PlantMaster class is responsible for initializing and managing the core components
+ * of the Plant Master system, including network initialization, data handling, and
+ * managing various sensors and controllers.
  */
 #include "PlantMaster.hpp"
 

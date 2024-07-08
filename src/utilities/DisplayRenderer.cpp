@@ -1,8 +1,13 @@
-/*
- *   DisplayRenderer.cpp
- *   ----------------------
- *   Created on: 2024/05/26
- *   Author: Lankow
+/**
+ * @file DisplayRenderer.cpp
+ * @date   2024-05-26
+ * @author Lankow
+ * @version 1.0
+ *
+ * @brief This file contains the implementation of the DisplayRenderer class.
+ *
+ * The DisplayRenderer class is responsible for rendering various screens on an OLED display,
+ * including the initial screen, configuration screen, and connected screen.
  */
 #include "utilities/DisplayRenderer.hpp"
 

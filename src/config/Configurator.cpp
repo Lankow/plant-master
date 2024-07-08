@@ -1,8 +1,13 @@
-/*
- *   Configurator.hpp
- *   ----------------------
- *   Created on: 2024/06/10
- *   Author: Lankow
+/**
+ * @file Configurator.cpp
+ * @date   2024-06-10
+ * @author Lankow
+ * @version 1.0
+ *
+ * @brief This file contains the implementation of the Configurator class.
+ *
+ * The Configurator class is responsible for reading configuration settings from
+ * a JSON file stored on SPIFFS and providing these settings to other components.
  */
 #include "config/Configurator.hpp"
 #include "config/Constants.hpp"

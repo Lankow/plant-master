@@ -1,17 +1,20 @@
-/*
- *   JSONConverter.cpp
- *   ----------------------
- *   Created on: 2024/05/31
- *   Author: Lankow
+/**
+ * @file JSONConverter.cpp
+ * @date   2024-05-31
+ * @author Lankow
+ * @version 1.0
+ *
+ * @brief This file contains the implementation of the JSONConverter class.
+ *
+ * The JSONConverter class is responsible for serializing and deserializing data
+ * to and from JSON format, specifically for handling data related to plant humidity
+ * and device state.
  */
 #include "utilities/JSONConverter.hpp"
 #include <sstream>
 
 JSONConverter::JSONConverter(std::shared_ptr<DataStorage> dataStorage)
-    : m_dataStorage(dataStorage)
-{
-    // Initialization if needed
-}
+    : m_dataStorage(dataStorage) {}
 
 #ifdef PLANT_MASTER
 std::string JSONConverter::serializeDataStorage() const
