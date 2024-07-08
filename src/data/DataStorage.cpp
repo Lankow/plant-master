@@ -1,8 +1,13 @@
-/*
- *   DataStorage.cpp
- *   ----------------------
- *   Created on: 2024/05/30
- *   Author: Lankow
+/**
+ * @file DataStorage.cpp
+ * @date   2024-05-30
+ * @author Lankow
+ * @version 1.0
+ *
+ * @brief This file contains the implementation of the DataStorage class.
+ *
+ * This class handles the storage and management of data related to plants, room conditions,
+ * and the water pump state.
  */
 #include "data/DataStorage.hpp"
 

@@ -1,9 +1,14 @@
-/*
- *   DataHandler.cpp
- *   ----------------------
- *   Created on: 2024/06/07
- *   Author: Lankow
+/**
+ * @file DataHandler.cpp
+ * @date   2024-06-07
+ * @author Lankow
+ * @version 1.0
+ *
+ * @brief This file contains the implementation of the DataHandler class.
+ *
+ * This class processes incoming data from various topics and stores it in the DataStorage object.
  */
+
 #include "data/DataHandler.hpp"
 #include "utilities/StringParser.hpp"
 

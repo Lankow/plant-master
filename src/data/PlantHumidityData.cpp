@@ -1,8 +1,13 @@
-/*
- *   PlantHumidityData.cpp
- *   ----------------------
- *   Created on: 2024/05/30
- *   Author: Lankow
+/**
+ * @file PlantHumidityData.cpp
+ * @date   2024-05-30
+ * @author Lankow
+ * @version 1.0
+ *
+ * @brief This file contains the implementation of the PlantHumidityData class.
+ *
+ * Stores information about the humidity of a plant, including its assigned pin,
+ * current humidity, and humidity threshold.
  */
 #include "data/PlantHumidityData.hpp"
 #include "config/Constants.hpp"
