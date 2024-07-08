@@ -1,8 +1,13 @@
-/*
- *   WiFiInitializer.cpp
- *   ----------------------
- *   Created on: 2024/05/26
- *   Author: Lankow
+/**
+ * @file WiFiInitializer.cpp
+ * @date   2024-05-26
+ * @author Lankow
+ * @version 1.0
+ *
+ * @brief This file contains the implementation of the WiFiInitializer class.
+ *
+ * The WiFiInitializer class is responsible for managing the WiFi connection
+ * for the device, including connecting to a WiFi network and handling connection status.
  */
 #include "network/WiFiInitializer.hpp"
 #include "config/Constants.hpp"

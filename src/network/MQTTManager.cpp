@@ -1,8 +1,13 @@
-/*
- *   MQTTManager.cpp
- *   ----------------------
- *   Created on: 2024/06/04
- *   Author: Lankow
+/**
+ * @file MQTTManager.hpp
+ * @date   2024-06-04
+ * @author Lankow
+ * @version 1.0
+ *
+ * @brief This file contains the implementation of the MQTTManager class.
+ *
+ * The MQTTManager class is responsible for managing MQTT communication for the device,
+ * including initializing connections, handling messages, and maintaining the connection state.
  */
 #include "network/MQTTManager.hpp"
 

@@ -1,8 +1,13 @@
-/*
- *   ServerManager.cpp
- *   ----------------------
- *   Created on: 2024/05/27
- *   Author: Lankow
+/**
+ * @file ServerManager.cpp
+ * @date   2024-05-27
+ * @author Lankow
+ * @version 1.0
+ *
+ * @brief This file contains the implementation of the ServerManager class.
+ *
+ * The ServerManager class is responsible for managing the web server and WebSocket
+ * connections for the device, including handling HTTP requests and WebSocket events.
  */
 #include <Arduino.h>
 #include <SPIFFS.h>
