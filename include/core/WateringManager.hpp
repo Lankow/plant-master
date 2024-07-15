@@ -17,42 +17,17 @@
 #include "data/DataStorage.hpp"
 #include "network/MQTTManager.hpp"
 
-/**
- * @class WateringManager
- * @brief A class for managing the watering process based on plant humidity data.
- *
- * The WateringManager class checks the humidity levels of plants and activates the water pump
- * if the humidity falls below a certain threshold.
- */
 class WateringManager
 {
 public:
-    /**
-     * @brief Constructs a new WateringManager object.
-     *
-     * @param dataStorage A shared pointer to a DataStorage object for storing data and state.
-     * @param mqttManager A shared pointer to an MQTTManager object for managing MQTT communication.
-     */
     WateringManager(std::shared_ptr<DataStorage> dataStorage, std::shared_ptr<MQTTManager> mqttManager);
 
-    /**
-     * @brief Periodically checks plant humidity and controls the water pump.
-     *
-     * This method should be called cyclically to ensure that plant humidity is checked and
-     * the water pump is controlled at regular intervals.
-     */
     void cyclic();
 
 private:
-    std::shared_ptr<DataStorage> m_dataStorage; /**< A shared pointer to a DataStorage object for storing data and state. */
-    std::shared_ptr<MQTTManager> m_mqttManager; /**< A shared pointer to an MQTTManager object for managing MQTT communication. */
+    std::shared_ptr<DataStorage> m_dataStorage;
+    std::shared_ptr<MQTTManager> m_mqttManager;
 
-    /**
-     * @brief Checks the humidity levels of plants and activates the water pump if needed.
-     *
-     * This method checks the humidity levels of plants and activates the water pump if any plant's
-     * humidity falls below its threshold.
-     */
     void checkHumidity();
 };
 
