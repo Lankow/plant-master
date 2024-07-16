@@ -26,6 +26,7 @@
 #include "core/DHTReader.hpp"
 #include "core/WaterPumpController.hpp"
 #include "core/ResetHandler.hpp"
+#include "utilities/DisplayRenderer.hpp"
 
 class PlantMaster
 {
@@ -48,6 +49,7 @@ private:
 #ifdef PLANT_MASTER
     ServerManager m_serverManager;
     WateringManager m_wateringManager;
+    DisplayRenderer m_displayRenderer;
 #else
     PlantHumidityHandler m_plantHumidityHandler;
     WaterPumpController m_waterPumpController;

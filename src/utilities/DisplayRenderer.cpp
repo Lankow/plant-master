@@ -10,47 +10,45 @@
  * including the initial screen, configuration screen, and connected screen.
  */
 #include "utilities/DisplayRenderer.hpp"
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <SPI.h>
 
-DisplayRenderer::DisplayRenderer()
-    : m_display(I2C_ADDRESS, SDA, SCL)
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+
+#define OLED_MOSI 23
+#define OLED_CLK 18
+#define OLED_DC 17
+#define OLED_CS 5
+#define OLED_RESET 16
+
+DisplayRenderer::DisplayRenderer(std::shared_ptr<Configurator> configurator)
+    : m_display(SCREEN_WIDTH, SCREEN_HEIGHT, &SPI, OLED_DC, OLED_RESET, OLED_CS)
 {
     initializeDisplay();
 }
 
 void DisplayRenderer::initializeDisplay()
 {
-    m_display.init();
-    m_display.clear();
+    if (!m_display.begin(SSD1306_SWITCHCAPVCC, 0x3C))
+    {
+        m_display.println(F("SSD1306 allocation failed"));
+        return;
+    }
+
+    m_display.clearDisplay();
+
+    m_display.fillRect(0, 0, 128, 64, SSD1306_WHITE);
+    m_display.setCursor(0, 0);
+    m_display.setTextColor(SSD1306_BLACK);
+    m_display.setTextSize(1);
+    m_display.println("Plant-Master");
+
     m_display.display();
 }
 
 void DisplayRenderer::drawInitialScreen()
 {
-    m_display.clear();
-    m_display.drawString(TEXT_X_POS, TEXT_Y_POS_INITIAL, "Plant-Master");
-    m_display.drawHorizontalLine(TEXT_X_POS, LINE_Y_POS_INITIAL, LINE_LENGTH);
-    m_display.drawString(TEXT_X_POS + 25, TEXT_Y_POS_INITIAL + 20, "by XXX");
-    m_display.display();
-
     delay(Screen::INITIAL_SCREEN_DURATION);
-}
-
-void DisplayRenderer::drawConfigScreen(const std::string &ssid, const std::string &password)
-{
-    m_display.clear();
-    m_display.drawString(TEXT_X_POS, 0, "Config SSID:");
-    m_display.drawString(TEXT_X_POS, TEXT_Y_POS_INITIAL, ssid.c_str());
-    m_display.drawHorizontalLine(TEXT_X_POS, 24, LINE_LENGTH);
-    m_display.drawString(TEXT_X_POS, 25, "Config PASSWORD:");
-    m_display.drawString(TEXT_X_POS, 35, password.c_str());
-    m_display.display();
-}
-
-void DisplayRenderer::drawConnectedScreen(const std::string &ip)
-{
-    m_display.clear();
-    m_display.drawString(TEXT_X_POS, 0, "Plant-Master Server:");
-    m_display.drawHorizontalLine(TEXT_X_POS, LINE_Y_POS_CONNECTED, LINE_LENGTH);
-    m_display.drawString(TEXT_X_POS, TEXT_Y_POS_CONNECTED, ip.c_str());
-    m_display.display();
 }
