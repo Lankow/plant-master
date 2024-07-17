@@ -78,10 +78,20 @@ namespace MQTT
 namespace JSON
 {
   static const std::string DHT_PIN = "dhtPin";              /**< JSON key for DHT sensor pin. */
+  static const std::string OLED_MOSI_PIN = "oledMosiPin";   /**< JSON key for OLED MOSI pin. */
+  static const std::string OLED_CLK_PIN = "oledClkPin";     /**< JSON key for OLED CLK pin. */
+  static const std::string OLED_DC_PIN = "oledDcPin";       /**< JSON key for OLED DC pin. */
+  static const std::string OLED_CS_PIN = "oledCsPin";       /**< JSON key for OLED CS pin. */
+  static const std::string OLED_RESET_PIN = "oledResetPin"; /**< JSON key for OLED RESET pin. */
   static const std::string WATER_PUMP_PIN = "waterPumpPin"; /**< JSON key for water pump pin. */
   static const std::string READER_PINS = "readerPins";      /**< JSON key for reader pins. */
   static const std::string VALVE_PINS = "valvePins";        /**< JSON key for valve pins. */
   static const std::string THRESHOLDS = "thresholds";       /**< JSON key for thresholds. */
+}
+namespace Screen
+{
+  static const uint8_t SCREEN_WIDTH = 128; /**< OLED Screen Width. */
+  static const uint8_t SCREEN_HEIGHT = 64; /**< OLED Screen Height. */
 }
 
 namespace PumpState

@@ -36,6 +36,11 @@ std::vector<int> Configurator::getReaderPins() const { return m_readerPins; }
 std::vector<int> Configurator::getThresholds() const { return m_thresholds; }
 int Configurator::getDhtPin() const { return m_dhtPin; }
 int Configurator::getWaterPumpPin() const { return m_waterPumpPin; }
+int Configurator::getOledMosiPin() const { return m_oledMosiPin; }
+int Configurator::getOledClkPin() const { return m_oledClkPin; }
+int Configurator::getOledDcPin() const { return m_oledDcPin; }
+int Configurator::getOledCsPin() const { return m_oledCsPin; }
+int Configurator::getOledResetPin() const { return m_oledResetPin; }
 
 bool Configurator::initSPIFFS()
 {
@@ -66,13 +71,14 @@ bool Configurator::readConfigFile()
 
 #ifdef PLANT_MASTER
     m_thresholds = getIntArray(JSON::THRESHOLDS.c_str());
+    m_oledMosiPin = getIntValue(JSON::OLED_MOSI_PIN.c_str());
+    m_oledClkPin = getIntValue(JSON::OLED_CLK_PIN.c_str());
+    m_oledDcPin = getIntValue(JSON::OLED_DC_PIN.c_str());
+    m_oledCsPin = getIntValue(JSON::OLED_CS_PIN.c_str());
+    m_oledResetPin = getIntValue(JSON::OLED_RESET_PIN.c_str());
 #else
     m_dhtPin = getIntValue(JSON::DHT_PIN.c_str());
-    Serial.println("DHT PIN:");
-    Serial.println(m_dhtPin);
     m_waterPumpPin = getIntValue(JSON::WATER_PUMP_PIN.c_str());
-    Serial.println("WATER PUMP PIN:");
-    Serial.println(m_waterPumpPin);
 #endif
 
     return true;

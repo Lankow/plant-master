@@ -28,6 +28,12 @@ public:
     std::vector<int> getThresholds() const;
     int getDhtPin() const;
     int getWaterPumpPin() const;
+    int getOledMosiPin() const;
+    int getOledClkPin() const;
+    int getOledDcPin() const;
+    int getOledCsPin() const;
+    int getOledResetPin() const;
+
     void updateThreshold(int index, int value);
 
 private:
@@ -36,6 +42,11 @@ private:
     std::vector<int> m_thresholds;
     int m_dhtPin;
     int m_waterPumpPin;
+    int m_oledMosiPin;
+    int m_oledClkPin;
+    int m_oledDcPin;
+    int m_oledCsPin;
+    int m_oledResetPin;
 
     bool initSPIFFS();
     bool readConfigFile();

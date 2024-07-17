@@ -1,5 +1,10 @@
 {
     "dhtPin": 21,
+    "oledMosiPin": 23,
+    "oledClkPin": 18,
+    "oledDcPin": 17,
+    "oledCsPin": 5,
+    "oledResetPin": 16,
     "waterPumpPin": 18,
     "readerPins": [
         34

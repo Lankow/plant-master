@@ -14,17 +14,8 @@
 #include <Adafruit_GFX.h>
 #include <SPI.h>
 
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
-
-#define OLED_MOSI 23
-#define OLED_CLK 18
-#define OLED_DC 17
-#define OLED_CS 5
-#define OLED_RESET 16
-
 DisplayRenderer::DisplayRenderer(std::shared_ptr<Configurator> configurator)
-    : m_display(SCREEN_WIDTH, SCREEN_HEIGHT, &SPI, OLED_DC, OLED_RESET, OLED_CS)
+    : m_display(Screen::SCREEN_WIDTH, Screen::SCREEN_HEIGHT, &SPI, configurator->getOledDcPin(), configurator->getOledResetPin(), configurator->getOledCsPin())
 {
     initializeDisplay();
 }
