@@ -41,5 +41,32 @@ void DisplayRenderer::initializeDisplay()
 
 void DisplayRenderer::drawInitialScreen()
 {
-    delay(Screen::INITIAL_SCREEN_DURATION);
+    m_display.clearDisplay();
+
+    const char *line1 = "Plant Master";
+    const char *line2 = "by Lankow";
+
+    int16_t x1, y1;
+    uint16_t textWidth1, textHeight1;
+    m_display.getTextBounds(line1, 0, 0, &x1, &y1, &textWidth1, &textHeight1);
+
+    uint16_t textWidth2, textHeight2;
+    m_display.getTextBounds(line2, 0, 0, &x1, &y1, &textWidth2, &textHeight2);
+
+    int16_t xOffset1 = (Screen::SCREEN_WIDTH - textWidth1) / 2;
+    int16_t yOffset1 = (Screen::SCREEN_HEIGHT / 2) - textHeight1;
+
+    int16_t xOffset2 = (Screen::SCREEN_WIDTH - textWidth2) / 2;
+    int16_t yOffset2 = (Screen::SCREEN_HEIGHT / 2) + 2; // Adjust for spacing
+
+    m_display.setTextSize(1);
+    m_display.setTextColor(SSD1306_WHITE);
+
+    m_display.setCursor(xOffset1, yOffset1);
+    m_display.print(line1);
+
+    m_display.setCursor(xOffset2, yOffset2);
+    m_display.print(line2);
+
+    m_display.display();
 }

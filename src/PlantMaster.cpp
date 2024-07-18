@@ -37,6 +37,10 @@ PlantMaster::PlantMaster(std::shared_ptr<Configurator> configurator)
 
 bool PlantMaster::init()
 {
+#ifdef PLANT_MASTER
+    m_displayRenderer.drawInitialScreen();
+#endif
+
     if (!m_wiFiInitializer.init())
     {
         Serial.println("Failed to initialize WiFi");
