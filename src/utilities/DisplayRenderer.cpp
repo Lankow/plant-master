@@ -57,7 +57,7 @@ void DisplayRenderer::drawInitialScreen()
     int16_t yOffset1 = (Screen::SCREEN_HEIGHT / 2) - textHeight1;
 
     int16_t xOffset2 = (Screen::SCREEN_WIDTH - textWidth2) / 2;
-    int16_t yOffset2 = (Screen::SCREEN_HEIGHT / 2) + 2; // Adjust for spacing
+    int16_t yOffset2 = (Screen::SCREEN_HEIGHT / 2) + 2;
 
     m_display.setTextSize(1);
     m_display.setTextColor(SSD1306_WHITE);
@@ -70,3 +70,8 @@ void DisplayRenderer::drawInitialScreen()
 
     m_display.display();
 }
+
+void DisplayRenderer::drawAccessPointScreen() {};
+void DisplayRenderer::drawWebSocketScreen() {};
+void DisplayRenderer::drawHumidityScreen() {};
+void DisplayRenderer::drawResetScreen() {};

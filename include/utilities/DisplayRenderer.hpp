@@ -22,6 +22,10 @@ public:
     DisplayRenderer(std::shared_ptr<Configurator> configurator);
 
     void drawInitialScreen();
+    void drawAccessPointScreen();
+    void drawWebSocketScreen();
+    void drawHumidityScreen();
+    void drawResetScreen();
 
 private:
     Adafruit_SSD1306 m_display;
