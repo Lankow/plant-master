@@ -39,6 +39,7 @@ bool PlantMaster::init()
 {
 #ifdef PLANT_MASTER
     m_displayRenderer.drawInitialScreen();
+    m_displayRenderer.drawResetScreen();
 #endif
 
     if (!m_wiFiInitializer.init())

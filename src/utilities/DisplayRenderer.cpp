@@ -69,9 +69,37 @@ void DisplayRenderer::drawInitialScreen()
     m_display.print(line2);
 
     m_display.display();
+
+    delay(3000);
 }
 
 void DisplayRenderer::drawAccessPointScreen() {};
+
 void DisplayRenderer::drawWebSocketScreen() {};
+
 void DisplayRenderer::drawHumidityScreen() {};
-void DisplayRenderer::drawResetScreen() {};
+
+void DisplayRenderer::drawResetScreen()
+{
+    int16_t xOffset = 0;
+    int16_t yOffset = 7;
+
+    for (int i = 3; i >= 0; i--)
+    {
+        m_display.clearDisplay();
+
+        m_display.setTextSize(1);
+        m_display.setTextColor(SSD1306_WHITE);
+
+        m_display.setCursor(xOffset, yOffset);
+        m_display.println("Device Reset in:");
+        m_display.setCursor(xOffset, yOffset + 12);
+        char countdownText[16];
+        snprintf(countdownText, sizeof(countdownText), "%d seconds...", i);
+        m_display.println(countdownText);
+
+        m_display.display();
+
+        delay(1000);
+    }
+};
