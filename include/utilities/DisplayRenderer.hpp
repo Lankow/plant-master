@@ -29,8 +29,12 @@ public:
 
 private:
     Adafruit_SSD1306 m_display;
+    int16_t m_offsetX;
+    int16_t m_offsetY;
 
     void initializeDisplay();
+    void resetDisplay();
+    void displayText(std::string text);
 };
 
 #endif // DISPLAY_RENDERER_HPP

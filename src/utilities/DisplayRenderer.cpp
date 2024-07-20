@@ -15,7 +15,7 @@
 #include <SPI.h>
 
 DisplayRenderer::DisplayRenderer(std::shared_ptr<Configurator> configurator)
-    : m_display(Screen::SCREEN_WIDTH, Screen::SCREEN_HEIGHT, &SPI, configurator->getOledDcPin(), configurator->getOledResetPin(), configurator->getOledCsPin())
+    : m_display(Screen::WIDTH, Screen::HEIGHT, &SPI, configurator->getOledDcPin(), configurator->getOledResetPin(), configurator->getOledCsPin())
 {
     initializeDisplay();
 }
@@ -53,11 +53,11 @@ void DisplayRenderer::drawInitialScreen()
     uint16_t textWidth2, textHeight2;
     m_display.getTextBounds(line2, 0, 0, &x1, &y1, &textWidth2, &textHeight2);
 
-    int16_t xOffset1 = (Screen::SCREEN_WIDTH - textWidth1) / 2;
-    int16_t yOffset1 = (Screen::SCREEN_HEIGHT / 2) - textHeight1;
+    int16_t xOffset1 = (Screen::WIDTH - textWidth1) / 2;
+    int16_t yOffset1 = (Screen::HEIGHT / 2) - textHeight1;
 
-    int16_t xOffset2 = (Screen::SCREEN_WIDTH - textWidth2) / 2;
-    int16_t yOffset2 = (Screen::SCREEN_HEIGHT / 2) + 2;
+    int16_t xOffset2 = (Screen::WIDTH - textWidth2) / 2;
+    int16_t yOffset2 = (Screen::HEIGHT / 2) + 2;
 
     m_display.setTextSize(1);
     m_display.setTextColor(SSD1306_WHITE);
@@ -103,3 +103,19 @@ void DisplayRenderer::drawResetScreen()
         delay(1000);
     }
 };
+
+void DisplayRenderer::resetDisplay()
+{
+    m_offsetX = Screen::DEFAULT_OFFSET_X;
+    m_offsetY = Screen::DEFAULT_OFFSET_Y;
+    m_display.setCursor(m_offsetX, m_offsetY);
+
+    m_display.clearDisplay();
+}
+
+void DisplayRenderer::displayText(std::string text)
+{
+    // Calculate size of the text
+    // Split text into lines
+    // display lines
+}

@@ -23,7 +23,7 @@ PlantMaster::PlantMaster(std::shared_ptr<Configurator> configurator)
       m_serverManager(m_dataStorage),
       m_mqttManager(std::make_shared<MQTTManager>(m_dataHandler, m_configurator)),
       m_wateringManager(m_dataStorage, m_mqttManager),
-      m_displayRenderer(m_configurator)
+      m_displayRenderer(std::make_shared<DisplayRenderer>(m_configurator))
 #else
       m_dataStorage(std::make_shared<DataStorage>()),
       m_dataHandler(std::make_shared<DataHandler>(m_dataStorage)),
@@ -38,8 +38,8 @@ PlantMaster::PlantMaster(std::shared_ptr<Configurator> configurator)
 bool PlantMaster::init()
 {
 #ifdef PLANT_MASTER
-    m_displayRenderer.drawInitialScreen();
-    m_displayRenderer.drawResetScreen();
+    m_displayRenderer->drawInitialScreen();
+    m_displayRenderer->drawResetScreen();
 #endif
 
     if (!m_wiFiInitializer.init())
