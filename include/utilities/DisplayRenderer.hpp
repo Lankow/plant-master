@@ -33,8 +33,8 @@ private:
     int16_t m_offsetY;
 
     void initializeDisplay();
-    void resetDisplay();
-    void displayText(std::string text);
+    void printHeading(std::string text);
+    void printTextLine(std::string text);
 };
 
 #endif // DISPLAY_RENDERER_HPP

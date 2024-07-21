@@ -29,13 +29,6 @@ void DisplayRenderer::initializeDisplay()
     }
 
     m_display.clearDisplay();
-
-    m_display.fillRect(0, 0, 128, 64, SSD1306_WHITE);
-    m_display.setCursor(0, 0);
-    m_display.setTextColor(SSD1306_BLACK);
-    m_display.setTextSize(1);
-    m_display.println("Plant-Master");
-
     m_display.display();
 }
 
@@ -43,30 +36,10 @@ void DisplayRenderer::drawInitialScreen()
 {
     m_display.clearDisplay();
 
-    const char *line1 = "Plant Master";
-    const char *line2 = "by Lankow";
+    printHeading("Plant-Master");
 
-    int16_t x1, y1;
-    uint16_t textWidth1, textHeight1;
-    m_display.getTextBounds(line1, 0, 0, &x1, &y1, &textWidth1, &textHeight1);
-
-    uint16_t textWidth2, textHeight2;
-    m_display.getTextBounds(line2, 0, 0, &x1, &y1, &textWidth2, &textHeight2);
-
-    int16_t xOffset1 = (Screen::WIDTH - textWidth1) / 2;
-    int16_t yOffset1 = (Screen::HEIGHT / 2) - textHeight1;
-
-    int16_t xOffset2 = (Screen::WIDTH - textWidth2) / 2;
-    int16_t yOffset2 = (Screen::HEIGHT / 2) + 2;
-
-    m_display.setTextSize(1);
-    m_display.setTextColor(SSD1306_WHITE);
-
-    m_display.setCursor(xOffset1, yOffset1);
-    m_display.print(line1);
-
-    m_display.setCursor(xOffset2, yOffset2);
-    m_display.print(line2);
+    m_display.setCursor(0, 16);
+    m_display.print("App by Lankow");
 
     m_display.display();
 
@@ -104,18 +77,16 @@ void DisplayRenderer::drawResetScreen()
     }
 };
 
-void DisplayRenderer::resetDisplay()
+void DisplayRenderer::printHeading(std::string text)
 {
-    m_offsetX = Screen::DEFAULT_OFFSET_X;
-    m_offsetY = Screen::DEFAULT_OFFSET_Y;
-    m_display.setCursor(m_offsetX, m_offsetY);
+    m_display.setTextSize(1);
+    m_display.setTextColor(SSD1306_WHITE);
 
-    m_display.clearDisplay();
+    m_display.setCursor(Screen::DEFAULT_HEADING_OFFSET_X, Screen::DEFAULT_HEADING_OFFSET_Y);
+    m_display.print("Plant Master");
+    m_display.drawLine(Screen::DEFAULT_HEADING_OFFSET_X, Screen::DEFAULT_HEADING_LINE_OFFSET_Y, Screen::WIDTH, Screen::DEFAULT_HEADING_LINE_OFFSET_Y, SSD1306_WHITE);
 }
 
-void DisplayRenderer::displayText(std::string text)
+void DisplayRenderer::printTextLine(std::string text)
 {
-    // Calculate size of the text
-    // Split text into lines
-    // display lines
 }

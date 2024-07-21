@@ -90,11 +90,14 @@ namespace JSON
 }
 namespace Screen
 {
-  static const uint8_t WIDTH = 128;           /**< OLED Screen Width. */
-  static const uint8_t HEIGHT = 64;           /**< OLED Screen Height. */
-  static const int16_t DEFAULT_OFFSET_X = 0;  /**< Default offset for cursor on axis X. */
-  static const int16_t DEFAULT_OFFSET_Y = 7;  /**< Default offset for display cursor on axis Y. */
-  static const int16_t DEFAULT_TEXT_SIZE = 1; /**< Default Text size for screen. */
+  static const uint8_t WIDTH = 128;                        /**< OLED Screen Width. */
+  static const uint8_t HEIGHT = 64;                        /**< OLED Screen Height. */
+  static const int16_t DEFAULT_OFFSET_X = 0;               /**< Default offset for cursor on axis X. */
+  static const int16_t DEFAULT_HEADING_OFFSET_X = 0;       /**< Default heading offset for cursor on axis X. */
+  static const int16_t DEFAULT_OFFSET_Y = 7;               /**< Default offset for display cursor on axis Y. */
+  static const int16_t DEFAULT_HEADING_OFFSET_Y = 4;       /**< Default heading offset for display cursor on axis Y. */
+  static const int16_t DEFAULT_HEADING_LINE_OFFSET_Y = 14; /**< Default heading line offset for display cursor on axis Y. */
+  static const int16_t DEFAULT_TEXT_SIZE = 1;              /**< Default Text size for screen. */
 }
 
 namespace PumpState
