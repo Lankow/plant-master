@@ -38,7 +38,7 @@ PlantMaster::PlantMaster(std::shared_ptr<Configurator> configurator)
 bool PlantMaster::init()
 {
 #ifdef PLANT_MASTER
-    m_displayRenderer->drawInitialScreen();
+    m_displayRenderer->drawAccessPointScreen();
     m_displayRenderer->drawResetScreen();
 #endif
 
