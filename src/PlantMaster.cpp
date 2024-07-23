@@ -40,6 +40,8 @@ bool PlantMaster::init()
 #ifdef PLANT_MASTER
     m_displayRenderer->drawAccessPointScreen();
     m_displayRenderer->drawResetScreen();
+    m_displayRenderer->drawWebSocketScreen();
+    m_displayRenderer->drawHelpScreen();
 #endif
 
     if (!m_wiFiInitializer.init())

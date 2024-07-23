@@ -24,12 +24,13 @@ public:
     void drawInitialScreen();
     void drawAccessPointScreen();
     void drawWebSocketScreen();
-    void drawHumidityScreen();
+    void drawHelpScreen();
     void drawResetScreen();
 
 private:
     Adafruit_SSD1306 m_display;
     int16_t m_currentLine;
+    bool m_isInitialized;
 
     void initializeDisplay();
     void resetDisplay();

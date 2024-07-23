@@ -15,7 +15,8 @@
 #include <SPI.h>
 
 DisplayRenderer::DisplayRenderer(std::shared_ptr<Configurator> configurator)
-    : m_display(Screen::WIDTH, Screen::HEIGHT, &SPI, configurator->getOledDcPin(), configurator->getOledResetPin(), configurator->getOledCsPin())
+    : m_display(Screen::WIDTH, Screen::HEIGHT, &SPI, configurator->getOledDcPin(), configurator->getOledResetPin(), configurator->getOledCsPin()),
+      m_isInitialized(false)
 {
     initializeDisplay();
 }
@@ -28,46 +29,78 @@ void DisplayRenderer::initializeDisplay()
         return;
     }
 
+    m_isInitialized = true;
     drawInitialScreen();
 }
 
 void DisplayRenderer::drawInitialScreen()
 {
-    resetDisplay();
-    drawHeading("Plant-Master");
-    drawTextLine("App by Lankow");
-    m_display.display();
+    if (m_isInitialized)
+    {
+        resetDisplay();
+        drawHeading("Plant-Master");
+        drawTextLine("App by Lankow");
+        m_display.display();
 
-    delay(3000);
+        delay(3000);
+    }
 }
 
 void DisplayRenderer::drawAccessPointScreen()
 {
-    resetDisplay();
-    drawHeading("Configure WiFi");
-    drawTextLine("SSID: ");
-    drawTextLine(Config::PAGE_SSID);
-    drawTextLine("Password:");
-    drawTextLine(Config::PAGE_PASSWORD);
-    m_display.display();
+    if (m_isInitialized)
+    {
+        resetDisplay();
+        drawHeading("Plant-Master Config");
+        drawTextLine("SSID: ");
+        drawTextLine(Config::PAGE_SSID);
+        drawTextLine("Password:");
+        drawTextLine(Config::PAGE_PASSWORD);
+        m_display.display();
 
-    delay(3000);
+        delay(3000);
+    }
 };
 
-void DisplayRenderer::drawWebSocketScreen() {};
+void DisplayRenderer::drawWebSocketScreen()
+{
+    if (m_isInitialized)
+    {
+        resetDisplay();
+        drawHeading("Plant-Master App");
+        drawTextLine("Application address:");
+        drawTextLine(Network::IP::LOCAL.toString().c_str());
+        m_display.display();
 
-void DisplayRenderer::drawHumidityScreen() {};
+        delay(3000);
+    }
+};
+
+void DisplayRenderer::drawHelpScreen()
+{
+    if (m_isInitialized)
+    {
+        resetDisplay();
+        drawHeading("Plant-Master Help");
+        m_display.display();
+
+        delay(3000);
+    }
+};
 
 void DisplayRenderer::drawResetScreen()
 {
-    for (int i = 3; i >= 0; i--)
+    if (m_isInitialized)
     {
-        resetDisplay();
-        drawHeading("Device Reset");
-        drawTextLine("Reset in " + std::to_string(i) + " seconds...");
-        m_display.display();
+        for (int i = 3; i >= 0; i--)
+        {
+            resetDisplay();
+            drawHeading("Plant-Master Reset");
+            drawTextLine("Reset in " + std::to_string(i) + " seconds...");
+            m_display.display();
 
-        delay(1000);
+            delay(1000);
+        }
     }
 };
 
@@ -86,7 +119,7 @@ void DisplayRenderer::drawTextLine(std::string text)
     m_display.setTextSize(1);
     m_display.setTextColor(SSD1306_WHITE);
 
-    m_display.setCursor(0, 16 + (m_currentLine++ * 8));
+    m_display.setCursor(0, 16 + (m_currentLine++ * 10));
     m_display.print(text.c_str());
 }
 
