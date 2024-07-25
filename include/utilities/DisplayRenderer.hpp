@@ -25,17 +25,21 @@ class DisplayRenderer
 public:
     explicit DisplayRenderer(std::shared_ptr<Configurator> configurator);
 
-    void drawInitialScreen();
-    void drawAccessPointScreen();
-    void drawWebSocketScreen();
-    void drawHelpScreen();
-    void drawResetScreen();
+    static Screen::Type displayedScreen;
+
+    void init();
+    void cyclic();
 
 private:
     Adafruit_SSD1306 m_display;
     int16_t m_currentLine;
     bool m_isInitialized;
 
+    void drawInitialScreen();
+    void drawConfigScreen();
+    void drawAppScreen();
+    void drawHelpScreen();
+    void drawResetScreen();
     void initializeDisplay();
     void resetDisplay();
     void drawHeading(const std::string &text);

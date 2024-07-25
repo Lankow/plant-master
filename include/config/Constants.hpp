@@ -51,6 +51,16 @@ namespace Screen
   constexpr int16_t HEADING_Y = 4;            /**< Heading offset on Y-axis. */
   constexpr int16_t HEADING_LINE_Y = 14;      /**< Heading line offset on Y-axis. */
   constexpr int16_t TEXT_SIZE = 1;            /**< Default Text size for screen. */
+
+  enum Type
+  {
+    None,
+    InitialScreen,
+    ResetScreen,
+    AppScreen,
+    ConfigScreen,
+    HelpScreen
+  };
 }
 
 namespace Network

@@ -47,7 +47,7 @@ private:
     std::shared_ptr<MQTTManager> m_mqttManager;
 
 #ifdef PLANT_MASTER
-    std::shared_ptr<DisplayRenderer> m_displayRenderer;
+    DisplayRenderer m_displayRenderer;
     ServerManager m_serverManager;
     WateringManager m_wateringManager;
 #else

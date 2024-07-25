@@ -14,13 +14,48 @@
 #include <Adafruit_GFX.h>
 #include <SPI.h>
 
+Screen::Type DisplayRenderer::displayedScreen = Screen::Type::None;
+
 DisplayRenderer::DisplayRenderer(std::shared_ptr<Configurator> configurator)
     : m_display(Screen::WIDTH, Screen::HEIGHT, &SPI, configurator->getOledDcPin(),
                 configurator->getOledResetPin(), configurator->getOledCsPin()),
       m_isInitialized(false),
       m_currentLine(0)
 {
+}
+
+void DisplayRenderer::init()
+{
     initializeDisplay();
+    DisplayRenderer::displayedScreen = Screen::Type::InitialScreen;
+}
+
+void DisplayRenderer::cyclic()
+{
+    if (m_isInitialized)
+    {
+        switch (displayedScreen)
+        {
+        case Screen::Type::InitialScreen:
+            drawInitialScreen();
+            break;
+        case Screen::Type::AppScreen:
+            drawAppScreen();
+            break;
+        case Screen::Type::HelpScreen:
+            drawHelpScreen();
+            break;
+        case Screen::Type::ConfigScreen:
+            drawConfigScreen();
+            break;
+        case Screen::Type::ResetScreen:
+            drawResetScreen();
+            break;
+        case Screen::Type::None:
+        default:
+            resetDisplay();
+        }
+    }
 }
 
 void DisplayRenderer::initializeDisplay()
@@ -30,71 +65,56 @@ void DisplayRenderer::initializeDisplay()
         m_display.println(F("SSD1306 allocation failed"));
         return;
     }
+
     m_isInitialized = true;
-    drawInitialScreen();
 }
 
 void DisplayRenderer::drawInitialScreen()
 {
-    if (m_isInitialized)
-    {
-        resetDisplay();
-        drawHeading("Plant-Master");
-        drawTextLine("App by Lankow");
-        m_display.display();
-        delay(Screen::INITIAL_DURATION);
-    }
+    resetDisplay();
+    drawHeading("Plant-Master");
+    drawTextLine("App by Lankow");
+    m_display.display();
+    delay(Screen::INITIAL_DURATION);
 }
 
-void DisplayRenderer::drawAccessPointScreen()
+void DisplayRenderer::drawConfigScreen()
 {
-    if (m_isInitialized)
-    {
-        resetDisplay();
-        drawHeading("Plant-Master Config");
-        drawTextLine("SSID: " + Config::PAGE_SSID);
-        drawTextLine("Password: " + Config::PAGE_PASSWORD);
-        m_display.display();
-        delay(Screen::INITIAL_DURATION);
-    }
+    resetDisplay();
+    drawHeading("Plant-Master Config");
+    drawTextLine("SSID: " + Config::PAGE_SSID);
+    drawTextLine("Password: " + Config::PAGE_PASSWORD);
+    m_display.display();
+    delay(Screen::INITIAL_DURATION);
 }
 
-void DisplayRenderer::drawWebSocketScreen()
+void DisplayRenderer::drawAppScreen()
 {
-    if (m_isInitialized)
-    {
-        resetDisplay();
-        drawHeading("Plant-Master App");
-        drawTextLine("Application address:");
-        drawTextLine(Network::IP::LOCAL.toString().c_str());
-        m_display.display();
-        delay(Screen::INITIAL_DURATION);
-    }
+    resetDisplay();
+    drawHeading("Plant-Master App");
+    drawTextLine("Application address:");
+    drawTextLine(Network::IP::LOCAL.toString().c_str());
+    m_display.display();
+    delay(Screen::INITIAL_DURATION);
 }
 
 void DisplayRenderer::drawHelpScreen()
 {
-    if (m_isInitialized)
-    {
-        resetDisplay();
-        drawHeading("Plant-Master Help");
-        m_display.display();
-        delay(Screen::INITIAL_DURATION);
-    }
+    resetDisplay();
+    drawHeading("Plant-Master Help");
+    m_display.display();
+    delay(Screen::INITIAL_DURATION);
 }
 
 void DisplayRenderer::drawResetScreen()
 {
-    if (m_isInitialized)
+    for (int i = 3; i >= 0; --i)
     {
-        for (int i = 3; i >= 0; --i)
-        {
-            resetDisplay();
-            drawHeading("Plant-Master Reset");
-            drawTextLine("Reset in " + std::to_string(i) + " seconds...");
-            m_display.display();
-            delay(1000);
-        }
+        resetDisplay();
+        drawHeading("Plant-Master Reset");
+        drawTextLine("Reset in " + std::to_string(i) + " seconds...");
+        m_display.display();
+        delay(1000);
     }
 }
 
