@@ -18,7 +18,14 @@
 ResetHandler::ResetHandler()
     : m_pressedCounter(ResetButton::DEFAULT_TIME),
       m_resetButton(ResetButton::PIN),
-      m_resetButtonPressed(false) {}
+      m_resetButtonPressed(false),
+      m_displayRenderer(nullptr) {}
+
+ResetHandler::ResetHandler(std::shared_ptr<DisplayRenderer> displayRenderer)
+    : m_pressedCounter(ResetButton::DEFAULT_TIME),
+      m_resetButton(ResetButton::PIN),
+      m_resetButtonPressed(false),
+      m_displayRenderer(displayRenderer) {}
 
 void ResetHandler::init()
 {
@@ -30,7 +37,8 @@ void ResetHandler::cyclic()
     if (m_resetButtonPressed && m_pressedCounter > ResetButton::THRESHOLD_TIME_MS)
     {
         Serial.println("Performing reset for target..");
-        performReset();
+        m_displayRenderer->displayScreen(Screen::Type::ResetScreen);
+        // performReset();
     }
 
     if (m_resetButton.pressed())

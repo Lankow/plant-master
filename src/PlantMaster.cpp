@@ -15,22 +15,23 @@
 PlantMaster::PlantMaster(std::shared_ptr<Configurator> configurator)
     : m_isInitialized(false),
       m_wiFiInitializer(),
-      m_resetHandler(),
       m_configurator(std::move(configurator)),
 #ifdef PLANT_MASTER
+      m_displayRenderer(std::make_shared<DisplayRenderer>(m_configurator)),
       m_dataStorage(std::make_shared<DataStorage>(m_configurator)),
       m_dataHandler(std::make_shared<DataHandler>(m_dataStorage)),
       m_serverManager(m_dataStorage),
       m_mqttManager(std::make_shared<MQTTManager>(m_dataHandler, m_configurator)),
       m_wateringManager(m_dataStorage, m_mqttManager),
-      m_displayRenderer(m_configurator)
+      m_resetHandler(m_displayRenderer)
 #else
       m_dataStorage(std::make_shared<DataStorage>()),
       m_dataHandler(std::make_shared<DataHandler>(m_dataStorage)),
       m_mqttManager(std::make_shared<MQTTManager>(m_dataHandler)),
       m_dhtReader(m_configurator, m_mqttManager),
       m_plantHumidityHandler(m_configurator, m_mqttManager, m_dataStorage),
-      m_waterPumpController(m_configurator, m_dataStorage)
+      m_waterPumpController(m_configurator, m_dataStorage),
+      m_resetHandler()
 #endif
 {
 }
@@ -38,7 +39,7 @@ PlantMaster::PlantMaster(std::shared_ptr<Configurator> configurator)
 bool PlantMaster::init()
 {
 #ifdef PLANT_MASTER
-    m_displayRenderer.init();
+    m_displayRenderer->init();
 #endif
 
     if (!m_wiFiInitializer.init())
@@ -65,9 +66,6 @@ bool PlantMaster::init()
 void PlantMaster::cyclic()
 {
     m_resetHandler.cyclic();
-#ifdef PLANT_MASTER
-    m_displayRenderer.cyclic();
-#endif
 
     if (m_isInitialized)
     {

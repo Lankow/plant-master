@@ -10,11 +10,9 @@
  * including the initial screen, configuration screen, and connected screen.
  */
 
-#include "utilities/DisplayRenderer.hpp"
 #include <Adafruit_GFX.h>
 #include <SPI.h>
-
-Screen::Type DisplayRenderer::displayedScreen = Screen::Type::None;
+#include "utilities/DisplayRenderer.hpp"
 
 DisplayRenderer::DisplayRenderer(std::shared_ptr<Configurator> configurator)
     : m_display(Screen::WIDTH, Screen::HEIGHT, &SPI, configurator->getOledDcPin(),
@@ -24,43 +22,53 @@ DisplayRenderer::DisplayRenderer(std::shared_ptr<Configurator> configurator)
 {
 }
 
-void DisplayRenderer::displayScreen(Screen::Type screenToDisplay)
-{
-    displayedScreen = screenToDisplay;
-}
-
 void DisplayRenderer::init()
 {
     initializeDisplay();
     displayScreen(Screen::Type::InitialScreen);
 }
 
-void DisplayRenderer::cyclic()
+void DisplayRenderer::displayScreen(Screen::Type screenToDisplay)
 {
     if (m_isInitialized)
     {
-        switch (displayedScreen)
+        resetDisplay();
+        switch (screenToDisplay)
         {
         case Screen::Type::InitialScreen:
-            drawInitialScreen();
+            drawHeading("Plant-Master");
+            drawTextLine("App by Lankow");
             break;
         case Screen::Type::AppScreen:
-            drawAppScreen();
+            drawHeading("Plant-Master App");
+            drawTextLine("Application address:");
+            drawTextLine(Network::IP::LOCAL.toString().c_str());
             break;
         case Screen::Type::HelpScreen:
-            drawHelpScreen();
+            drawHeading("Plant-Master Help");
             break;
         case Screen::Type::ConfigScreen:
-            drawConfigScreen();
+            drawHeading("Plant-Master Config");
+            drawTextLine("SSID: " + Config::PAGE_SSID);
+            drawTextLine("Password: " + Config::PAGE_PASSWORD);
+            break;
+        case Screen::Type::ErrorScreen:
+            drawHeading("Plant-Master Error");
+            drawTextLine("Error: ");
             break;
         case Screen::Type::ResetScreen:
-            drawResetScreen();
-            break;
-        case Screen::Type::None:
-        default:
-            resetDisplay();
+            for (int i = 3; i >= 0; --i)
+            {
+                resetDisplay();
+                drawHeading("Plant-Master Reset");
+                drawTextLine("Reset in " + std::to_string(i) + " seconds...");
+                m_display.display();
+                delay(1000);
+            }
+            return;
         }
     }
+    m_display.display();
 }
 
 void DisplayRenderer::initializeDisplay()
@@ -72,64 +80,6 @@ void DisplayRenderer::initializeDisplay()
     }
 
     m_isInitialized = true;
-}
-
-void DisplayRenderer::drawInitialScreen()
-{
-    resetDisplay();
-    drawHeading("Plant-Master");
-    drawTextLine("App by Lankow");
-    m_display.display();
-    delay(Screen::INITIAL_DURATION);
-}
-
-void DisplayRenderer::drawConfigScreen()
-{
-    resetDisplay();
-    drawHeading("Plant-Master Config");
-    drawTextLine("SSID: " + Config::PAGE_SSID);
-    drawTextLine("Password: " + Config::PAGE_PASSWORD);
-    m_display.display();
-    delay(Screen::INITIAL_DURATION);
-}
-
-void DisplayRenderer::drawAppScreen()
-{
-    resetDisplay();
-    drawHeading("Plant-Master App");
-    drawTextLine("Application address:");
-    drawTextLine(Network::IP::LOCAL.toString().c_str());
-    m_display.display();
-    delay(Screen::INITIAL_DURATION);
-}
-
-void DisplayRenderer::drawHelpScreen()
-{
-    resetDisplay();
-    drawHeading("Plant-Master Help");
-    m_display.display();
-    delay(Screen::INITIAL_DURATION);
-}
-
-void DisplayRenderer::drawResetScreen()
-{
-    for (int i = 3; i >= 0; --i)
-    {
-        resetDisplay();
-        drawHeading("Plant-Master Reset");
-        drawTextLine("Reset in " + std::to_string(i) + " seconds...");
-        m_display.display();
-        delay(1000);
-    }
-}
-
-void DisplayRenderer::drawErrorScreen()
-{
-    resetDisplay();
-    drawHeading("Plant-Master Error");
-    drawTextLine("Error: ");
-    m_display.display();
-    delay(Screen::INITIAL_DURATION);
 }
 
 void DisplayRenderer::drawHeading(const std::string &text)
@@ -160,5 +110,4 @@ void DisplayRenderer::resetDisplay()
 {
     m_display.clearDisplay();
     m_currentLine = 0;
-    m_display.display();
 }

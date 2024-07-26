@@ -152,5 +152,4 @@ void WiFiInitializer::setupAccessPoint()
 
     m_server.begin();
     Serial.println(m_apIP.toString());
-    DisplayRenderer::displayScreen(Screen::Type::ConfigScreen);
 }

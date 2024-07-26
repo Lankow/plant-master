@@ -14,16 +14,20 @@
 
 #include <Arduino.h>
 #include <Button.h>
+#include <memory>
+#include <utilities/DisplayRenderer.hpp>
 
 class ResetHandler
 {
 public:
     ResetHandler();
+    ResetHandler(std::shared_ptr<DisplayRenderer> displayRenderer);
 
     void init();
     void cyclic();
 
 private:
+    std::shared_ptr<DisplayRenderer> m_displayRenderer;
     uint16_t m_pressedCounter;
     Button m_resetButton;
     bool m_resetButtonPressed;

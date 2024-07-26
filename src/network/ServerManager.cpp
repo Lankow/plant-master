@@ -32,12 +32,10 @@ void ServerManager::init()
   {
     Serial.println("Initializing Server...");
     initServer();
-    DisplayRenderer::displayScreen(Screen::Type::AppScreen);
   }
   else
   {
     Serial.println("WiFi not connected. Server initialization aborted.");
-    DisplayRenderer::displayScreen(Screen::Type::ErrorScreen);
   }
 }
 

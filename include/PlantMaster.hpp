@@ -38,7 +38,6 @@ public:
 
 private:
     WiFiInitializer m_wiFiInitializer;
-    ResetHandler m_resetHandler;
     bool m_isInitialized;
 
     std::shared_ptr<Configurator> m_configurator;
@@ -47,7 +46,7 @@ private:
     std::shared_ptr<MQTTManager> m_mqttManager;
 
 #ifdef PLANT_MASTER
-    DisplayRenderer m_displayRenderer;
+    std::shared_ptr<DisplayRenderer> m_displayRenderer;
     ServerManager m_serverManager;
     WateringManager m_wateringManager;
 #else
@@ -55,6 +54,7 @@ private:
     WaterPumpController m_waterPumpController;
     DHTReader m_dhtReader;
 #endif
+    ResetHandler m_resetHandler;
 };
 
 #endif // PLANT_MASTER_HPP
