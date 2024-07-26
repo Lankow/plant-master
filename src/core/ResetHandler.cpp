@@ -13,6 +13,7 @@
 #include <Preferences.h>
 #include "core/ResetHandler.hpp"
 #include "config/Constants.hpp"
+#include "utilities/DisplayRenderer.hpp"
 
 ResetHandler::ResetHandler()
     : m_pressedCounter(ResetButton::DEFAULT_TIME),

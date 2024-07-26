@@ -24,10 +24,15 @@ DisplayRenderer::DisplayRenderer(std::shared_ptr<Configurator> configurator)
 {
 }
 
+void DisplayRenderer::displayScreen(Screen::Type screenToDisplay)
+{
+    displayedScreen = screenToDisplay;
+}
+
 void DisplayRenderer::init()
 {
     initializeDisplay();
-    DisplayRenderer::displayedScreen = Screen::Type::InitialScreen;
+    displayScreen(Screen::Type::InitialScreen);
 }
 
 void DisplayRenderer::cyclic()
@@ -116,6 +121,15 @@ void DisplayRenderer::drawResetScreen()
         m_display.display();
         delay(1000);
     }
+}
+
+void DisplayRenderer::drawErrorScreen()
+{
+    resetDisplay();
+    drawHeading("Plant-Master Error");
+    drawTextLine("Error: ");
+    m_display.display();
+    delay(Screen::INITIAL_DURATION);
 }
 
 void DisplayRenderer::drawHeading(const std::string &text)

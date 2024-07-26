@@ -17,6 +17,7 @@
 #include <AsyncWebSocket.h>
 #include "network/ServerManager.hpp"
 #include "config/Constants.hpp"
+#include "utilities/DisplayRenderer.hpp"
 
 ServerManager::ServerManager(std::shared_ptr<DataStorage> dataStorage)
     : m_server(Network::Ports::ASYNC_SERVER),
@@ -31,10 +32,12 @@ void ServerManager::init()
   {
     Serial.println("Initializing Server...");
     initServer();
+    DisplayRenderer::displayScreen(Screen::Type::AppScreen);
   }
   else
   {
     Serial.println("WiFi not connected. Server initialization aborted.");
+    DisplayRenderer::displayScreen(Screen::Type::ErrorScreen);
   }
 }
 

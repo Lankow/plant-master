@@ -11,6 +11,7 @@
  */
 #include "network/WiFiInitializer.hpp"
 #include "config/Constants.hpp"
+#include "utilities/DisplayRenderer.hpp"
 
 WiFiInitializer::WiFiInitializer() : m_preferences(), m_server(Network::Ports::ASYNC_SERVER) {}
 
@@ -151,4 +152,5 @@ void WiFiInitializer::setupAccessPoint()
 
     m_server.begin();
     Serial.println(m_apIP.toString());
+    DisplayRenderer::displayScreen(Screen::Type::ConfigScreen);
 }

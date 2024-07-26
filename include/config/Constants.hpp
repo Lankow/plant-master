@@ -59,7 +59,8 @@ namespace Screen
     ResetScreen,
     AppScreen,
     ConfigScreen,
-    HelpScreen
+    HelpScreen,
+    ErrorScreen
   };
 }
 
