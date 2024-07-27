@@ -15,7 +15,7 @@
 #include <Arduino.h>
 #include <Button.h>
 #include <memory>
-#include <utilities/DisplayRenderer.hpp>
+#include "utilities/DisplayRenderer.hpp"
 
 class ResetHandler
 {
@@ -31,8 +31,11 @@ private:
     uint16_t m_pressedCounter;
     Button m_resetButton;
     bool m_resetButtonPressed;
+    unsigned long m_lastPressTime;
+    bool m_doubleClickDetected;
 
     void performReset();
+    void onDoubleClick();
 };
 
 #endif // RESET_HANDLER_HPP

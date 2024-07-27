@@ -45,15 +45,18 @@ bool PlantMaster::init()
     if (!m_wiFiInitializer.init())
     {
         Serial.println("Failed to initialize WiFi");
+#ifdef PLANT_MASTER
+        m_displayRenderer->displayScreen(Screen::Type::ConfigScreen);
+#endif
         return false;
     }
-
     Serial.println("Connected to WiFi successfully.");
     m_mqttManager->init();
     m_resetHandler.init();
 
 #ifdef PLANT_MASTER
     m_serverManager.init();
+    m_displayRenderer->displayScreen(Screen::Type::AppScreen);
 #else
     m_waterPumpController.init();
     m_dhtReader.init();

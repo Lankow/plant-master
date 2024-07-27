@@ -20,6 +20,13 @@
 #include "config/Constants.hpp"
 #include "config/Configurator.hpp"
 
+#include <memory>
+#include <string>
+#include <Wire.h>
+#include <Adafruit_SSD1306.h>
+#include "config/Constants.hpp"
+#include "config/Configurator.hpp"
+
 class DisplayRenderer
 {
 public:
@@ -37,6 +44,12 @@ private:
     void resetDisplay();
     void drawHeading(const std::string &text);
     void drawTextLine(const std::string &text);
+    void drawInitialScreen();
+    void drawAppScreen();
+    void drawHelpScreen();
+    void drawConfigScreen();
+    void drawErrorScreen();
+    void drawResetScreen();
 };
 
 #endif // DISPLAY_RENDERER_HPP

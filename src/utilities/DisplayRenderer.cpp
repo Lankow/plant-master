@@ -30,43 +30,33 @@ void DisplayRenderer::init()
 
 void DisplayRenderer::displayScreen(Screen::Type screenToDisplay)
 {
-    if (m_isInitialized)
+    if (!m_isInitialized)
     {
-        resetDisplay();
-        switch (screenToDisplay)
-        {
-        case Screen::Type::InitialScreen:
-            drawHeading("Plant-Master");
-            drawTextLine("App by Lankow");
-            break;
-        case Screen::Type::AppScreen:
-            drawHeading("Plant-Master App");
-            drawTextLine("Application address:");
-            drawTextLine(Network::IP::LOCAL.toString().c_str());
-            break;
-        case Screen::Type::HelpScreen:
-            drawHeading("Plant-Master Help");
-            break;
-        case Screen::Type::ConfigScreen:
-            drawHeading("Plant-Master Config");
-            drawTextLine("SSID: " + Config::PAGE_SSID);
-            drawTextLine("Password: " + Config::PAGE_PASSWORD);
-            break;
-        case Screen::Type::ErrorScreen:
-            drawHeading("Plant-Master Error");
-            drawTextLine("Error: ");
-            break;
-        case Screen::Type::ResetScreen:
-            for (int i = 3; i >= 0; --i)
-            {
-                resetDisplay();
-                drawHeading("Plant-Master Reset");
-                drawTextLine("Reset in " + std::to_string(i) + " seconds...");
-                m_display.display();
-                delay(1000);
-            }
-            return;
-        }
+        return;
+    }
+
+    resetDisplay();
+
+    switch (screenToDisplay)
+    {
+    case Screen::Type::InitialScreen:
+        drawInitialScreen();
+        break;
+    case Screen::Type::AppScreen:
+        drawAppScreen();
+        break;
+    case Screen::Type::HelpScreen:
+        drawHelpScreen();
+        break;
+    case Screen::Type::ConfigScreen:
+        drawConfigScreen();
+        break;
+    case Screen::Type::ErrorScreen:
+        drawErrorScreen();
+        break;
+    case Screen::Type::ResetScreen:
+        drawResetScreen();
+        return;
     }
     m_display.display();
 }
@@ -110,4 +100,47 @@ void DisplayRenderer::resetDisplay()
 {
     m_display.clearDisplay();
     m_currentLine = 0;
+}
+
+void DisplayRenderer::drawInitialScreen()
+{
+    drawHeading("Plant-Master");
+    drawTextLine("App by Lankow");
+}
+
+void DisplayRenderer::drawAppScreen()
+{
+    drawHeading("Plant-Master App");
+    drawTextLine("Application address:");
+    drawTextLine(Network::IP::LOCAL.toString().c_str());
+}
+
+void DisplayRenderer::drawHelpScreen()
+{
+    drawHeading("Plant-Master Help");
+}
+
+void DisplayRenderer::drawConfigScreen()
+{
+    drawHeading("Plant-Master Config");
+    drawTextLine("SSID: " + Config::PAGE_SSID);
+    drawTextLine("Password: " + Config::PAGE_PASSWORD);
+}
+
+void DisplayRenderer::drawErrorScreen()
+{
+    drawHeading("Plant-Master Error");
+    drawTextLine("Plant master encountered an error. See logs for more information.");
+}
+
+void DisplayRenderer::drawResetScreen()
+{
+    for (int i = 3; i >= 0; --i)
+    {
+        resetDisplay();
+        drawHeading("Plant-Master Reset");
+        drawTextLine("Reset in " + std::to_string(i) + " seconds...");
+        m_display.display();
+        delay(1000);
+    }
 }

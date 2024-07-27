@@ -24,6 +24,7 @@ namespace ResetButton
   constexpr uint16_t PIN = 0;                  /**< Pin number for the reset button. */
   constexpr uint16_t THRESHOLD_TIME_MS = 3000; /**< Threshold time in milliseconds for the reset button. */
   constexpr uint16_t DEFAULT_TIME = 0;         /**< Default time for the reset button. */
+  const int DOUBLE_CLICK_THRESHOLD_MS = 1000;  /**< Time window for double click detection */
 }
 
 namespace HumiditySensor
