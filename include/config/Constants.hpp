@@ -43,15 +43,15 @@ namespace Room
 
 namespace Screen
 {
-  constexpr uint16_t INITIAL_DURATION = 3000; /**< Initial screen duration in milliseconds. */
-  constexpr uint8_t WIDTH = 128;              /**< OLED Screen Width. */
-  constexpr uint8_t HEIGHT = 64;              /**< OLED Screen Height. */
-  constexpr int16_t TEXT_X = 0;               /**< Text offset on X-axis. */
-  constexpr int16_t TEXT_Y = 16;              /**< Text offset on Y-axis. */
-  constexpr int16_t HEADING_X = 0;            /**< Heading offset on X-axis. */
-  constexpr int16_t HEADING_Y = 4;            /**< Heading offset on Y-axis. */
-  constexpr int16_t HEADING_LINE_Y = 14;      /**< Heading line offset on Y-axis. */
-  constexpr int16_t TEXT_SIZE = 1;            /**< Default Text size for screen. */
+  constexpr uint16_t SCREEN_DURATION = 3000; /**< Screen duration in milliseconds. */
+  constexpr uint8_t WIDTH = 128;             /**< OLED Screen Width. */
+  constexpr uint8_t HEIGHT = 64;             /**< OLED Screen Height. */
+  constexpr int16_t TEXT_X = 0;              /**< Text offset on X-axis. */
+  constexpr int16_t TEXT_Y = 16;             /**< Text offset on Y-axis. */
+  constexpr int16_t HEADING_X = 0;           /**< Heading offset on X-axis. */
+  constexpr int16_t HEADING_Y = 4;           /**< Heading offset on Y-axis. */
+  constexpr int16_t HEADING_LINE_Y = 14;     /**< Heading line offset on Y-axis. */
+  constexpr int16_t TEXT_SIZE = 1;           /**< Default Text size for screen. */
 
   enum Type
   {

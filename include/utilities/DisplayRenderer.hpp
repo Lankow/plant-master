@@ -33,11 +33,13 @@ public:
     explicit DisplayRenderer(std::shared_ptr<Configurator> configurator);
 
     void init();
+    void cyclic();
     void displayScreen(Screen::Type screenToDisplay);
 
 private:
     Adafruit_SSD1306 m_display;
     int16_t m_currentLine;
+    int16_t m_screenTimeCounter;
     bool m_isInitialized;
 
     void initializeDisplay();

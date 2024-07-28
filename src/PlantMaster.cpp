@@ -68,6 +68,9 @@ bool PlantMaster::init()
 
 void PlantMaster::cyclic()
 {
+#ifdef PLANT_MASTER
+    m_displayRenderer->cyclic();
+#endif
     m_resetHandler.cyclic();
 
     if (m_isInitialized)
@@ -76,6 +79,7 @@ void PlantMaster::cyclic()
 #ifdef PLANT_MASTER
         m_serverManager.cyclic();
         m_wateringManager.cyclic();
+        m_displayRenderer->displayScreen(Screen::Type::AppScreen);
 #else
         m_dhtReader.cyclic();
         m_plantHumidityHandler.cyclic();

@@ -69,7 +69,7 @@ void ResetHandler::cyclic()
         {
             Serial.println("Performing reset for target..");
             m_displayRenderer->displayScreen(Screen::Type::ResetScreen);
-            // performReset();
+            performReset();
         }
     }
 
@@ -84,6 +84,7 @@ void ResetHandler::performReset()
     Preferences preferences;
     if (!preferences.begin("wifi-config", false))
     {
+        m_displayRenderer->displayScreen(Screen::Type::ErrorScreen);
         Serial.println("Failed to open NVS namespace.");
         return;
     }

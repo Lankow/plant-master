@@ -18,6 +18,7 @@ DisplayRenderer::DisplayRenderer(std::shared_ptr<Configurator> configurator)
     : m_display(Screen::WIDTH, Screen::HEIGHT, &SPI, configurator->getOledDcPin(),
                 configurator->getOledResetPin(), configurator->getOledCsPin()),
       m_isInitialized(false),
+      m_screenTimeCounter(0),
       m_currentLine(0)
 {
 }
@@ -28,9 +29,14 @@ void DisplayRenderer::init()
     displayScreen(Screen::Type::InitialScreen);
 }
 
+void DisplayRenderer::cyclic()
+{
+    m_screenTimeCounter -= Config::CYCLE_TIME_MS;
+}
+
 void DisplayRenderer::displayScreen(Screen::Type screenToDisplay)
 {
-    if (!m_isInitialized)
+    if (!m_isInitialized || m_screenTimeCounter > 0)
     {
         return;
     }
@@ -118,6 +124,8 @@ void DisplayRenderer::drawAppScreen()
 void DisplayRenderer::drawHelpScreen()
 {
     drawHeading("Plant-Master Help");
+    drawTextLine("Hold boot button to reset device settings.Use Plant-Master web app to update config.");
+    m_screenTimeCounter = Screen::SCREEN_DURATION;
 }
 
 void DisplayRenderer::drawConfigScreen()
@@ -131,6 +139,7 @@ void DisplayRenderer::drawErrorScreen()
 {
     drawHeading("Plant-Master Error");
     drawTextLine("Plant master encountered an error. See logs for more information.");
+    m_screenTimeCounter = Screen::SCREEN_DURATION;
 }
 
 void DisplayRenderer::drawResetScreen()
