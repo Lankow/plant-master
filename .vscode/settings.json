@@ -73,5 +73,33 @@
     "any": "cpp",
     "variant": "cpp"
   },
-  "cmake.configureOnOpen": false
+  "cmake.configureOnOpen": false,
+  "actionButtons": {
+    "commands": [
+      {
+        "name": "$(tools) Build Plant-Master",
+        "color": "#5ea651",
+        "command": "pio run -a DPLANT_MASTER",
+      },
+      {
+        "name": "$(tools) Build Plant-Monitor",
+        "color": "#d9d893",
+        "command": "pio run",
+      },
+      {
+        "cwd": "/plant-master-client", 
+        "name": "$(notebook-mimetype) Build Web-App",
+        "color": "#ba874c",
+        "command": "",
+      },
+      {
+        "name": "$(arrow-right) Upload",
+        "color": "#5c92bf",
+        "command": "pio run -t nobuild -t upload",
+      },
+    ],
+    "defaultColor": "white",
+    "reloadButton": "↻",
+    "loadNpmCommands": false
+}
 }
