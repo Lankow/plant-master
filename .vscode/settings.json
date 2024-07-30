@@ -74,32 +74,76 @@
     "variant": "cpp"
   },
   "cmake.configureOnOpen": false,
-  "actionButtons": {
-    "commands": [
-      {
-        "name": "$(tools) Build Plant-Master",
-        "color": "#5ea651",
-        "command": "pio run -a DPLANT_MASTER",
-      },
-      {
-        "name": "$(tools) Build Plant-Monitor",
-        "color": "#d9d893",
-        "command": "pio run",
-      },
-      {
-        "cwd": "/plant-master-client", 
-        "name": "$(notebook-mimetype) Build Web-App",
-        "color": "#ba874c",
-        "command": "",
-      },
-      {
-        "name": "$(arrow-right) Upload",
-        "color": "#5c92bf",
-        "command": "pio run -t nobuild -t upload",
-      },
-    ],
-    "defaultColor": "white",
-    "reloadButton": "↻",
-    "loadNpmCommands": false
-}
+  "platformio-ide.toolbar": [
+    {
+      "text": "$(tools) Build Plant-Master",
+      "tooltip": "Build the Plant-Master environment",
+      "commands": [
+        {
+          "id": "platformio-ide.runPIOCoreCommand",
+          "args": "pio run -e plant-master"
+        }
+      ]
+    },
+    {
+      "text": "$(tools) Build Plant-Monitor",
+      "tooltip": "Build the Plant-Monitor environment",
+      "commands": [
+        {
+          "id": "platformio-ide.runPIOCoreCommand",
+          "args": "pio run -e plant-monitor"
+        }
+      ]
+    },
+    {
+      "text": "$(tools) Build FS Plant-Master",
+      "tooltip": "Build filesystem for the Plant-Master environment",
+      "commands": [
+        {
+          "id": "platformio-ide.runPIOCoreCommand",
+          "args": "pio run -t buildfs -e plant-master"
+        }
+      ]
+    },
+    {
+      "text": "$(tools) Build FS Plant-Monitor",
+      "tooltip": "Build filesystem for the Plant-Monitor environment",
+      "commands": [
+        {
+          "id": "platformio-ide.runPIOCoreCommand",
+          "args": "pio run -t buildfs -e plant-monitor"
+        }
+      ]
+    },
+    {
+      "text": "$(arrow-right) Upload",
+      "tooltip": "Upload to the active environment",
+      "commands": [
+        {
+          "id": "platformio-ide.runPIOCoreCommand",
+          "args": "pio run -t nobuild -t upload"
+        }
+      ]
+    },
+    {
+      "text": "$(trash) Clean All",
+      "tooltip": "Clean all environments",
+      "commands": [
+        {
+          "id": "platformio-ide.runPIOCoreCommand",
+          "args": "pio run -t clean"
+        }
+      ]
+    },
+    {
+      "text": "$(plug) Serial Monitor",
+      "tooltip": "Open Serial Monitor",
+      "commands": [
+        {
+          "id": "platformio-ide.runPIOCoreCommand",
+          "args": "platformio-ide.serialMonitor"
+        }
+      ]
+    }
+  ]
 }
