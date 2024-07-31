@@ -1,3 +1,4 @@
+Import("env") # type: ignore
 import os
 import shutil
 
@@ -37,4 +38,6 @@ def createClientApp():
     # Change back to the original directory
     os.chdir('..')
 
-createClientApp()
+program_args = env['PROGRAM_ARGS'] # type: ignore
+if('runExtraScripts' in program_args):
+    createClientApp()

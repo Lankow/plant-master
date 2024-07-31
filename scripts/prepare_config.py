@@ -240,6 +240,8 @@ def inspect_fields(data):
     else:
         print("The JSON data is not an object (dictionary).")
 
-print("---------------------")
-handle_config()
-print("---------------------")
+program_args = env['PROGRAM_ARGS'] # type: ignore
+if('runExtraScripts' in program_args):
+    print("---------------------")
+    handle_config()
+    print("---------------------")

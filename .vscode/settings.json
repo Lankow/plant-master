@@ -81,7 +81,7 @@
       "commands": [
         {
           "id": "platformio-ide.runPIOCoreCommand",
-          "args": "pio run -e plant-master"
+          "args": "pio run -e plant-master -a 'runExtraScripts'"
         }
       ]
     },
@@ -91,7 +91,7 @@
       "commands": [
         {
           "id": "platformio-ide.runPIOCoreCommand",
-          "args": "pio run -e plant-monitor"
+          "args": "pio run -e plant-monitor -a 'runExtraScripts'"
         }
       ]
     },
