@@ -129,7 +129,7 @@
       "commands": [
         {
           "id": "platformio-ide.runPIOCoreCommand",
-          "args": "platformio-ide.serialMonitor"
+          "args": "pio device monitor --environment plant-master "
         }
       ]
     }
