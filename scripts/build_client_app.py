@@ -39,5 +39,5 @@ def createClientApp():
     os.chdir('..')
 
 program_args = env['PROGRAM_ARGS'] # type: ignore
-if('runExtraScripts' in program_args):
+if('runExtraScripts' in program_args and 'plant-master' in program_args):
     createClientApp()

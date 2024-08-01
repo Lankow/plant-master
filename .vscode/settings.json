@@ -81,7 +81,11 @@
       "commands": [
         {
           "id": "platformio-ide.runPIOCoreCommand",
-          "args": "pio run -e plant-master -a 'runExtraScripts'"
+          "args": "pio run -e plant-master -a 'plant-master' -a 'runExtraScripts'"
+        },
+        {
+          "id": "platformio-ide.runPIOCoreCommand",
+          "args": "pio run -t buildfs -e plant-master"
         }
       ]
     },
@@ -91,27 +95,11 @@
       "commands": [
         {
           "id": "platformio-ide.runPIOCoreCommand",
-          "args": "pio run -e plant-monitor -a 'runExtraScripts'"
-        }
-      ]
-    },
-    {
-      "text": "$(tools) Build FS Plant-Master",
-      "tooltip": "Build filesystem for the Plant-Master environment",
-      "commands": [
+          "args": "pio run -e plant-master -a 'plant-monitor' -a 'runExtraScripts'"
+        },
         {
           "id": "platformio-ide.runPIOCoreCommand",
           "args": "pio run -t buildfs -e plant-master"
-        }
-      ]
-    },
-    {
-      "text": "$(tools) Build FS Plant-Monitor",
-      "tooltip": "Build filesystem for the Plant-Monitor environment",
-      "commands": [
-        {
-          "id": "platformio-ide.runPIOCoreCommand",
-          "args": "pio run -t buildfs -e plant-monitor"
         }
       ]
     },
