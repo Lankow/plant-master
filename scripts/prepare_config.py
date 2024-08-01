@@ -49,7 +49,7 @@ def handle_config():
     """
     print("Initializing configuration...")
 
-    cpp_defines = env["CPPDEFINES"] # type: ignore
+    cpp_defines = env.ParseFlags(env['BUILD_FLAGS']).get("CPPDEFINES") # type: ignore
 
     if os.path.isfile(CONFIG_NAME):
         validate_config(CONFIG_NAME)
@@ -243,6 +243,4 @@ def inspect_fields(data):
 
 program_args = env['PROGRAM_ARGS']  # type: ignore
 if 'runExtraScripts' in program_args:
-    if 'plant-master' in program_args:
-        env.Append(CPPDEFINES=[("PLANT_MASTER")])  # type: ignore
     handle_config()

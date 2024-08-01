@@ -81,11 +81,21 @@
       "commands": [
         {
           "id": "platformio-ide.runPIOCoreCommand",
-          "args": "pio run -e plant-master -a 'plant-master' -a 'runExtraScripts'"
+          "args": "pio run -e plant-master -a 'runExtraScripts'"
         },
         {
           "id": "platformio-ide.runPIOCoreCommand",
           "args": "pio run -t buildfs -e plant-master"
+        }
+      ]
+    },
+    {
+      "text": "$(arrow-right) Upload Plant-Master",
+      "tooltip": "Upload the Plant-Master environment",
+      "commands": [
+        {
+          "id": "platformio-ide.runPIOCoreCommand",
+          "args": "pio run -e plant-master -t nobuild -t upload"
         }
       ]
     },
@@ -95,21 +105,21 @@
       "commands": [
         {
           "id": "platformio-ide.runPIOCoreCommand",
-          "args": "pio run -e plant-master -a 'plant-monitor' -a 'runExtraScripts'"
+          "args": "pio run -e plant-monitor -a 'runExtraScripts'"
         },
         {
           "id": "platformio-ide.runPIOCoreCommand",
-          "args": "pio run -t buildfs -e plant-master"
+          "args": "pio run -t buildfs -e plant-monitor"
         }
       ]
     },
     {
-      "text": "$(arrow-right) Upload",
-      "tooltip": "Upload to the active environment",
+      "text": "$(arrow-right) Upload Plant-Monitor",
+      "tooltip": "Upload the Plant-Monitor environment",
       "commands": [
         {
           "id": "platformio-ide.runPIOCoreCommand",
-          "args": "pio run -t nobuild -t upload"
+          "args": "pio run -e plant-monitor -t nobuild -t upload"
         }
       ]
     },
