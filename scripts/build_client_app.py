@@ -12,11 +12,9 @@ def createClientApp():
     script_dir = os.getcwd()
     data_dir_path = os.path.join(script_dir, 'data')
     
-    if os.path.exists(data_dir_path):
-        print(f'Rename: Deleting the old data directory {data_dir_path}')
-        shutil.rmtree(data_dir_path)
-    print(f'Rename: Creating an empty data directory {data_dir_path}')
-    os.mkdir(data_dir_path)
+    if not os.path.exists(data_dir_path):
+        print(f'Rename: Creating an empty data directory {data_dir_path}')
+        os.mkdir(data_dir_path)
     
     # Build the React web application
     react_proj_dir = "plant-master-client"

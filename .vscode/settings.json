@@ -82,10 +82,6 @@
         {
           "id": "platformio-ide.runPIOCoreCommand",
           "args": "pio run -e plant-master -a 'runExtraScripts'"
-        },
-        {
-          "id": "platformio-ide.runPIOCoreCommand",
-          "args": "pio run -t buildfs -e plant-master"
         }
       ]
     },
@@ -96,6 +92,10 @@
         {
           "id": "platformio-ide.runPIOCoreCommand",
           "args": "pio run -e plant-master -t nobuild -t upload"
+        },
+        {
+          "id": "platformio-ide.runPIOCoreCommand",
+          "args": "pio run -e plant-master -t uploadfs"
         }
       ]
     },
@@ -106,10 +106,6 @@
         {
           "id": "platformio-ide.runPIOCoreCommand",
           "args": "pio run -e plant-monitor -a 'runExtraScripts'"
-        },
-        {
-          "id": "platformio-ide.runPIOCoreCommand",
-          "args": "pio run -t buildfs -e plant-monitor"
         }
       ]
     },
@@ -120,6 +116,10 @@
         {
           "id": "platformio-ide.runPIOCoreCommand",
           "args": "pio run -e plant-monitor -t nobuild -t upload"
+        },
+        {
+          "id": "platformio-ide.runPIOCoreCommand",
+          "args": "pio run -e plant-monitor -t uploadfs"
         }
       ]
     },
