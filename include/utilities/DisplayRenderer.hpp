@@ -32,7 +32,6 @@ class DisplayRenderer
 public:
     explicit DisplayRenderer(std::shared_ptr<Configurator> configurator);
 
-    void init();
     void cyclic();
     void displayScreen(Screen::Type screenToDisplay);
 
@@ -42,7 +41,7 @@ private:
     int16_t m_screenTimeCounter;
     bool m_isInitialized;
 
-    void initializeDisplay();
+    bool initializeDisplay();
     void resetDisplay();
     void drawHeading(const std::string &text);
     void drawTextLine(const std::string &text);

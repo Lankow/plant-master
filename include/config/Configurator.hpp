@@ -54,6 +54,7 @@ private:
     int getIntValue(const String &key);
     std::vector<int> getIntArray(const String &key);
     void writeConfigFile();
+    void createDefaultConfigFile();
 };
 
 #endif // CONFIGURATOR_HPP

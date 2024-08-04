@@ -21,11 +21,7 @@ DisplayRenderer::DisplayRenderer(std::shared_ptr<Configurator> configurator)
       m_screenTimeCounter(0),
       m_currentLine(0)
 {
-}
-
-void DisplayRenderer::init()
-{
-    initializeDisplay();
+    m_isInitialized = initializeDisplay();
     displayScreen(Screen::Type::InitialScreen);
 }
 
@@ -67,15 +63,15 @@ void DisplayRenderer::displayScreen(Screen::Type screenToDisplay)
     m_display.display();
 }
 
-void DisplayRenderer::initializeDisplay()
+bool DisplayRenderer::initializeDisplay()
 {
     if (!m_display.begin(SSD1306_SWITCHCAPVCC, 0x3C))
     {
         m_display.println(F("SSD1306 allocation failed"));
-        return;
+        return false;
     }
 
-    m_isInitialized = true;
+    return true;
 }
 
 void DisplayRenderer::drawHeading(const std::string &text)

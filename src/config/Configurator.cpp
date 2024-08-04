@@ -18,14 +18,14 @@ bool Configurator::init()
 {
     if (!initSPIFFS())
     {
-        Serial.println("An error occurred while mounting SPIFFS");
+        Serial.println("Failed to mount SPIFFS");
         return false;
     }
-    Serial.println("SPIFFS mounted successfully");
 
     if (!SPIFFS.exists(Config::PATH.c_str()))
     {
-        Serial.println("Config file does not exist. Please rebuild project.");
+        Serial.println("Config file does not exist. Creating default config.");
+        createDefaultConfigFile();
         return false;
     }
 
@@ -44,7 +44,13 @@ int Configurator::getOledResetPin() const { return m_oledResetPin; }
 
 bool Configurator::initSPIFFS()
 {
-    return SPIFFS.begin(true);
+    if (!SPIFFS.begin(true))
+    {
+        Serial.println("An error occurred while mounting SPIFFS");
+        return false;
+    }
+    Serial.println("SPIFFS mounted successfully");
+    return true;
 }
 
 bool Configurator::readConfigFile()
@@ -52,7 +58,7 @@ bool Configurator::readConfigFile()
     File file = SPIFFS.open(Config::PATH.c_str());
     if (!file)
     {
-        Serial.println("Failed to open config file");
+        Serial.println("Failed to open config file. Possible reasons: file system corruption, insufficient memory, or file does not exist.");
         return false;
     }
 
@@ -67,6 +73,7 @@ bool Configurator::readConfigFile()
     }
 
     Serial.println("Config file loaded successfully");
+    m_readerPins = getIntArray(JSON::READER_PINS.c_str());
     m_readerPins = getIntArray(JSON::READER_PINS.c_str());
 
 #ifdef PLANT_MASTER
@@ -159,3 +166,5 @@ void Configurator::writeConfigFile()
     }
     file.close();
 }
+
+void Configurator::createDefaultConfigFile() {}
