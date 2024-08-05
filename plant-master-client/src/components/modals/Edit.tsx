@@ -34,7 +34,7 @@ const Edit: React.FC<EditProps> = ({
           step={100}
           marks
           min={0}
-          max={4000}
+          max={4095}
         />
       </DialogContent>
       <DialogActions sx={{ mr: 3, mb: 2 }}>
