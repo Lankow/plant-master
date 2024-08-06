@@ -10,13 +10,13 @@ interface SensorDetailsProps {
  
 const SensorDetails: React.FC<SensorDetailsProps> = ({ id, pin, humidity, threshold }) => (
   <>
-    <Typography sx={{ mb: 1 }} variant="h6">
+    <Typography sx={{ mb: 1}} variant="h6">
       Humidity Data ID: {id !== 0xff ? id : "Not Assigned"}
     </Typography>
     <Divider flexItem sx={{ mb: 1 }} />
     <Typography sx={{ mb: 1 }}>Assigned Pin: {pin}</Typography>
-    <Typography sx={{ mb: 1 }}>Current Humidity: {(humidity/40.95).toFixed(1)} %</Typography>
-    <Typography sx={{ mb: 1 }}>Threshold: {(threshold/40.95).toFixed(1)} %</Typography>
+    <Typography sx={{ mb: 1 }}>Current Humidity: {(humidity/40).toFixed(1)} %</Typography>
+    <Typography sx={{ mb: 1 }}>Threshold: {(threshold/40).toFixed(1)} %</Typography>
     <Divider flexItem sx={{ mb: 2 }} />
   </>
 );

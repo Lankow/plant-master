@@ -17,6 +17,11 @@ const generateUniquePins = (count: number, min: number, max: number) => {
   return Array.from(pins);
 };
 
+const generateRandomThreshold = (min: number, max: number) => {
+  const randomMultiplier = generateRandomNumber(min / 200, max / 200);
+  return randomMultiplier * 200;
+};
+
 const useDemoData = () => {
   const [sensors, setSensors] = useState<Array<Sensor>>([]);
   const [roomTemperature, setRoomTemperature] = useState<number>(0.0);
@@ -70,7 +75,7 @@ const useDemoData = () => {
       id: i,
       pin,
       humidity: generateRandomNumber(100, 4000),
-      threshold: generateRandomNumber(100, 4000),
+      threshold: generateRandomThreshold(200, 3800),
     }));
     setSensors(initialSensors);
 
