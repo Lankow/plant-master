@@ -4,13 +4,15 @@ import Footer from "./components/Footer";
 import TopBar from "./components/TopBar";
 import Modal from "./components/Modal";
 import HumidityPanel from "./components/panels/HumidityPanel";
-import useDataSource from "./hooks/useDataSource";
+import useWebSocket from "./hooks/useWebSocket";
+import useDemoData from "./hooks/useDemoData";
 
 const initialThreshold = 0;
 const initialPin = 0;
 
 function App() {
-  const { sensors, roomTemperature, roomHumidity, waterPumpActive, activeReaderPin, sendUpdate } = useDataSource();
+  const isDemo = import.meta.env.VITE_DEMO === "true";
+  const { sensors, roomTemperature, roomHumidity, waterPumpActive, activeReaderPin, sendUpdate } = isDemo ? useDemoData() : useWebSocket();
   const [editedThreshold, setEditedThreshold] = useState(initialThreshold);
   const [editedPin, setEditedPin] = useState(initialPin);
   const [openedModal, setOpenedModal] = useState("");
