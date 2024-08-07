@@ -24,7 +24,12 @@ DataStorage::DataStorage(std::shared_ptr<Configurator> configurator)
 
     for (size_t i = 0; i < pins.size(); ++i)
     {
-        m_plantsHumidityData.emplace_back(pins[i], thresholds[i]);
+        uint16_t threshold =
+            thresholds[i] > HumiditySensor::MAX_THRESHOLD || thresholds[i] < HumiditySensor::MIN_THRESHOLD
+                ? HumiditySensor::MAX_THRESHOLD
+                : thresholds[i];
+
+        m_plantsHumidityData.emplace_back(pins[i], threshold);
     }
 }
 #else
@@ -73,6 +78,12 @@ void DataStorage::setPlantHumidity(uint8_t pin, uint16_t humidity)
 
 void DataStorage::setHumidityThreshold(uint8_t pin, uint16_t threshold)
 {
+    if (threshold > HumiditySensor::MAX_THRESHOLD || threshold < HumiditySensor::MIN_THRESHOLD)
+    {
+        Serial.println("Requested Humidity threshold update failed. Invalid value.");
+        return;
+    }
+
     for (size_t i = 0; i < m_plantsHumidityData.size(); ++i)
     {
         if (m_plantsHumidityData[i].getAssignedPin() == pin)

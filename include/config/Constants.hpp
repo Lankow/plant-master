@@ -29,10 +29,12 @@ namespace ResetButton
 
 namespace HumiditySensor
 {
-  constexpr uint8_t MAX_AMOUNT = 4;                      /**< Maximum number of humidity sensors. */
-  constexpr uint16_t DEFAULT_ACTIVE_PIN = 0;             /**< Default active pin for the humidity sensor. */
-  constexpr uint16_t DEFAULT_HUMIDITY = AnalogPin::MAX;  /**< Default humidity value for the humidity sensor. */
-  constexpr uint16_t DEFAULT_THRESHOLD = AnalogPin::MAX; /**< Default threshold value for the humidity sensor. */
+  constexpr uint8_t MAX_AMOUNT = 4;                     /**< Maximum number of humidity sensors. */
+  constexpr uint16_t DEFAULT_ACTIVE_PIN = 0;            /**< Default active pin for the humidity sensor. */
+  constexpr uint16_t MIN_THRESHOLD = 0;                 /**< Min threshold value for the humidity sensor. */
+  constexpr uint16_t MAX_THRESHOLD = 4000;              /**< Max threshold value for the humidity sensor. */
+  constexpr uint16_t DEFAULT_THRESHOLD = 4000;          /**< Default threshold value for the humidity sensor. */
+  constexpr uint16_t DEFAULT_HUMIDITY = AnalogPin::MAX; /**< Default humidity value for the humidity sensor. */
 }
 
 namespace Room

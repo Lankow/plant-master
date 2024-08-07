@@ -15,7 +15,9 @@ const SensorDetails: React.FC<SensorDetailsProps> = ({ id, pin, humidity, thresh
     </Typography>
     <Divider flexItem sx={{ mb: 1 }} />
     <Typography sx={{ mb: 1 }}>Assigned Pin: {pin}</Typography>
-    <Typography sx={{ mb: 1 }}>Current Humidity: {(humidity/40).toFixed(1)} %</Typography>
+    <Typography sx={{ mb: 1 }}>
+        Current Humidity: {humidity > 4000 ? "INACTIVE" : `${(humidity / 40).toFixed(1)} %`}
+    </Typography>
     <Typography sx={{ mb: 1 }}>Threshold: {(threshold/40).toFixed(1)} %</Typography>
     <Divider flexItem sx={{ mb: 2 }} />
   </>
