@@ -7,12 +7,15 @@
     "oledResetPin": 16,
     "waterPumpPin": 18,
     "readerPins": [
+        32,
         34
     ],
     "valvePins": [
+        15,
         15
     ],
     "thresholds": [
-        4000
+        100,
+        100
     ]
 }

@@ -38,9 +38,18 @@ void PlantHumidityHandler::readHumidity()
 {
     for (int pin : m_configurator->getReaderPins())
     {
-        uint16_t humidity = analogRead(pin);
-        Serial.println(humidity);
-        m_mqttManager->publish(MQTT::PLANT_HUMIDITY + "/" + std::to_string(pin), std::to_string(humidity), 0, false);
+        uint16_t humidityReading = analogRead(pin);
+
+        if (humidityReading > HumiditySensor::AIR_HUMIDITY)
+            humidityReading = HumiditySensor::AIR_HUMIDITY;
+
+        if (humidityReading < HumiditySensor::WATER_HUMIDITY)
+            humidityReading = HumiditySensor::WATER_HUMIDITY;
+
+        uint16_t humidityValue = (HumiditySensor::AIR_HUMIDITY - humidityReading) / 14;
+        Serial.println("Value:");
+        Serial.println(humidityValue);
+        m_mqttManager->publish(MQTT::PLANT_HUMIDITY + "/" + std::to_string(pin), std::to_string(humidityValue), 0, false);
     }
 }
 
