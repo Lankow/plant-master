@@ -24,15 +24,16 @@ std::string JSONConverter::serializeDataStorage() const
     doc["roomTemperature"] = m_dataStorage->getRoomTemperature();
     doc["waterPumpActive"] = m_dataStorage->isWaterPumpActive();
     doc["activeReaderPin"] = m_dataStorage->getActiveReaderPin();
-    doc["plantsHumidity"] = serializePlantsHumidity(m_dataStorage->getPlantsHumidityData(), doc);
+    doc["plantsHumidity"] = serializePlantsHumidity(m_dataStorage->getPlantsHumidityData());
 
     std::ostringstream jsonOss;
     serializeJson(doc, jsonOss);
     return jsonOss.str();
 }
 
-JsonArray JSONConverter::serializePlantsHumidity(const std::vector<PlantHumidityData> &plantHumidityData, DynamicJsonDocument &doc) const
+JsonArray JSONConverter::serializePlantsHumidity(const std::vector<PlantHumidityData> &plantHumidityData) const
 {
+    DynamicJsonDocument doc(1024);
     JsonArray plantHumidityArray = doc.createNestedArray();
 
     for (size_t i = 0; i < plantHumidityData.size(); ++i)

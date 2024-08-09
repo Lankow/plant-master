@@ -31,8 +31,8 @@ private:
     std::shared_ptr<DataStorage> m_dataStorage;
     StaticJsonDocument<512> m_receivedJson;
 
-    JsonArray serializePlantsHumidity(const std::vector<PlantHumidityData> &plantHumidityData, DynamicJsonDocument &doc) const;
     void serializePlantHumidityData(const PlantHumidityData &plantHumidityData, JsonArray &plantHumidityArray, int sensorIndex) const;
+    JsonArray serializePlantsHumidity(const std::vector<PlantHumidityData> &plantHumidityData) const;
     uint16_t deserializeByKey(const std::string &keyName) const;
 };
 

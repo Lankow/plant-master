@@ -28,6 +28,12 @@ ServerManager::ServerManager(std::shared_ptr<DataStorage> dataStorage)
 
 void ServerManager::init()
 {
+  if (!WiFi.config(Network::IP::LOCAL, Network::IP::GATEWAY, Network::IP::SUBNET, Network::IP::PRIMARY_DNS, Network::IP::SECONDARY_DNS))
+  {
+    Serial.println("STA Failed to configure");
+    return;
+  }
+
   if (WiFi.status() == WL_CONNECTED)
   {
     Serial.println("Initializing Server...");
