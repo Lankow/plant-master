@@ -11,8 +11,8 @@ const initialThreshold = 0;
 const initialPin = 0;
 
 function App() {
-  const isDemo = import.meta.env.VITE_DEMO === "true";
-  const { sensors, roomTemperature, roomHumidity, waterPumpActive, activeReaderPin, sendUpdate } = isDemo ? useDemoData() : useWebSocket();
+  const isDemo = import.meta.env.BASE_URL !== '/';
+  const { sensors, roomTemperature, roomHumidity, waterPumpActive, activeReaderPin, sendUpdate } = isDemo ? useDemoData() : useWebSocket();  // eslint-disable-line
   const [editedThreshold, setEditedThreshold] = useState(initialThreshold);
   const [editedPin, setEditedPin] = useState(initialPin);
   const [openedModal, setOpenedModal] = useState("");
