@@ -18,8 +18,12 @@ const generateUniquePins = (count: number, min: number, max: number) => {
 };
 
 const generateRandomThreshold = (min: number, max: number) => {
-  const randomMultiplier = generateRandomNumber(min / 200, max / 200);
-  return randomMultiplier * 200;
+  const randomMultiplier = Math.floor(generateRandomNumber(min / 5, max / 5));
+  return randomMultiplier * 5;
+};
+
+const generateRandomHumidity = (min: number, max: number) => {
+  return generateRandomNumber(min, max);
 };
 
 const useDemoData = () => {
@@ -37,9 +41,9 @@ const useDemoData = () => {
     let activePin = 0;
 
     setSensors(sensorsRef.current.map(sensor => {
-      let newHumidity = sensor.humidity + (Math.random() < 0.5 ? -20 : 20);
-      if (newHumidity < 100) newHumidity = 100;
-      if (newHumidity > 4000) newHumidity = 4000;
+      let newHumidity = sensor.humidity + (Math.random() < 0.5 ? -5 : 5);
+      if (newHumidity < 0) newHumidity = 0;
+      if (newHumidity > 100) newHumidity = 100;
 
       if (newHumidity < sensor.threshold) {
         pumpActive = true;
@@ -55,7 +59,7 @@ const useDemoData = () => {
 
   const updateRoomConditions = () => {
     setRoomTemperature(prev => {
-      let newTemp = prev + (Math.random() < 0.5 ? -0.5 : 0.5);
+      let newTemp = prev + (Math.random() < 0.5 ? -0.1 : 0.1);
       if (newTemp < 15) newTemp = 15;
       if (newTemp > 30) newTemp = 30;
       return newTemp;
@@ -74,8 +78,8 @@ const useDemoData = () => {
     const initialSensors = initialPins.map((pin, i) => ({
       id: i,
       pin,
-      humidity: generateRandomNumber(100, 4000),
-      threshold: generateRandomThreshold(200, 3800),
+      humidity: generateRandomHumidity(0, 100),
+      threshold: generateRandomThreshold(0, 100),
     }));
     setSensors(initialSensors);
 

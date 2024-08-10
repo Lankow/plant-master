@@ -71,7 +71,7 @@ const useWebSocket = () => {
       }
       websocket.current?.close();
     };
-  }, []);
+  });
 
   const sendUpdate = useCallback(({ pin, threshold }: UpdatedData) => {
     const updatedData: UpdatedData = {

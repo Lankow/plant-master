@@ -16,8 +16,7 @@ const Edit: React.FC<EditProps> = ({
 }) => {
 
   const handleSliderChange = (_event: Event, value: number | number[]) => {
-    const intValue = Math.round((value as number) / 100 * 4000);
-    setEditedThreshold(intValue);
+    setEditedThreshold(value as number);
   };
 
   return (
@@ -28,7 +27,7 @@ const Edit: React.FC<EditProps> = ({
           Modify the values for the sensor below:
         </DialogContentText>
         <Slider
-          value={(editedThreshold/40)}
+          value={(editedThreshold)}
           onChange={handleSliderChange}
           valueLabelDisplay="auto"
           valueLabelFormat={(value) => value.toString()}
