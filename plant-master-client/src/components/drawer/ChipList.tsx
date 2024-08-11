@@ -22,7 +22,7 @@ const ChipList: React.FC<ChipListProps> = ({
       <Chip label={`Temperature: ${roomTemperature.toFixed(1)} °C`} sx={{ color: '#fff' }} />
       <Chip label={`Humidity: ${roomHumidity.toFixed(1)} %`} sx={{ color: '#fff' }} />
       <Chip label={`Water Pump: ${waterPumpActive ? "Active" : "Inactive"}`} sx={{ color: '#fff' }} />
-      <Chip label={`Active Reader Pin: ${activeReaderPin}`} sx={{ color: '#fff' }} />
+      <Chip label={`Active Reader Pin: ${activeReaderPin != 0 ? activeReaderPin : "None"}`} sx={{ color: '#fff' }} />
     </Box>
   );
 };
