@@ -25,23 +25,24 @@ const useWebSocket = () => {
   const websocket = useRef<w3cwebsocket | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const clearState = () => {
+  const clearState = useCallback(() => {
     setSensors([]);
     setRoomHumidity(0.0);
     setRoomTemperature(0.0);
     setWaterPumpActive(false);
     setActiveReaderPin(0);
-  };
+  }, []);
 
-  const resetTimeout = () => {
+  const resetTimeout = useCallback(() => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
     timeoutRef.current = setTimeout(clearState, 5000);
-  };
+  }, [clearState]);
 
   useEffect(() => {
     websocket.current = new w3cwebsocket(serverAddress);
+
     websocket.current.onmessage = (message: IMessageEvent) => {
       resetTimeout();
       const dataFromServer = JSON.parse(message.data.toString());
@@ -71,7 +72,7 @@ const useWebSocket = () => {
       }
       websocket.current?.close();
     };
-  });
+  }, [resetTimeout]);
 
   const sendUpdate = useCallback(({ pin, threshold }: UpdatedData) => {
     const updatedData: UpdatedData = {

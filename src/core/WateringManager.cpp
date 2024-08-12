@@ -31,7 +31,8 @@ void WateringManager::checkHumidity()
 
     for (const auto &plantData : plantsHumidityData)
     {
-        if (plantData.getCurrentHumidity() < plantData.getHumidityThreshold())
+        if (plantData.getCurrentHumidity() > HumiditySensor::MIN_HUMIDITY &&
+            plantData.getCurrentHumidity() < plantData.getHumidityThreshold())
         {
             Serial.println("Watering needed");
             m_dataStorage->setWaterPumpActive(true);

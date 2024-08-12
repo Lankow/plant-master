@@ -35,6 +35,7 @@ namespace HumiditySensor
   constexpr uint16_t MAX_THRESHOLD = 100;     /**< Max threshold value for the humidity sensor. */
   constexpr uint16_t DEFAULT_THRESHOLD = 100; /**< Default threshold value for the humidity sensor. */
   constexpr uint16_t DEFAULT_HUMIDITY = 100;  /**< Default humidity value for the humidity sensor. */
+  constexpr uint16_t MIN_HUMIDITY = 0;        /**< Min humidity value for the humidity sensor. */
   constexpr uint16_t WATER_HUMIDITY = 1400;   /**< Water humidity value for the humidity sensor. */
   constexpr uint16_t AIR_HUMIDITY = 2800;     /**< Air humidity value for the humidity sensor. */
 }
