@@ -36,12 +36,19 @@ const useDemoData = () => {
   const sensorsRef = useRef(sensors);
   sensorsRef.current = sensors;
 
+  const activeReaderPinRef = useRef(activeReaderPin);
+  
+  useEffect(() => {
+    activeReaderPinRef.current = activeReaderPin;
+  }, [activeReaderPin]);
+
   const updateSensorHumidity = () => {
     let pumpActive = false;
     let activePin = 0;
 
     setSensors(sensorsRef.current.map(sensor => {
-      let newHumidity = sensor.humidity + (Math.random() < 0.5 ? -5 : 5);
+      let newHumidity = sensor.pin === activeReaderPinRef.current ? sensor.humidity + 1 : sensor.humidity - 0.25;
+
       if (newHumidity < 0) newHumidity = 0;
       if (newHumidity > 100) newHumidity = 100;
 
