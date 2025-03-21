@@ -74,7 +74,6 @@ bool Configurator::readConfigFile()
 
     Serial.println("Config file loaded successfully");
     m_readerPins = getIntArray(JSON::READER_PINS.c_str());
-    m_readerPins = getIntArray(JSON::READER_PINS.c_str());
 
 #ifdef PLANT_MASTER
     m_thresholds = getIntArray(JSON::THRESHOLDS.c_str());
